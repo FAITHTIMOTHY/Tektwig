@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%">
+  <!-- Connecting Lines -->
+  <line x1="90" y1="80" x2="66" y2="38.5" stroke="#00abec" stroke-width="5" stroke-linecap="round" />
+  <line x1="90" y1="80" x2="132.6" y2="50.2" stroke="#00abec" stroke-width="5" stroke-linecap="round" />
+  <line x1="90" y1="80" x2="34" y2="95" stroke="#00abec" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Nodes -->
+  <circle cx="66" cy="38.5" r="12.5" fill="#00abec" />
+  <circle cx="132.6" cy="50.2" r="14.5" fill="#00abec" />
+  <circle cx="34" cy="95" r="18.5" fill="#f24b22" />
+  
+  <!-- Central Node -->
+  <circle cx="90" cy="80" r="23" fill="#00abec" />
+
+  <!-- Letter 't' inside central node -->
+  <path d="M 82,71 L 77,71 L 77,68 C 80,68 83,66 84,63 L 88,63 L 88,71 L 99,71 L 99,75 L 88,75 L 88,92 C 88,98 91,100 96,100 C 99,100 101,99 103,97 L 103,101 C 100,103 97,104 93,104 C 85,104 83,101 83,92 L 83,75 L 79,75 L 79,71 Z" fill="#13267d" />
+</svg>

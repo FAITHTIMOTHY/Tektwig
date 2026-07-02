@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tektwig Digital & Internet Business Solutions - Building secure, intelligent, data-driven systems that scale with you. Specialists in Cybersecurity, Data Protection, AI development, Networking, and Full-Stack Engineering.">
+  <meta name="keywords" content="Cybersecurity, Data Protection, AI Development, Networking, Software Development, IT Training, Lagos, Nigeria, Tektwig">
+  <meta name="author" content="Tektwig">
+  <title>Tektwig | Empowering Your Digital Future</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Header / Navigation -->
+  <header id="main-header" class="site-header">
+    <div class="container header-container">
+      <a href="#" class="logo-link">
+        <img src="assets/logo.svg" alt="Tektwig Logo" class="logo-img" id="site-logo">
+      </a>
+      
+      <!-- Mobile Nav Trigger -->
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#datarock" class="nav-link">DataRock Control</a></li>
+          <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+          <li><a href="#leadership" class="nav-link">Leadership</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="#contact" class="btn btn-secondary btn-sm" id="btn-quote-nav">Get Quote</a>
+          <a href="#contact" class="btn btn-primary btn-sm" id="btn-login-nav">Client Portal</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="badge" id="hero-badge">Empowering Your Digital Future</div>
+        <h1 class="hero-title" id="hero-main-title">
+          Building Secure, <span class="gradient-text">Intelligent</span> Systems That Scale.
+        </h1>
+        <p class="hero-description" id="hero-sub-text">
+          From advanced cybersecurity and data protection to custom AI development, networking, and full-stack software engineering. We turn your technology ambitions into production-ready realities.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary btn-lg" id="hero-cta-primary">Start a Project</a>
+          <a href="#services" class="btn btn-secondary btn-lg" id="hero-cta-secondary">Explore Services</a>
+          <a href="#contact" class="btn btn-tertiary" id="hero-cta-tertiary">
+            <span>Learn With Us</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="tech-card-wrapper">
+          <!-- Glassmorphic Tech Card -->
+          <div class="tech-card glass-panel" id="hero-interactive-card">
+            <div class="card-header">
+              <span class="status-dot pulsing"></span>
+              <span class="card-title">Tektwig Cloud Core</span>
+              <span class="card-tag">v2.5</span>
+            </div>
+            <div class="card-body">
+              <div class="metric-row">
+                <div class="metric-item">
+                  <span class="metric-label">Threat Shield</span>
+                  <span class="metric-value color-cyan">Active</span>
+                </div>
+                <div class="metric-item">
+                  <span class="metric-label">AI Processing</span>
+                  <span class="metric-value color-purple">98.4 GigaFLOPS</span>
+                </div>
+              </div>
+              <!-- Mini Console Graph -->
+              <div class="console-graph">
+                <div class="graph-bar" style="height: 40%"></div>
+                <div class="graph-bar" style="height: 60%"></div>
+                <div class="graph-bar" style="height: 45%"></div>
+                <div class="graph-bar" style="height: 75%"></div>
+                <div class="graph-bar" style="height: 90%"></div>
+                <div class="graph-bar" style="height: 65%"></div>
+                <div class="graph-bar" style="height: 85%"></div>
+                <div class="graph-bar" style="height: 100%"></div>
+              </div>
+              <div class="card-footer-text">
+                &gt; Secure network gateway configured successfully.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How Can We Help You? (Services) -->
+  <section id="services" class="services-section section-padding">
+    <div class="container">
+      <div class="section-header center-align">
+        <span class="section-tag">Solutions Overview</span>
+        <h2 class="section-title">How Can We Help You?</h2>
+        <p class="section-subtitle">We deliver premium consulting, training, and execution across critical digital layers.</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Card 1 -->
+        <div class="service-card glass-panel" id="service-cybersecurity">
+          <div class="service-icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3 class="service-title">Cybersecurity &amp; Data Protection</h3>
+          <p class="service-text">
+            Comprehensive risk assessments, GDPR/ISO27001 compliance advisory, penetration testing, database encryption, and automated incident response systems.
+          </p>
+          <ul class="service-bullets">
+            <li>Risk &amp; Vulnerability Auditing</li>
+            <li>Regulatory Compliance (GDPR, ISO)</li>
+            <li>End-to-End Encryption Setup</li>
+          </ul>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="service-card glass-panel" id="service-networking">
+          <div class="service-icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+              <line x1="6" y1="6" x2="6.01" y2="6"></line>
+              <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+          </div>
+          <h3 class="service-title">Networking &amp; Infrastructure</h3>
+          <p class="service-text">
+            Enterprise network architecture design and deployment. Specializing in secure private clouds, SD-WAN virtualization, and telemetry monitoring.
+          </p>
+          <ul class="service-bullets">
+            <li>Secure Topology Design</li>
+            <li>Cloud &amp; Hybrid Virtualization</li>
+            <li>High Availability Clustering</li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="service-card glass-panel" id="service-ai">
+          <div class="service-icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <h3 class="service-title">AI &amp; Data Analytics</h3>
+          <p class="service-text">
+            Bespoke machine learning models, predictive intelligence algorithms, dynamic data engineering pipelines (ETL/ELT), and real-time BI dashboards.
+          </p>
+          <ul class="service-bullets">
+            <li>Machine Learning Pipelines</li>
+            <li>Predictive BI Dashboards</li>
+            <li>ETL &amp; Big Data Engineering</li>
+          </ul>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="service-card glass-panel" id="service-software">
+          <div class="service-icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+              <line x1="14" y1="4" x2="10" y2="20"></line>
+            </svg>
+          </div>
+          <h3 class="service-title">Software Development</h3>
+          <p class="service-text">
+            Bespoke full-stack web and native mobile application engineering. API integrations, microservices structures, and automated DevOps CI/CD setups.
+          </p>
+          <ul class="service-bullets">
+            <li>Full-Stack Web &amp; Mobile</li>
+            <li>Microservices &amp; API Design</li>
+            <li>DevOps &amp; Cloud Deployments</li>
+          </ul>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="service-card glass-panel" id="service-vending">
+          <div class="service-icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+          </div>
+          <h3 class="service-title">IT Products Vending</h3>
+          <p class="service-text">
+            Strategic technology hardware and license procurement. Sourcing robust security appliances, high-throughput network nodes, and software tools.
+          </p>
+          <ul class="service-bullets">
+            <li>Hardware Supply &amp; Install</li>
+            <li>Enterprise Software Licensing</li>
+            <li>Vendor Evaluation Services</li>
+          </ul>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="service-card glass-panel" id="service-training">
+          <div class="service-icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <h3 class="service-title">Training &amp; Capacity Building</h3>
+          <p class="service-text">
+            Tailored technical bootcamps, security awareness modules, structured corporate coaching, and guided mentorship in programming and analytics.
+          </p>
+          <ul class="service-bullets">
+            <li>Technical Bootcamp Programs</li>
+            <li>Corporate Cybersecurity Drills</li>
+            <li>One-on-One Engineering Mentorship</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- SVG gradients helper for styles -->
+    <svg style="width:0;height:0;position:absolute;" aria-hidden="true">
+      <linearGradient id="cyanPurpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00f2fe" />
+        <stop offset="100%" stop-color="#d946ef" />
+      </linearGradient>
+    </svg>
+  </section>
+
+  <!-- DataRock Control Showcase -->
+  <section id="datarock" class="datarock-section section-padding">
+    <div class="container datarock-container">
+      <div class="datarock-content">
+        <div class="badge badge-purple" id="datarock-badge">Featured System</div>
+        <h2 class="section-title">DataRock Control Suite</h2>
+        <p class="datarock-description">
+          DataRock Control is Tektwig's premier proprietary security and endpoint compliance dashboard. Providing real-time telemetry, threat hunting, and dynamic bandwidth allocation, it represents the absolute peak of network defense.
+        </p>
+        <div class="datarock-stats-grid">
+          <div class="stat-box">
+            <span class="stat-num" id="stat-blocks">142K+</span>
+            <span class="stat-lbl">Threats Avoided</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num" id="stat-ping">1.2ms</span>
+            <span class="stat-lbl">Average Latency</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">99.99%</span>
+            <span class="stat-lbl">Uptime Standard</span>
+          </div>
+        </div>
+        <div class="datarock-actions">
+          <a href="#contact" class="btn btn-primary" id="btn-datarock-demo">Request Software Trial</a>
+        </div>
+      </div>
+      
+      <!-- Interactive Terminal/Dashboard Showcase -->
+      <div class="datarock-visual">
+        <div class="terminal-mock glass-panel" id="datarock-dashboard">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="td-dot red"></span>
+              <span class="td-dot yellow"></span>
+              <span class="td-dot green"></span>
+            </div>
+            <div class="terminal-title">datarock-monitor.sh</div>
+            <div class="terminal-status"><span class="pulse-green"></span> Live Telemetry</div>
+          </div>
+          <div class="terminal-body" id="telemetry-logs">
+            <div class="log-line text-muted">[2026-07-02 13:13:00] Initializing telemetry node...</div>
+            <div class="log-line text-success">[OK] Cybersecurity Shield: Nominal load (14% active)</div>
+            <div class="log-line text-success">[OK] Bandwidth Allocator: Optimizing traffic vectors</div>
+            <div class="log-line text-warning">[WARN] Database Query Latency: Spike detected (85ms)</div>
+            <div class="log-line text-info">[INFO] Auto-routing network pipelines via secondary nodes...</div>
+            <div class="log-line text-success">[OK] Threat Shield: Threat from IP 192.168.42.12 isolated!</div>
+          </div>
+          <!-- Graph overlay -->
+          <div class="terminal-chart">
+            <div class="chart-header">
+              <span>Traffic Analysis (BPS)</span>
+              <span id="chart-load-percent">Load: 42%</span>
+            </div>
+            <div class="chart-visual" id="live-line-chart">
+              <!-- Visual bars mapping a line chart -->
+              <span class="chart-point" style="--height: 30%"></span>
+              <span class="chart-point" style="--height: 45%"></span>
+              <span class="chart-point" style="--height: 38%"></span>
+              <span class="chart-point" style="--height: 55%"></span>
+              <span class="chart-point" style="--height: 70%"></span>
+              <span class="chart-point" style="--height: 60%"></span>
+              <span class="chart-point" style="--height: 80%"></span>
+              <span class="chart-point" style="--height: 75%"></span>
+              <span class="chart-point" style="--height: 95%"></span>
+              <span class="chart-point" style="--height: 85%"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="portfolio-section section-padding">
+    <div class="container">
+      <div class="section-header center-align">
+        <span class="section-tag">Case Studies</span>
+        <h2 class="section-title">Our Portfolio</h2>
+        <p class="section-subtitle">We have successfully delivered numerous projects, both training and implementation, across diverse domains.</p>
+      </div>
+
+      <!-- Filters -->
+      <div class="portfolio-filters" id="portfolio-filters">
+        <button class="filter-btn active" data-filter="all">All Solutions</button>
+        <button class="filter-btn" data-filter="cybersecurity">Security</button>
+        <button class="filter-btn" data-filter="ai">AI &amp; Analytics</button>
+        <button class="filter-btn" data-filter="software">Software Dev</button>
+        <button class="filter-btn" data-filter="training">Training</button>
+      </div>
+
+      <!-- Project Grid -->
+      <div class="portfolio-grid" id="portfolio-grid">
+        <!-- Item 1 -->
+        <div class="portfolio-item glass-panel" data-category="cybersecurity">
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <span class="project-cat">GDPR Compliance &amp; Audit</span>
+            <h4 class="project-name">Financial Node Vaulting</h4>
+            <p class="project-desc">Audited and encrypted a fintech startup's payment database serving 100K active clients, passing regulatory certification.</p>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="portfolio-item glass-panel" data-category="ai">
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <span class="project-cat">AI Predictive Model</span>
+            <h4 class="project-name">Smart Grid Telemetry Analytics</h4>
+            <p class="project-desc">Implemented regression algorithms forecasting resource usage peaks for a regional electricity network node.</p>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="portfolio-item glass-panel" data-category="software">
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <span class="project-cat">Full-Stack Application</span>
+            <h4 class="project-name">E-Commerce Merchant Gateway</h4>
+            <p class="project-desc">Built a custom multi-tenant API manager handles high volume transaction loads securely and without downtime.</p>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="portfolio-item glass-panel" data-category="training">
+          <div class="project-overlay"></div>
+          <div class="project-info">
+            <span class="project-cat">Corporate Coaching Program</span>
+            <h4 class="project-name">Cyber Defense Operations Intensive</h4>
+            <p class="project-desc">Coached 50+ enterprise IT operators in malware isolation, threat vectors, and disaster recovery procedures.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section section-padding">
+    <div class="container testimonial-container">
+      <div class="section-header center-align">
+        <span class="section-tag">Client Feedback</span>
+        <h2 class="section-title">Our Customers</h2>
+        <p class="section-subtitle">Leading companies trust Tektwig to protect and optimize their technological pipelines.</p>
+      </div>
+
+      <!-- Testimonial Slider Outer wrapper -->
+      <div class="testimonial-slider-wrap">
+        <div class="testimonial-slider" id="testimonial-slider">
+          <!-- Slide 1 -->
+          <div class="testimonial-slide active">
+            <div class="testimonial-card glass-panel">
+              <div class="quote-icon">“</div>
+              <h3 class="testimonial-quote">Well Experienced and Professional Service!</h3>
+              <p class="testimonial-text">
+                Tektwig delivered exactly what we needed with impressive expertise and attention to detail. Their professionalism and commitment to quality made our entire experience seamless and highly rewarding.
+              </p>
+              <div class="testimonial-client">
+                <img src="assets/avatar-client.png" alt="John Doe" class="client-avatar">
+                <div class="client-meta">
+                  <h4 class="client-name">John Doe</h4>
+                  <p class="client-title">Chief Technology Officer, FinTech Corp</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Slide 2 -->
+          <div class="testimonial-slide">
+            <div class="testimonial-card glass-panel">
+              <div class="quote-icon">“</div>
+              <h3 class="testimonial-quote">Secured Our Entire Infrastructure</h3>
+              <p class="testimonial-text">
+                Their penetration testing and regulatory compliance team worked tirelessly. Thanks to Tektwig, we successfully passed our ISO27001 data audit and locked down all internal vectors.
+              </p>
+              <div class="testimonial-client">
+                <img src="assets/avatar-client.png" alt="Sarah Connor" class="client-avatar" style="filter: hue-rotate(90deg);">
+                <div class="client-meta">
+                  <h4 class="client-name">Sarah Connor</h4>
+                  <p class="client-title">Director of InfoSec, HealthData</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider Controls -->
+        <div class="slider-controls">
+          <button class="control-btn prev-btn" id="testimonial-prev" aria-label="Previous Testimonial">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="slider-dots" id="slider-dots">
+            <span class="slide-dot active" data-index="0"></span>
+            <span class="slide-dot" data-index="1"></span>
+          </div>
+          <button class="control-btn next-btn" id="testimonial-next" aria-label="Next Testimonial">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet Our Leadership -->
+  <section id="leadership" class="leadership-section section-padding">
+    <div class="container">
+      <div class="section-header center-align">
+        <span class="section-tag">Visionaries</span>
+        <h2 class="section-title">Meet Our Leadership</h2>
+        <p class="section-subtitle">Dedicated to guiding Tektwig with innovation, integrity, and client success.</p>
+      </div>
+
+      <div class="leadership-grid">
+        <!-- Leader 1 -->
+        <div class="leader-card glass-panel" id="leader-piu">
+          <div class="leader-img-box">
+            <img src="assets/avatar-piu.png" alt="PIU" class="leader-img">
+            <div class="leader-overlay-socials">
+              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+              <a href="#" class="social-icon-sm" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+            </div>
+          </div>
+          <div class="leader-info">
+            <h4 class="leader-name">PIU</h4>
+            <p class="leader-title">Co-Founder &amp; Chief Operations Director</p>
+            <p class="leader-bio">Directing operational strategies, framework designs, and corporate networking targets.</p>
+          </div>
+        </div>
+
+        <!-- Leader 2 -->
+        <div class="leader-card glass-panel" id="leader-esther">
+          <div class="leader-img-box">
+            <img src="assets/avatar-esther.png" alt="Esther I." class="leader-img">
+            <div class="leader-overlay-socials">
+              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            </div>
+          </div>
+          <div class="leader-info">
+            <h4 class="leader-name">Esther I.</h4>
+            <p class="leader-title">Director of Cybersecurity &amp; Compliance</p>
+            <p class="leader-bio">Leading security audits, penetration testing operations, and client data protection compliance.</p>
+          </div>
+        </div>
+
+        <!-- Leader 3 -->
+        <div class="leader-card glass-panel" id="leader-ruth">
+          <div class="leader-img-box">
+            <img src="assets/avatar-ruth.png" alt="Ruth I." class="leader-img">
+            <div class="leader-overlay-socials">
+              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            </div>
+          </div>
+          <div class="leader-info">
+            <h4 class="leader-name">Ruth I.</h4>
+            <p class="leader-title">Head of Software Engineering &amp; AI</p>
+            <p class="leader-bio">Managing app development lifecycles, ML model implementation, and cloud integrations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Project Quote Calculator & Contact Form -->
+  <section id="contact" class="contact-section section-padding">
+    <div class="container contact-container">
+      
+      <!-- Calculator Column -->
+      <div class="contact-calc-column glass-panel">
+        <h3 class="calc-title">Configure Your Solution</h3>
+        <p class="calc-intro-text">Select your target services to calculate an estimated scope, timeline, and resource projection.</p>
+        
+        <form id="quote-calculator-form">
+          <!-- Selection -->
+          <div class="form-group-checkboxes">
+            <label class="calc-label">Select Services Needed</label>
+            <div class="calc-checkbox-grid">
+              <label class="calc-checkbox-card">
+                <input type="checkbox" name="calc-service" value="cybersecurity" data-cost="2500" data-weeks="3" checked>
+                <span class="checkbox-visual"></span>
+                <span class="checkbox-label">Cybersecurity &amp; Auditing</span>
+              </label>
+              
+              <label class="calc-checkbox-card">
+                <input type="checkbox" name="calc-service" value="networking" data-cost="2000" data-weeks="2">
+                <span class="checkbox-visual"></span>
+                <span class="checkbox-label">Networking Setup</span>
+              </label>
+              
+              <label class="calc-checkbox-card">
+                <input type="checkbox" name="calc-service" value="ai" data-cost="3500" data-weeks="4">
+                <span class="checkbox-visual"></span>
+                <span class="checkbox-label">AI &amp; Data Pipeline</span>
+              </label>
+              
+              <label class="calc-checkbox-card">
+                <input type="checkbox" name="calc-service" value="software" data-cost="3000" data-weeks="4">
+                <span class="checkbox-visual"></span>
+                <span class="checkbox-label">Software Engineering</span>
+              </label>
+
+              <label class="calc-checkbox-card">
+                <input type="checkbox" name="calc-service" value="training" data-cost="1500" data-weeks="2">
+                <span class="checkbox-visual"></span>
+                <span class="checkbox-label">Team Bootcamps</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- Slider -->
+          <div class="form-group-slider">
+            <div class="slider-header">
+              <label for="company-scale" class="calc-label">Company Infrastructure Scale</label>
+              <span id="company-scale-value">25 endpoints</span>
+            </div>
+            <input type="range" id="company-scale" name="scale" min="5" max="250" step="5" value="25" class="range-slider">
+            <span class="slider-hint">End-user terminals, local nodes, or servers requiring configuration.</span>
+          </div>
+
+          <!-- Dynamic Output Display -->
+          <div class="calc-output-box">
+            <div class="output-item">
+              <span class="output-label">Estimated Timeline</span>
+              <span class="output-val color-cyan" id="calc-timeline">3 Weeks</span>
+            </div>
+            <div class="output-item">
+              <span class="output-label">Project Base Budget</span>
+              <span class="output-val color-purple" id="calc-budget">$2,500</span>
+            </div>
+            <div class="output-item">
+              <span class="output-label">Project Complexity</span>
+              <span class="output-val color-green" id="calc-complexity">Standard</span>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Contact Info & Form -->
+      <div class="contact-form-column">
+        <div class="badge" id="contact-badge">Ready to Start?</div>
+        <h2 class="section-title">Let's Build a Solution</h2>
+        <p class="section-subtitle">Reach out today, and let's craft a technology pipeline that delivers results.</p>
+        
+        <form class="contact-form glass-panel" id="actual-contact-form">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="contact-name">Full Name</label>
+              <input type="text" id="contact-name" name="name" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" name="email" required placeholder="johndoe@company.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contact-subject">Subject</label>
+            <input type="text" id="contact-subject" name="subject" required placeholder="Project Inquiry / Advisory Request">
+          </div>
+          <div class="form-group">
+            <label for="contact-msg">Tell us about your project</label>
+            <textarea id="contact-msg" name="message" rows="5" required placeholder="Describe your software, database, or security needs..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="btn-submit-contact">Send Inquiry</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <!-- Info Column -->
+      <div class="footer-col brand-col">
+        <img src="assets/logo.svg" alt="Tektwig Logo" class="footer-logo">
+        <p class="footer-bio-text">
+          Tektwig Digital &amp; Internet Business Solutions is your trusted advisor in complex modern technologies. We design, build, audit, and support systems that scale safely.
+        </p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/tektwiig" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fb"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="https://x.com/tektwig" target="_blank" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-x"><path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768 M20 4l-6.768 6.768"></path></svg></a>
+          <a href="http://www.instagram.com/tektwig" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-ig"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="http://linkedin.com/company/tektwig" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-li"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+        </div>
+      </div>
+
+      <!-- Links Column 1 (Solutions) -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Solutions</h4>
+        <ul class="footer-links">
+          <li><a href="#services">Cybersecurity Audit</a></li>
+          <li><a href="#services">AI &amp; Business Intelligence</a></li>
+          <li><a href="#services">Custom Web Development</a></li>
+          <li><a href="#services">Cloud Topology Design</a></li>
+          <li><a href="#services">IT Procurement Vending</a></li>
+        </ul>
+      </div>
+
+      <!-- Links Column 2 (Company) -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Company</h4>
+        <ul class="footer-links">
+          <li><a href="#leadership">About Tektwig</a></li>
+          <li><a href="#portfolio">Our Portfolio</a></li>
+          <li><a href="#datarock">DataRock Suite</a></li>
+          <li><a href="#contact">Consulting Services</a></li>
+          <li><a href="#contact">Bootcamps &amp; Training</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Column -->
+      <div class="footer-col contact-col">
+        <h4 class="footer-heading">Get in Touch</h4>
+        <p class="footer-contact-info"><strong class="label">Location:</strong> 35 Maj. St., Lagos, Nigeria</p>
+        <p class="footer-contact-info"><strong class="label">Email:</strong> <a href="mailto:tektwig@gmail.com">tektwig@gmail.com</a></p>
+        <p class="footer-contact-info"><strong class="label">Phone:</strong> <a href="tel:+2348097457323">+234 809 745 7323</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright-text">Copyright &copy; 2026 Tektwig. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Data Protection Addendum</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script File -->
+  <script src="app.js"></script>
+</body>
+</html>
