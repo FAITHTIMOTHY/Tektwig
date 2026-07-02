@@ -10,13 +10,13 @@
   --bg-panel-hover: rgba(22, 27, 45, 0.65);
   --bg-panel-solid: #0f121e;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-glow-cyan: rgba(0, 242, 254, 0.25);
+  --border-glow-cyan: rgba(0, 171, 236, 0.25);
   --border-glow-purple: rgba(217, 70, 239, 0.25);
 
-  --accent-cyan: #00f2fe;
+  --accent-cyan: #00abec;
   --accent-purple: #d946ef;
   --accent-green: #10b981;
-  --accent-blue: #4facfe;
+  --accent-blue: #13267d;
 
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
@@ -187,7 +187,7 @@ img {
 .glass-panel:hover {
   background: var(--bg-panel-hover);
   border-color: var(--border-glow-cyan);
-  box-shadow: 0 8px 30px rgba(0, 242, 254, 0.06);
+  box-shadow: 0 8px 30px rgba(0, 171, 236, 0.06);
 }
 
 /* Buttons System */
@@ -257,6 +257,39 @@ img {
   width: 100%;
 }
 
+.btn-link-orange {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f24b22;
+  font-family: var(--font-title);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 12px 14px;
+  transition: var(--transition-fast);
+}
+
+.btn-link-orange:hover {
+  color: #ff6b4a;
+}
+
+.btn-link-orange svg {
+  transition: var(--transition-fast);
+}
+
+.btn-link-orange:hover svg {
+  transform: translateX(4px);
+}
+
+.datarock-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .badge {
   display: inline-block;
   font-size: 0.75rem;
@@ -265,8 +298,8 @@ img {
   letter-spacing: 2px;
   padding: 6px 14px;
   border-radius: 30px;
-  background: rgba(0, 242, 254, 0.1);
-  border: 1px solid rgba(0, 242, 254, 0.2);
+  background: rgba(0, 171, 236, 0.1);
+  border: 1px solid rgba(0, 171, 236, 0.2);
   color: var(--accent-cyan);
   margin-bottom: 20px;
 }
@@ -396,7 +429,7 @@ img {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+  background: linear-gradient(90deg, #f24b22, #ff6b4a);
   transition: var(--transition-fast);
 }
 
@@ -473,7 +506,7 @@ img {
   padding: 24px;
   border-radius: 16px;
   border-color: var(--border-glow-cyan);
-  box-shadow: 0 10px 40px rgba(0, 242, 254, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 171, 236, 0.08);
   animation: floatCard 6s infinite ease-in-out;
   transform-style: preserve-3d;
 }
@@ -509,24 +542,24 @@ img {
 }
 
 .status-dot.pulsing {
-  box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7);
+  box-shadow: 0 0 0 0 rgba(0, 171, 236, 0.7);
   animation: pulseDot 2s infinite;
 }
 
 @keyframes pulseDot {
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7);
+    box-shadow: 0 0 0 0 rgba(0, 171, 236, 0.7);
   }
 
   70% {
     transform: scale(1);
-    box-shadow: 0 0 0 6px rgba(0, 242, 254, 0);
+    box-shadow: 0 0 0 6px rgba(0, 171, 236, 0);
   }
 
   100% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(0, 242, 254, 0);
+    box-shadow: 0 0 0 0 rgba(0, 171, 236, 0);
   }
 }
 
@@ -659,8 +692,8 @@ img {
   width: 56px;
   height: 56px;
   border-radius: 12px;
-  background: rgba(0, 242, 254, 0.05);
-  border: 1px solid rgba(0, 242, 254, 0.15);
+  background: rgba(0, 171, 236, 0.05);
+  border: 1px solid rgba(0, 171, 236, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -938,7 +971,7 @@ img {
 .project-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(0, 242, 254, 0.15) 0%, rgba(217, 70, 239, 0.15) 100%);
+  background: linear-gradient(135deg, rgba(0, 171, 236, 0.15) 0%, rgba(217, 70, 239, 0.15) 100%);
   opacity: 0;
   transition: var(--transition-smooth);
 }
@@ -1316,7 +1349,7 @@ img {
 }
 
 .calc-checkbox-card input[type="checkbox"]:checked~.calc-checkbox-card {
-  background: rgba(0, 242, 254, 0.05);
+  background: rgba(0, 171, 236, 0.05);
 }
 
 .checkbox-label {
@@ -1457,7 +1490,7 @@ img {
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: var(--accent-cyan);
-  box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+  box-shadow: 0 0 10px rgba(0, 171, 236, 0.15);
 }
 
 /* ==========================================================================
@@ -1592,7 +1625,7 @@ img {
   right: 24px;
   background: var(--bg-panel-solid);
   border: 1px solid var(--accent-cyan);
-  box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 171, 236, 0.2);
   color: var(--text-main);
   padding: 16px 24px;
   border-radius: 8px;
