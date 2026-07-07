@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tektwig Recruiter Panel - Central recruitment spreadsheet and applicant management database. View, filter, sort candidates, track statuses, download CVs, and export reports.">
+  <title>Tektwig Recruiter Portal | Manage Candidates</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Header / Navigation -->
+  <header id="main-header" class="site-header sticky">
+    <div class="container header-container">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo.svg" alt="Tektwig Logo" class="logo-img">
+      </a>
+      
+      <!-- Mobile Nav Trigger -->
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li><a href="index.html#hero" class="nav-link">Home</a></li>
+          <li><a href="index.html#services" class="nav-link">Services</a></li>
+          <li><a href="index.html#datarock" class="nav-link">DataRock Control</a></li>
+          <li><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
+          <li><a href="index.html#leadership" class="nav-link">Leadership</a></li>
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+          <li><a href="careers.html" class="nav-link">Careers</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="index.html#contact" class="btn btn-secondary btn-sm">Get Quote</a>
+          <a href="admin.html" class="btn btn-primary btn-sm active">Recruiter Portal</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Admin Area Wrapper -->
+  <section class="admin-section">
+    <div class="container">
+      
+      <!-- Admin Header Row -->
+      <div class="admin-header-row">
+        <div>
+          <div class="badge badge-purple" style="margin-bottom: 8px;">Recruitment Administration</div>
+          <h1 class="section-title" style="margin-bottom: 0;">Centralized Applicant Database</h1>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-toggle-jobs-panel" style="border-color: var(--accent-purple);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+          <span>Manage Job Postings</span>
+        </button>
+      </div>
+
+      <!-- Database Metric Statistics Banner -->
+      <div class="admin-metrics-grid" id="admin-metrics">
+        <div class="metric-card glass-panel m-total">
+          <div class="m-card-title">Total Candidates</div>
+          <div class="m-card-value" id="metric-total">0</div>
+        </div>
+        <div class="metric-card glass-panel m-pending">
+          <div class="m-card-title">Pending Review</div>
+          <div class="m-card-value" id="metric-pending">0</div>
+        </div>
+        <div class="metric-card glass-panel m-review">
+          <div class="m-card-title">Under Review</div>
+          <div class="m-card-value" id="metric-reviewing">0</div>
+        </div>
+        <div class="metric-card glass-panel m-interview">
+          <div class="m-card-title">Interviewing</div>
+          <div class="m-card-value" id="metric-interviewing">0</div>
+        </div>
+        <div class="metric-card glass-panel m-offered">
+          <div class="m-card-title">Offers Extended</div>
+          <div class="m-card-value" id="metric-offered">0</div>
+        </div>
+      </div>
+
+      <!-- Controls Panel (Search, Filter, Sort, CSV Export) -->
+      <div class="admin-controls-bar">
+        <div class="search-input-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="admin-search-input" placeholder="Search applicants by name or email...">
+        </div>
+        
+        <div class="filter-select-wrap">
+          <select id="admin-role-filter">
+            <option value="all">All Roles</option>
+            <!-- Filled dynamically -->
+          </select>
+        </div>
+        
+        <div class="filter-select-wrap">
+          <select id="admin-status-filter">
+            <option value="all">All Stages</option>
+            <option value="Pending Review">Pending Review</option>
+            <option value="Reviewing">Under Review</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offered">Offered</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        
+        <div class="filter-select-wrap">
+          <select id="admin-sort-select">
+            <option value="applied-desc">Newest Applied</option>
+            <option value="applied-asc">Oldest Applied</option>
+            <option value="experience-desc">Experience: High to Low</option>
+            <option value="experience-asc">Experience: Low to High</option>
+            <option value="name-asc">Name: A to Z</option>
+          </select>
+        </div>
+        
+        <button class="btn btn-primary btn-sm" id="btn-export-csv">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Export CSV</span>
+        </button>
+      </div>
+
+      <!-- Applicant Spreadsheet List Table -->
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Date Applied</th>
+              <th>Applicant Name</th>
+              <th>Target Role</th>
+              <th style="text-align: center;">Experience</th>
+              <th>Current Stage</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="admin-applicants-tbody">
+            <!-- Loaded dynamically by admin.js -->
+            <tr>
+              <td colspan="6" class="empty-state-row">
+                <div class="empty-state-content">
+                  <p>Loading application data...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Job postings management drawer/panel (hidden initially) -->
+      <div id="jobs-management-panel" class="glass-panel" style="display:none; margin-top: 40px; padding: 30px;">
+        <h2 class="form-title-bar" style="margin-bottom: 20px;">Manage Job Descriptions</h2>
+        
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px;">
+          <!-- Active Jobs List -->
+          <div>
+            <h3 class="job-details-title" style="margin-bottom: 12px;">Active Open Roles</h3>
+            <ul id="admin-jobs-list" style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+              <!-- Filled dynamically by JS -->
+            </ul>
+          </div>
+          
+          <!-- Add Job Form -->
+          <div class="glass-panel" style="padding: 20px; background: rgba(0,0,0,0.2);">
+            <h3 class="job-details-title" style="margin-bottom: 12px;">Post a New Job Role</h3>
+            <form id="admin-add-job-form">
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label for="job-title" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Job Title *</label>
+                <input type="text" id="job-title" required placeholder="e.g. Lead DevSecOps Engineer" style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff;">
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                <div class="form-group">
+                  <label for="job-dept" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Department *</label>
+                  <select id="job-dept" required style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff; cursor:pointer;">
+                    <option value="Security">Cybersecurity</option>
+                    <option value="Software Dev">Software Engineering</option>
+                    <option value="AI & Analytics">AI & Analytics</option>
+                    <option value="Networking">Networking</option>
+                    <option value="Training">Training</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="job-type" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Job Type *</label>
+                  <input type="text" id="job-type" required placeholder="Full-time / Contract" style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff;">
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                <div class="form-group">
+                  <label for="job-location" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Location *</label>
+                  <input type="text" id="job-location" required placeholder="Lagos / Remote" style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff;">
+                </div>
+                <div class="form-group">
+                  <label for="job-exp" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Experience Req *</label>
+                  <input type="text" id="job-exp" required placeholder="3+ Years" style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff;">
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label for="job-salary" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Salary *</label>
+                <input type="text" id="job-salary" required placeholder="Competitive / Negotiable" style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff;">
+              </div>
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label for="job-desc" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Role Description *</label>
+                <textarea id="job-desc" rows="3" required placeholder="Core mission and daily activities..." style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff; font-family:var(--font-body);"></textarea>
+              </div>
+              <div class="form-group" style="margin-bottom: 16px;">
+                <label for="job-reqs" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Requirements (comma separated) *</label>
+                <textarea id="job-reqs" rows="2" required placeholder="E.g. Degree in CS, Docker certification, 3 years React exp" style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff; font-family:var(--font-body);"></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-sm btn-block">Publish Job Post</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Candidate Detailed Profile Modal (Viewer / Editor Drawer) -->
+  <div class="modal-backdrop" id="candidate-detail-backdrop">
+    <div class="app-modal">
+      <div class="modal-header-section" style="border-color: var(--border-glow-purple);">
+        <div>
+          <span class="status-pill pill-pending" id="detail-job-title" style="margin-bottom: 8px;">Target Role</span>
+          <h2 class="job-card-title" id="detail-cand-name" style="margin-bottom: 0;">Jane Doe</h2>
+        </div>
+        <button class="modal-close-btn" id="btn-close-detail-modal" aria-label="Close Modal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      
+      <div class="modal-content-body">
+        <!-- Profile Summary Metadata Block -->
+        <div class="recruiter-profile-summary">
+          <div>
+            <div class="profile-meta-block">
+              <div class="profile-meta-lbl">Email Address</div>
+              <div class="profile-meta-val"><a href="#" id="detail-cand-email">jane@example.com</a></div>
+            </div>
+            <div class="profile-meta-block">
+              <div class="profile-meta-lbl">Phone Number</div>
+              <div class="profile-meta-val" id="detail-cand-phone">+234 812 345 6789</div>
+            </div>
+            <div class="profile-meta-block">
+              <div class="profile-meta-lbl">Date Applied</div>
+              <div class="profile-meta-val" id="detail-cand-date">2026-07-05</div>
+            </div>
+          </div>
+          <div>
+            <div class="profile-meta-block">
+              <div class="profile-meta-lbl">Years of Experience</div>
+              <div class="profile-meta-val" id="detail-cand-exp">3 Years</div>
+            </div>
+            <div class="profile-meta-block">
+              <div class="profile-meta-lbl">Portfolio / LinkedIn</div>
+              <div class="profile-meta-val"><a href="#" target="_blank" id="detail-cand-portfolio">github.com/username</a></div>
+            </div>
+            <div class="profile-meta-block">
+              <div class="profile-meta-lbl">CV File Status</div>
+              <div class="profile-meta-val" id="detail-cv-filename" style="color: var(--accent-green);">jane_resume.pdf</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="job-details-title">Cover Letter / Personal Statement</div>
+        <div class="profile-cover-letter-box" id="detail-cand-letter">
+          Candidate cover letter statement contents go here...
+        </div>
+
+        <!-- Action Control Bar -->
+        <div class="profile-action-bar">
+          <!-- CV Downloader Button -->
+          <button class="btn btn-secondary btn-sm" id="btn-download-cv">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Download Uploaded Resume</span>
+          </button>
+          
+          <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <!-- Status Update selector -->
+            <div class="status-update-control">
+              <label for="detail-status-select" class="profile-meta-lbl" style="margin-bottom:0;">Update Stage:</label>
+              <select id="detail-status-select">
+                <option value="Pending Review">Pending Review</option>
+                <option value="Reviewing">Under Review</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Offered">Offered</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+              <button class="btn btn-primary btn-sm" id="btn-save-status" style="padding: 10px 16px; font-size: 0.8rem; box-shadow: none;">Save Stage</button>
+            </div>
+            
+            <!-- Delete application button -->
+            <button class="action-btn-sm" id="btn-delete-candidate" style="border-color:#ef4444; color:#ef4444; background: rgba(239, 68, 68, 0.05);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+              <span>Purge</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="site-footer" style="margin-top: auto;">
+    <div class="container footer-grid">
+      <!-- Info Column -->
+      <div class="footer-col brand-col">
+        <img src="assets/logo.svg" alt="Tektwig Logo" class="footer-logo">
+        <p class="footer-bio-text">
+          Tektwig Digital &amp; Internet Business Solutions is your trusted advisor in complex modern technologies. We design, build, audit, and support systems that scale safely.
+        </p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/tektwiig" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fb"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+          <a href="https://x.com/tektwig" target="_blank" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-x"><path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768 M20 4l-6.768 6.768"></path></svg></a>
+          <a href="http://www.instagram.com/tektwig" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-ig"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="http://linkedin.com/company/tektwig" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-li"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+        </div>
+      </div>
+
+      <!-- Links Column 1 (Solutions) -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Solutions</h4>
+        <ul class="footer-links">
+          <li><a href="index.html#services">Cybersecurity Audit</a></li>
+          <li><a href="index.html#services">AI &amp; Business Intelligence</a></li>
+          <li><a href="index.html#services">Custom Web Development</a></li>
+          <li><a href="index.html#services">Cloud Topology Design</a></li>
+          <li><a href="index.html#services">IT Procurement Vending</a></li>
+        </ul>
+      </div>
+
+      <!-- Links Column 2 (Company) -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Company</h4>
+        <ul class="footer-links">
+          <li><a href="index.html#leadership">About Tektwig</a></li>
+          <li><a href="index.html#portfolio">Our Portfolio</a></li>
+          <li><a href="index.html#datarock">DataRock Suite</a></li>
+          <li><a href="careers.html">Careers / Job Openings</a></li>
+          <li><a href="admin.html">Recruiter Dashboard</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Column -->
+      <div class="footer-col contact-col">
+        <h4 class="footer-heading">Get in Touch</h4>
+        <p class="footer-contact-info"><strong class="label">Location:</strong> 35 Maj. St., Lagos, Nigeria</p>
+        <p class="footer-contact-info"><strong class="label">Email:</strong> <a href="mailto:tektwig@gmail.com">tektwig@gmail.com</a></p>
+        <p class="footer-contact-info"><strong class="label">Phone:</strong> <a href="tel:+2348097457323">+234 809 745 7323</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright-text">Copyright &copy; 2026 Tektwig. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Data Protection Addendum</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

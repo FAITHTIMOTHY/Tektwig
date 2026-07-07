@@ -1,0 +1,11 @@
+Timothy Faith - Resume
+Position: Full-Stack Software Engineer
+Contact: timothy@example.com | +234 812 345 6789
+Github: github.com/timothy
+
+Professional Experience:
+- Full Stack Engineer at WebLabs (3 years)
+- Frontend Developer at CodeStudio (1 year)
+
+Technical Skills:
+JavaScript, React, Node.js, Express, CSS, Git, SQLite.
