@@ -247,7 +247,7 @@
       </div>
       <div class="footer-col">
         <h4 class="footer-heading">Get in Touch</h4>
-        <p class="footer-contact-info"><strong class="label">Email:</strong> <a href="mailto:tektwig@gmail.com">tektwig@gmail.com</a></p>
+        <p class="footer-contact-info"><strong class="label">Email:</strong> <a href="mailto:Official@tektwig.com">Official@tektwig.com</a></p>
         <p class="footer-contact-info"><strong class="label">Phone:</strong> <a href="tel:+2348097457323">+234 809 745 7323</a></p>
         <p class="footer-contact-info"><strong class="label">Location:</strong> 35 Maj. St., Lagos, Nigeria</p>
       </div>
@@ -263,6 +263,16 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating Scroll Navigation -->
+  <div class="scroll-nav" id="scroll-nav">
+    <button class="scroll-btn scroll-btn--up" id="scroll-btn-up" title="Scroll to Top" aria-label="Scroll to Top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+    </button>
+    <button class="scroll-btn scroll-btn--down" id="scroll-btn-down" title="Scroll to Bottom" aria-label="Scroll to Bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+  </div>
 
   <script>
     // Simple header sticky toggle on scroll
@@ -282,6 +292,20 @@
       navToggle.addEventListener('click', () => {
         navToggle.classList.toggle('open');
         navMenu.classList.toggle('open');
+      });
+    }
+
+    // Scroll buttons
+    const btnUp = document.getElementById('scroll-btn-up');
+    const btnDown = document.getElementById('scroll-btn-down');
+    if (btnUp) {
+      btnUp.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+    if (btnDown) {
+      btnDown.addEventListener('click', () => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       });
     }
   </script>

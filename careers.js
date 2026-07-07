@@ -404,4 +404,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start initialization
   loadJobs();
+
+  /* ==========================================================================
+     Floating Scroll Navigation Actions
+     ========================================================================== */
+  const btnUp = document.getElementById('scroll-btn-up');
+  const btnDown = document.getElementById('scroll-btn-down');
+
+  if (btnUp) {
+    btnUp.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (btnDown) {
+    btnDown.addEventListener('click', () => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+  }
 });
