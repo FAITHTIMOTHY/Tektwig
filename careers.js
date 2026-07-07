@@ -86,11 +86,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     jobsGrid.innerHTML = jobsList.map(job => `
-      <div class="job-card glass-panel" id="job-card-${job.id}">
+      <div class="job-card glass-panel${job.isThirdParty ? ' job-card--external' : ''}" id="job-card-${job.id}">
         <div class="job-header">
           <span class="job-dept-tag">${job.department}</span>
           <span class="job-type-tag">${job.type}</span>
         </div>
+        ${job.isThirdParty && job.advertisingFor
+          ? `<div class="job-advertising-badge">
+               <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+               Advertising for <strong>${job.advertisingFor}</strong>
+             </div>`
+          : ''}
         <h3 class="job-card-title">${job.title}</h3>
         
         <div class="job-meta-info">
@@ -112,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `).join('');
+
 
     // Attach event listeners to apply buttons
     document.querySelectorAll('.btn-apply').forEach(button => {
@@ -357,7 +364,11 @@ document.addEventListener('DOMContentLoaded', () => {
       cvFileName: uploadedCVFile.name,
       cvFileType: uploadedCVFile.type,
       status: 'Pending Review',
-      appliedAt: new Date().toISOString()
+      appliedAt: new Date().toISOString(),
+      // Enterprise context fields
+      isThirdParty: selectedJob.isThirdParty || false,
+      advertisingFor: selectedJob.advertisingFor || null,
+      leadRefId: selectedJob.leadRefId || null
     };
 
     try {

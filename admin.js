@@ -536,6 +536,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const panelId = btn.getAttribute('data-panel');
       candidatesPanel.style.display  = panelId === 'candidates-panel' ? 'block' : 'none';
       leadsPanel.style.display       = panelId === 'leads-panel'      ? 'block' : 'none';
+
+      // Live reload of data on tab switch to prevent stale lists
+      if (panelId === 'candidates-panel') {
+        initDashboard();
+      } else if (panelId === 'leads-panel') {
+        loadLeads();
+      }
     });
   });
 
@@ -616,9 +623,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const date = new Date(lead.submittedAt).toLocaleString('en-GB');
 
+    // Fetch applications for this specific enterprise brief/lead
+    const leadApps = await window.TektwigDB.getEnterpriseApplicationsForLead(lead.refId);
+
+    let appsRowsHTML = '';
+    if (leadApps.length === 0) {
+      appsRowsHTML = `
+        <tr>
+          <td colspan="4" style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.88rem;">
+            No candidate applications have been filed for this advertisement yet.
+          </td>
+        </tr>`;
+    } else {
+      appsRowsHTML = leadApps.map(app => {
+        const appDate = new Date(app.appliedAt).toLocaleDateString('en-GB');
+        return `
+          <tr>
+            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); font-family:monospace; font-size:0.8rem;">${appDate}</td>
+            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05);">
+              <div style="font-weight:600; color:var(--text-main); font-size:0.88rem;">${app.name}</div>
+              <span style="font-size:0.75rem; color:var(--text-muted);">${app.email} · ${app.phone}</span>
+            </td>
+            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); text-align:center; font-weight:600; font-size:0.85rem;">${app.experience} Yr${app.experience > 1 ? 's' : ''}</td>
+            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); text-align:right;">
+              <button class="btn btn-secondary btn-sm" style="font-size:0.75rem; padding:4px 10px; border-color:rgba(255,255,255,0.15);" onclick="downloadEnterpriseCV(${app.id})">
+                Download CV
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
     const modalHTML = `
       <div id="lead-modal-backdrop" class="modal-backdrop show" onclick="if(event.target===this)closeLeadModal()">
-        <div class="app-modal lead-modal">
+        <div class="app-modal lead-modal" style="max-height:85vh; overflow-y:auto;">
           <div class="modal-header">
             <div>
               <div class="badge badge-purple" style="margin-bottom:6px; font-size:0.7rem;">${lead.refId}</div>
@@ -627,7 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <button class="modal-close-btn" id="lead-modal-close" onclick="closeLeadModal()">✕</button>
           </div>
-          <div class="modal-body lead-modal-body">
+          <div class="modal-body lead-modal-body" style="padding-bottom:30px;">
             <div class="lead-detail-grid">
               <div class="lead-detail-section">
                 <h4 class="job-details-title">Contact</h4>
@@ -650,6 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Submitted:</strong> ${date}</p>
               </div>
             </div>
+            
             <div class="lead-detail-full">
               <h4 class="job-details-title">Job Description</h4>
               <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${lead.description || '—'}</p>
@@ -658,6 +698,37 @@ document.addEventListener('DOMContentLoaded', () => {
               <h4 class="job-details-title">Key Requirements</h4>
               <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${lead.requirements || '—'}</p>
             </div>
+
+            <!-- SECTION: ENTERPRISE APPLICANTS -->
+            <div class="lead-detail-full" style="border-color: rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.01);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h4 class="job-details-title" style="margin-bottom:0; color:#f59e0b;">
+                  Candidate Returns (${leadApps.length})
+                </h4>
+                ${leadApps.length > 0 ? `
+                  <button class="btn btn-primary btn-sm" style="background:#d97706; border-color:#d97706; font-size:0.8rem;" onclick="exportEnterpriseLeadApplicantsCSV('${lead.refId}', '${lead.companyName}')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+                    Download Excel/CSV
+                  </button>
+                ` : ''}
+              </div>
+              <div class="table-responsive" style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px;">
+                <table style="width:100%; border-collapse:collapse; text-align:left;">
+                  <thead>
+                    <tr style="background:rgba(255,255,255,0.02); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid var(--border-color);">
+                      <th style="padding:10px;">Date Filed</th>
+                      <th style="padding:10px;">Candidate Details</th>
+                      <th style="padding:10px; text-align:center;">Experience</th>
+                      <th style="padding:10px; text-align:right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${appsRowsHTML}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
             <div class="lead-status-update">
               <label style="font-size:0.85rem; font-weight:600;">Update Status</label>
               <select id="lead-status-select" style="background:rgba(0,0,0,0.3); border:1px solid var(--border-color); color:var(--text-main); padding:10px 14px; border-radius:8px; font-family:var(--font-body); font-size:0.9rem;">
@@ -666,7 +737,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <option value="Completed"   ${lead.status==='Completed'?'selected':''}>Completed</option>
               </select>
               <button class="btn btn-primary btn-sm" onclick="saveLeadStatus()">Save Status</button>
-              <button class="btn btn-secondary btn-sm" style="border-color:#ef4444; color:#ef4444;" onclick="deleteLead(${lead.id})">Delete Lead</button>
+              ${lead.publishedJobId
+                ? `<span class="lead-published-badge">&#10003; Live on Careers Page</span>`
+                : `<button class="btn btn-sm lead-publish-btn" onclick="publishLeadAsJob(${lead.id})">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                     Publish as Job Listing
+                   </button>`
+              }
+              <button class="btn btn-secondary btn-sm" style="border-color:#ef4444; color:#ef4444; margin-left:auto;" onclick="deleteLead(${lead.id})">Delete Lead</button>
             </div>
           </div>
         </div>
@@ -696,6 +774,63 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Failed to update lead status:', err);
     }
   };
+
+  window.publishLeadAsJob = async function(id) {
+    const lead = await window.TektwigDB.getEnterpriseLead(id);
+    if (!lead) return;
+
+    if (!confirm(`Publish "${lead.jobTitle}" for ${lead.companyName} as a live job listing on the Careers page?`)) return;
+
+    // Build salary string from lead data
+    const salaryStr = (lead.salaryMin && lead.salaryMax)
+      ? `${lead.currency || 'NGN'} ${lead.salaryMin} \u2013 ${lead.salaryMax}/month`
+      : (lead.salaryMin ? `${lead.currency || 'NGN'} ${lead.salaryMin}+` : 'Competitive');
+
+    // Build location string
+    const locationStr = [lead.locationType, lead.city].filter(Boolean).join(' \u00b7 ') || 'See description';
+
+    // Parse requirements text into array (one per non-empty line)
+    const reqLines = (lead.requirements || '')
+      .split('\n')
+      .map(s => s.trim())
+      .filter(Boolean)
+      .slice(0, 6);
+
+    const job = {
+      title:          lead.jobTitle,
+      department:     lead.department || 'External',
+      type:           lead.employmentType || 'Full-time',
+      location:       locationStr,
+      experience:     'See description',
+      salary:         salaryStr,
+      description:    lead.description || 'See full job description.',
+      requirements:   reqLines.length ? reqLines : ['See full job description.'],
+      status:         'Active',
+      isThirdParty:   true,
+      advertisingFor: lead.companyName,
+      leadRefId:      lead.refId,
+      createdAt:      new Date().toISOString()
+    };
+
+    try {
+      const newJobId = await window.TektwigDB.addJob(job);
+
+      // Stamp the lead with the published job ID and update status
+      const updatedLead = Object.assign({}, lead, {
+        publishedJobId: newJobId,
+        status: 'In Progress'
+      });
+      await window.TektwigDB.updateEnterpriseLead(updatedLead);
+
+      closeLeadModal();
+      await loadLeads();
+      alert(`Job listing published!\n\n"${lead.jobTitle}" is now live on the Careers page\nAdvertising for: ${lead.companyName}`);
+    } catch (err) {
+      console.error('Failed to publish job listing:', err);
+      alert('Error publishing job. Please try again.');
+    }
+  };
+
 
   window.deleteLead = async function(id) {
     if (!confirm('Delete this enterprise lead? This cannot be undone.')) return;
@@ -728,6 +863,67 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.removeChild(link);
     });
   }
+
+  // Download Enterprise Candidate CV Helper
+  window.downloadEnterpriseCV = async function(id) {
+    try {
+      const app = await window.TektwigDB.getEnterpriseApplication(id);
+      if (!app || !app.cvFile) {
+        alert('Resume CV file not found in local IndexedDB storage.');
+        return;
+      }
+      const url = URL.createObjectURL(app.cvFile);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = app.cvFileName;
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Error downloading enterprise CV:', err);
+      alert('Failed to download CV file.');
+    }
+  };
+
+  // Export Company-Specific Candidates CSV
+  window.exportEnterpriseLeadApplicantsCSV = async function(leadRefId, companyName) {
+    try {
+      const apps = await window.TektwigDB.getEnterpriseApplicationsForLead(leadRefId);
+      if (apps.length === 0) {
+        alert('No candidate applications have been filed for this advertisement yet.');
+        return;
+      }
+      const clean = v => `"${String(v || '').replace(/"/g, '""')}"`;
+      let csv = 'Apply Date,Candidate Name,Email,Phone,Experience (Years),Portfolio,Cover Letter,Status\n';
+      apps.forEach(app => {
+        const appDate = new Date(app.appliedAt).toLocaleDateString('en-GB');
+        csv += [
+          clean(appDate),
+          clean(app.name),
+          clean(app.email),
+          clean(app.phone),
+          app.experience,
+          clean(app.portfolio),
+          clean(app.coverLetter),
+          clean(app.status)
+        ].join(',') + '\n';
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      const safeName = companyName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+      link.download = `candidate_returns_${safeName}.csv`;
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Error exporting enterprise candidates:', err);
+      alert('Failed to generate candidate spreadsheet.');
+    }
+  };
 
   loadLeads();
 });

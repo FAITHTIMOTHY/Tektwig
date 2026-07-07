@@ -3,7 +3,7 @@
  */
 
 const DB_NAME = 'TektwigRecruitmentDB';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 /**
  * Initializes the database.
@@ -43,6 +43,13 @@ function initDB() {
         const leadStore = db.createObjectStore('enterpriseLeads', { keyPath: 'id', autoIncrement: true });
         leadStore.createIndex('status', 'status', { unique: false });
         leadStore.createIndex('refId', 'refId', { unique: true });
+      }
+
+      // Store for enterprise job applications (v3)
+      if (!db.objectStoreNames.contains('enterpriseApplications')) {
+        const entAppStore = db.createObjectStore('enterpriseApplications', { keyPath: 'id', autoIncrement: true });
+        entAppStore.createIndex('leadRefId', 'leadRefId', { unique: false });
+        entAppStore.createIndex('status', 'status', { unique: false });
       }
     };
   }).then(async (db) => {
@@ -354,6 +361,9 @@ window.TektwigDB = {
     const db = await initDB();
     if (!appData.appliedAt) appData.appliedAt = new Date().toISOString();
     if (!appData.status) appData.status = 'Pending Review';
+    if (appData.isThirdParty) {
+      return addRecord(db, 'enterpriseApplications', appData);
+    }
     return addRecord(db, 'applications', appData);
   },
 
@@ -368,6 +378,36 @@ window.TektwigDB = {
   deleteApplication: async (id) => {
     const db = await initDB();
     return deleteRecord(db, 'applications', parseInt(id));
+  },
+
+  // ── Enterprise Applications ────────────────────────────────────────────────
+  getEnterpriseApplications: async () => {
+    const db = await initDB();
+    return getAllRecords(db, 'enterpriseApplications');
+  },
+
+  getEnterpriseApplicationsForLead: async (leadRefId) => {
+    const db = await initDB();
+    const allEntApps = await getAllRecords(db, 'enterpriseApplications');
+    return allEntApps.filter(app => app.leadRefId === leadRefId);
+  },
+
+  getEnterpriseApplication: async (id) => {
+    const db = await initDB();
+    return getRecordById(db, 'enterpriseApplications', parseInt(id));
+  },
+
+  updateEnterpriseApplicationStatus: async (id, newStatus) => {
+    const db = await initDB();
+    const app = await getRecordById(db, 'enterpriseApplications', parseInt(id));
+    if (!app) throw new Error(`Enterprise application with ID ${id} not found.`);
+    app.status = newStatus;
+    return putRecord(db, 'enterpriseApplications', app);
+  },
+
+  deleteEnterpriseApplication: async (id) => {
+    const db = await initDB();
+    return deleteRecord(db, 'enterpriseApplications', parseInt(id));
   },
 
   // ── Enterprise Leads ──────────────────────────────────────────────────────
@@ -386,6 +426,11 @@ window.TektwigDB = {
     if (!leadData.submittedAt) leadData.submittedAt = new Date().toISOString();
     if (!leadData.status) leadData.status = 'New';
     return addRecord(db, 'enterpriseLeads', leadData);
+  },
+
+  updateEnterpriseLead: async (leadData) => {
+    const db = await initDB();
+    return putRecord(db, 'enterpriseLeads', leadData);
   },
 
   updateLeadStatus: async (id, newStatus) => {
