@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tektwig Enterprise Recruitment — Submit a hiring brief and let us advertise your vacancies, pre-screen candidates, and deliver shortlisted talent directly to you.">
+  <title>Enterprise Recruitment | Tektwig</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="recruit.css">
+</head>
+<body>
+
+  <!-- Background Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- ─── Header ──────────────────────────────────────────────────────────── -->
+  <header id="main-header" class="site-header sticky">
+    <div class="container header-container">
+      <a href="index.html" class="logo-link">
+        <img src="assets/logo.svg" alt="Tektwig Logo" class="logo-img">
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+        <span class="hamburger"></span>
+      </button>
+
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li><a href="index.html#hero"       class="nav-link">Home</a></li>
+          <li><a href="index.html#services"   class="nav-link">Services</a></li>
+          <li><a href="index.html#datarock"   class="nav-link">DataRock Control</a></li>
+          <li><a href="index.html#portfolio"  class="nav-link">Portfolio</a></li>
+          <li><a href="index.html#leadership" class="nav-link">Leadership</a></li>
+          <li><a href="index.html#contact"    class="nav-link">Contact</a></li>
+          <li><a href="careers.html"          class="nav-link">Careers</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="index.html#contact" class="btn btn-secondary btn-sm">Get Quote</a>
+          <a href="index.html#services" class="btn btn-primary btn-sm">Our Services</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ─── Hero ────────────────────────────────────────────────────────────── -->
+  <section class="recruit-hero section-padding">
+    <div class="container recruit-hero-container">
+      <div class="recruit-hero-text">
+        <span class="section-tag">Enterprise Recruitment</span>
+        <h1 class="recruit-hero-title">Find Top Talent.<br><span class="text-gradient">Without the Guesswork.</span></h1>
+        <p class="recruit-hero-subtitle">
+          Post your vacancy once and let Tektwig do the rest. We advertise across premium channels,
+          pre-screen applicants, and hand you a shortlist of qualified candidates — so your team
+          focuses on hiring, not sorting through CVs.
+        </p>
+        <div class="recruit-hero-stats">
+          <div class="hero-stat">
+            <span class="stat-number text-gradient">500+</span>
+            <span class="stat-label">Candidates Placed</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-number text-gradient">72h</span>
+            <span class="stat-label">Avg. First Shortlist</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-number text-gradient">98%</span>
+            <span class="stat-label">Client Satisfaction</span>
+          </div>
+        </div>
+        <a href="#submit-brief" class="btn btn-primary btn-lg recruit-hero-cta">Submit a Hiring Brief ↓</a>
+      </div>
+      <div class="recruit-hero-visual">
+        <div class="recruit-visual-card glass-panel">
+          <div class="rvc-header">
+            <div class="terminal-dots">
+              <span class="td-dot red"></span>
+              <span class="td-dot yellow"></span>
+              <span class="td-dot green"></span>
+            </div>
+            <span class="rvc-title">Live Hiring Pipeline</span>
+            <span class="pulse-green"></span>
+          </div>
+          <div class="rvc-body">
+            <div class="pipeline-stage">
+              <span class="stage-label">Brief Received</span>
+              <span class="stage-bar"><span class="stage-fill" style="width:100%; background: var(--accent-green);"></span></span>
+              <span class="stage-count">12</span>
+            </div>
+            <div class="pipeline-stage">
+              <span class="stage-label">Advertising Live</span>
+              <span class="stage-bar"><span class="stage-fill" style="width:82%; background: var(--accent-cyan);"></span></span>
+              <span class="stage-count">9</span>
+            </div>
+            <div class="pipeline-stage">
+              <span class="stage-label">Screening</span>
+              <span class="stage-bar"><span class="stage-fill" style="width:60%; background: var(--accent-purple);"></span></span>
+              <span class="stage-count">7</span>
+            </div>
+            <div class="pipeline-stage">
+              <span class="stage-label">Shortlist Sent</span>
+              <span class="stage-bar"><span class="stage-fill" style="width:40%; background: #f59e0b;"></span></span>
+              <span class="stage-count">4</span>
+            </div>
+            <div class="pipeline-stage">
+              <span class="stage-label">Hired</span>
+              <span class="stage-bar"><span class="stage-fill" style="width:25%; background: #10b981;"></span></span>
+              <span class="stage-count">3</span>
+            </div>
+            <div class="rvc-footer">
+              <span class="rvc-footer-stat">🏢 Active Clients: <strong>7</strong></span>
+              <span class="rvc-footer-stat">📋 Open Roles: <strong>14</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── How It Works ─────────────────────────────────────────────────────── -->
+  <section class="how-it-works section-padding" id="how-it-works">
+    <div class="container">
+      <div class="section-header center-align">
+        <span class="section-tag">The Process</span>
+        <h2 class="section-title">Simple. Fast. Effective.</h2>
+        <p class="section-subtitle">From brief to shortlist in as little as 72 hours.</p>
+      </div>
+
+      <div class="hiw-steps">
+        <div class="hiw-step">
+          <div class="hiw-number">01</div>
+          <div class="hiw-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <h3>Submit Your Brief</h3>
+          <p>Fill in our structured form with your role requirements, company details, and preferred package. Takes under 10 minutes.</p>
+        </div>
+
+        <div class="hiw-connector">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+
+        <div class="hiw-step">
+          <div class="hiw-number">02</div>
+          <div class="hiw-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+          <h3>We Advertise &amp; Screen</h3>
+          <p>Your vacancy goes live on LinkedIn, job boards, and our talent network. We pre-screen every applicant against your criteria.</p>
+        </div>
+
+        <div class="hiw-connector">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+
+        <div class="hiw-step">
+          <div class="hiw-number">03</div>
+          <div class="hiw-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="23 11 17 17 14 14"></polyline></svg>
+          </div>
+          <h3>Receive Your Shortlist</h3>
+          <p>Get a curated shortlist of qualified candidates with profiles, CVs, and screening notes — ready to interview.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── What's Included ──────────────────────────────────────────────────── -->
+  <section class="whats-included section-padding">
+    <div class="container">
+      <div class="section-header center-align">
+        <span class="section-tag">What You Get</span>
+        <h2 class="section-title">Everything You Need to Hire Right</h2>
+      </div>
+
+      <div class="included-grid">
+        <div class="included-card glass-panel">
+          <div class="included-icon" style="color:var(--accent-cyan);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+          </div>
+          <h4>Branded Job Listings</h4>
+          <p>Your vacancy is published with your company branding across top job boards and social channels.</p>
+        </div>
+        <div class="included-card glass-panel">
+          <div class="included-icon" style="color:var(--accent-purple);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h4>Applicant Pre-Screening</h4>
+          <p>Every applicant is evaluated against your requirements before they reach your inbox.</p>
+        </div>
+        <div class="included-card glass-panel">
+          <div class="included-icon" style="color:#f59e0b;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          <h4>Performance Reporting</h4>
+          <p>Weekly summaries of application volume, funnel conversion, and shortlist progress.</p>
+        </div>
+        <div class="included-card glass-panel">
+          <div class="included-icon" style="color:var(--accent-green);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </div>
+          <h4>Dedicated Account Manager</h4>
+          <p>A single point of contact manages your brief from start to shortlist delivery.</p>
+        </div>
+        <div class="included-card glass-panel">
+          <div class="included-icon" style="color:var(--accent-cyan);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <h4>Direct Communication</h4>
+          <p>Collaborate with our team via email or WhatsApp throughout the process — no ticketing queues.</p>
+        </div>
+        <div class="included-card glass-panel">
+          <div class="included-icon" style="color:var(--accent-purple);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h4>72-Hour First Response</h4>
+          <p>We acknowledge and begin work on every submitted brief within 72 business hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Packages ─────────────────────────────────────────────────────────── -->
+  <section class="packages-section section-padding" id="packages">
+    <div class="container">
+      <div class="section-header center-align">
+        <span class="section-tag">Pricing</span>
+        <h2 class="section-title">Choose Your Package</h2>
+        <p class="section-subtitle">Select a plan when filling the form below. All prices are exclusive of VAT.</p>
+      </div>
+
+      <div class="packages-grid">
+        <!-- Starter -->
+        <div class="pkg-card glass-panel" data-package="Starter">
+          <div class="pkg-header">
+            <h3 class="pkg-name">Starter</h3>
+            <div class="pkg-price">
+              <span class="pkg-currency">₦</span>
+              <span class="pkg-amount">150,000</span>
+            </div>
+            <p class="pkg-desc">Perfect for a single role hire.</p>
+          </div>
+          <ul class="pkg-features">
+            <li><span class="pkg-check">✓</span> 1 Job Role Advertised</li>
+            <li><span class="pkg-check">✓</span> 2 Job Boards Posted</li>
+            <li><span class="pkg-check">✓</span> Basic Pre-Screening</li>
+            <li><span class="pkg-check">✓</span> Shortlist of up to 5 Candidates</li>
+            <li><span class="pkg-check">✓</span> 3-Week Campaign</li>
+            <li class="pkg-no"><span class="pkg-x">✗</span> Dedicated Account Manager</li>
+            <li class="pkg-no"><span class="pkg-x">✗</span> Performance Reports</li>
+          </ul>
+          <button class="btn btn-secondary pkg-select-btn" onclick="selectPackage(this, 'Starter')">Select Starter</button>
+        </div>
+
+        <!-- Growth (recommended) -->
+        <div class="pkg-card pkg-card--recommended glass-panel" data-package="Growth">
+          <div class="pkg-recommended-badge">Most Popular</div>
+          <div class="pkg-header">
+            <h3 class="pkg-name">Growth</h3>
+            <div class="pkg-price">
+              <span class="pkg-currency">₦</span>
+              <span class="pkg-amount">350,000</span>
+            </div>
+            <p class="pkg-desc">For teams hiring multiple roles.</p>
+          </div>
+          <ul class="pkg-features">
+            <li><span class="pkg-check">✓</span> Up to 3 Job Roles</li>
+            <li><span class="pkg-check">✓</span> 5 Job Boards + LinkedIn</li>
+            <li><span class="pkg-check">✓</span> In-Depth Pre-Screening</li>
+            <li><span class="pkg-check">✓</span> Shortlist of up to 10 Candidates</li>
+            <li><span class="pkg-check">✓</span> 6-Week Campaign</li>
+            <li><span class="pkg-check">✓</span> Dedicated Account Manager</li>
+            <li><span class="pkg-check">✓</span> Weekly Performance Reports</li>
+          </ul>
+          <button class="btn btn-primary pkg-select-btn" onclick="selectPackage(this, 'Growth')">Select Growth</button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pkg-card glass-panel" data-package="Enterprise">
+          <div class="pkg-header">
+            <h3 class="pkg-name">Enterprise</h3>
+            <div class="pkg-price pkg-price--custom">
+              <span class="pkg-amount-custom">Custom</span>
+            </div>
+            <p class="pkg-desc">Tailored for large-scale hiring.</p>
+          </div>
+          <ul class="pkg-features">
+            <li><span class="pkg-check">✓</span> Unlimited Job Roles</li>
+            <li><span class="pkg-check">✓</span> All Channels + Social Media Ads</li>
+            <li><span class="pkg-check">✓</span> Executive-Level Screening</li>
+            <li><span class="pkg-check">✓</span> Unlimited Shortlisting</li>
+            <li><span class="pkg-check">✓</span> 12-Week Retainer Campaign</li>
+            <li><span class="pkg-check">✓</span> Dedicated Account Manager</li>
+            <li><span class="pkg-check">✓</span> Full Analytics Dashboard</li>
+          </ul>
+          <button class="btn btn-secondary pkg-select-btn" onclick="selectPackage(this, 'Enterprise')">Contact Us</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Submission Form ──────────────────────────────────────────────────── -->
+  <section class="recruit-form-section section-padding" id="submit-brief">
+    <div class="container recruit-form-container">
+
+      <div class="recruit-form-header center-align">
+        <span class="section-tag">Get Started</span>
+        <h2 class="section-title">Submit Your Hiring Brief</h2>
+        <p class="section-subtitle">Fill in the details below and our team will be in touch within 72 hours.</p>
+      </div>
+
+      <!-- FORM SCREEN -->
+      <div id="form-screen">
+        <form id="enterprise-recruit-form" class="recruit-form glass-panel" novalidate>
+
+          <!-- Section: Company Info -->
+          <div class="form-section-label">
+            <span class="form-section-num">01</span> Company Information
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company-name">Company Name <span class="req">*</span></label>
+              <input type="text" id="company-name" placeholder="e.g. Acme Nigeria Ltd." required>
+            </div>
+            <div class="form-group">
+              <label for="company-industry">Industry / Sector <span class="req">*</span></label>
+              <input type="text" id="company-industry" placeholder="e.g. Fintech, Healthcare, Oil & Gas" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name">Contact Person <span class="req">*</span></label>
+              <input type="text" id="contact-name" placeholder="Full name of HR/Hiring Manager" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email Address <span class="req">*</span></label>
+              <input type="email" id="contact-email" placeholder="hr@yourcompany.com" required>
+            </div>
+          </div>
+          <div class="form-row form-row--single">
+            <div class="form-group">
+              <label for="contact-phone">Phone / WhatsApp <span class="req">*</span></label>
+              <input type="tel" id="contact-phone" placeholder="+234 800 000 0000" required>
+            </div>
+          </div>
+
+          <!-- Section: Role Details -->
+          <div class="form-section-label">
+            <span class="form-section-num">02</span> Role Details
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="job-title">Job Title <span class="req">*</span></label>
+              <input type="text" id="job-title" placeholder="e.g. Senior Backend Engineer" required>
+            </div>
+            <div class="form-group">
+              <label for="job-department">Department <span class="req">*</span></label>
+              <input type="text" id="job-department" placeholder="e.g. Engineering, Sales, Finance" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="location-type">Work Arrangement <span class="req">*</span></label>
+              <select id="location-type" required>
+                <option value="" disabled selected>Select arrangement</option>
+                <option value="On-site">On-site</option>
+                <option value="Remote">Remote</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="job-city">City / Location</label>
+              <input type="text" id="job-city" placeholder="e.g. Lagos, Abuja, Remote">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="employment-type">Employment Type <span class="req">*</span></label>
+              <select id="employment-type" required>
+                <option value="" disabled selected>Select type</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Contract">Contract</option>
+                <option value="Internship">Internship</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="num-openings">Number of Openings <span class="req">*</span></label>
+              <input type="number" id="num-openings" min="1" value="1" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group salary-group">
+              <label>Salary Range (Monthly)</label>
+              <div class="salary-row">
+                <select id="salary-currency">
+                  <option value="NGN">₦ NGN</option>
+                  <option value="USD">$ USD</option>
+                  <option value="GBP">£ GBP</option>
+                </select>
+                <input type="text" id="salary-min" placeholder="Min (e.g. 300,000)">
+                <span class="salary-sep">–</span>
+                <input type="text" id="salary-max" placeholder="Max (e.g. 600,000)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="application-deadline">Application Deadline</label>
+              <input type="date" id="application-deadline">
+            </div>
+          </div>
+
+          <!-- Section: Job Brief -->
+          <div class="form-section-label">
+            <span class="form-section-num">03</span> Job Brief
+          </div>
+          <div class="form-group form-group--full">
+            <label for="job-description">Job Description <span class="req">*</span></label>
+            <textarea id="job-description" rows="6" placeholder="Describe the role, day-to-day responsibilities, and team context…" required></textarea>
+          </div>
+          <div class="form-group form-group--full">
+            <label for="job-requirements">Key Requirements <span class="req">*</span></label>
+            <textarea id="job-requirements" rows="5" placeholder="List qualifications, experience level, tools, certifications, etc…" required></textarea>
+          </div>
+
+          <!-- Section: Package & Source -->
+          <div class="form-section-label">
+            <span class="form-section-num">04</span> Preferences
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="preferred-package">Selected Package</label>
+              <input type="text" id="preferred-package" placeholder="Click a package card above" readonly>
+            </div>
+            <div class="form-group">
+              <label for="heard-from">How did you hear about us?</label>
+              <select id="heard-from">
+                <option value="">Select an option</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Google Search">Google Search</option>
+                <option value="Referral">Referral / Word of Mouth</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div class="form-group form-group--full terms-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="terms-agree" required>
+              <span class="checkbox-custom"></span>
+              I confirm that the information provided is accurate and I agree to Tektwig's
+              <a href="#" class="inline-link">Terms of Service</a> and
+              <a href="#" class="inline-link">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" id="recruit-submit-btn" class="btn btn-primary btn-lg">
+              Submit Hiring Brief
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+            <p class="form-note">We respond to all briefs within 72 business hours.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- SUCCESS SCREEN -->
+      <div id="success-screen" class="recruit-success glass-panel" style="display:none;">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
+        <h2>Brief Submitted Successfully!</h2>
+        <p>Thank you for choosing Tektwig Enterprise Recruitment. Our team will review your brief and reach out within <strong>72 business hours</strong>.</p>
+        <div class="success-ref-box">
+          <span class="success-ref-label">Your Reference ID</span>
+          <span class="success-ref-id" id="success-ref-id">ERL-2026-XXXXX</span>
+        </div>
+        <p class="success-note">Save this reference ID — quote it in any follow-up communications with our team.</p>
+        <div class="success-actions">
+          <button id="btn-submit-another" class="btn btn-secondary">Submit Another Brief</button>
+          <a href="index.html" class="btn btn-primary">Back to Homepage</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="logo-link">
+          <img src="assets/logo.svg" alt="Tektwig Logo" class="logo-img footer-logo">
+        </a>
+        <p class="footer-tagline">Empowering your digital future — one solution at a time.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Solutions</h4>
+        <ul class="footer-links">
+          <li><a href="index.html#services">Cybersecurity Audit</a></li>
+          <li><a href="index.html#services">AI &amp; Business Intelligence</a></li>
+          <li><a href="index.html#services">Custom Web Development</a></li>
+          <li><a href="recruit.html">Enterprise Recruitment</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Company</h4>
+        <ul class="footer-links">
+          <li><a href="index.html#leadership">About Tektwig</a></li>
+          <li><a href="index.html#portfolio">Our Portfolio</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="admin.html">Recruiter Portal</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Get in Touch</h4>
+        <p class="footer-contact-info"><strong class="label">Email:</strong> <a href="mailto:tektwig@gmail.com">tektwig@gmail.com</a></p>
+        <p class="footer-contact-info"><strong class="label">Phone:</strong> <a href="tel:+2348097457323">+234 809 745 7323</a></p>
+        <p class="footer-contact-info"><strong class="label">Location:</strong> 35 Maj. St., Lagos, Nigeria</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-container">
+        <p class="copyright-text">Copyright &copy; 2026 Tektwig. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="recruit.js"></script>
+  <script>
+    function selectPackage(btn, name) {
+      document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+      btn.closest('.pkg-card').classList.add('selected');
+      const input = document.getElementById('preferred-package');
+      if (input) input.value = name;
+      document.getElementById('submit-brief').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

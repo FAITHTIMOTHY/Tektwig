@@ -520,4 +520,215 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start initialization
   initDashboard();
+
+  /* ==========================================================================
+     Admin Tab Switcher
+     ========================================================================== */
+  const adminTabBtns     = document.querySelectorAll('.admin-tab-btn');
+  const candidatesPanel  = document.getElementById('candidates-panel');
+  const leadsPanel       = document.getElementById('leads-panel');
+
+  adminTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      adminTabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const panelId = btn.getAttribute('data-panel');
+      candidatesPanel.style.display  = panelId === 'candidates-panel' ? 'block' : 'none';
+      leadsPanel.style.display       = panelId === 'leads-panel'      ? 'block' : 'none';
+    });
+  });
+
+  /* ==========================================================================
+     Enterprise Leads Panel
+     ========================================================================== */
+  let allLeads = [];
+  let activeLeadId = null;
+
+  const leadsTbody         = document.getElementById('leads-tbody');
+  const leadsSearch        = document.getElementById('leads-search-input');
+  const leadsStatusFilter  = document.getElementById('leads-status-filter');
+  const leadsCountBadge    = document.getElementById('leads-count-badge');
+  const btnExportLeadsCSV  = document.getElementById('btn-export-leads-csv');
+
+  async function loadLeads() {
+    try {
+      allLeads = await window.TektwigDB.getEnterpriseLeads();
+      if (leadsCountBadge) leadsCountBadge.textContent = allLeads.length;
+      renderLeads(allLeads);
+    } catch (err) {
+      console.error('Failed to load enterprise leads:', err);
+    }
+  }
+
+  function renderLeads(leads) {
+    if (!leadsTbody) return;
+    if (leads.length === 0) {
+      leadsTbody.innerHTML = `<tr><td colspan="7" class="empty-state-row"><div class="empty-state-content"><p>No enterprise leads found.</p></div></td></tr>`;
+      return;
+    }
+
+    leadsTbody.innerHTML = leads.map(lead => {
+      const date = new Date(lead.submittedAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+      const statusClass = lead.status === 'New' ? 'stage-badge stage-pending'
+                        : lead.status === 'In Progress' ? 'stage-badge stage-reviewing'
+                        : 'stage-badge stage-offered';
+      return `
+        <tr>
+          <td>${date}</td>
+          <td><code style="font-size:0.78rem; color:var(--accent-cyan);">${lead.refId}</code></td>
+          <td><strong>${lead.companyName}</strong><br><span style="font-size:0.75rem;color:var(--text-muted);">${lead.industry}</span></td>
+          <td>${lead.jobTitle}<br><span style="font-size:0.75rem;color:var(--text-muted);">${lead.employmentType || ''}</span></td>
+          <td>${lead.package || '—'}</td>
+          <td><span class="${statusClass}">${lead.status}</span></td>
+          <td style="text-align:right;">
+            <button class="btn-view-profile" onclick="openLeadModal(${lead.id})">View Brief</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function filterLeads() {
+    const query  = leadsSearch ? leadsSearch.value.toLowerCase() : '';
+    const status = leadsStatusFilter ? leadsStatusFilter.value : 'all';
+    const filtered = allLeads.filter(l => {
+      const matchesSearch = !query
+        || l.companyName.toLowerCase().includes(query)
+        || l.contactName.toLowerCase().includes(query)
+        || l.jobTitle.toLowerCase().includes(query)
+        || l.email.toLowerCase().includes(query)
+        || l.refId.toLowerCase().includes(query);
+      const matchesStatus = status === 'all' || l.status === status;
+      return matchesSearch && matchesStatus;
+    });
+    renderLeads(filtered);
+  }
+
+  if (leadsSearch)       leadsSearch.addEventListener('input', filterLeads);
+  if (leadsStatusFilter) leadsStatusFilter.addEventListener('change', filterLeads);
+
+  // -- Lead Detail Modal --
+  window.openLeadModal = async function(id) {
+    const lead = await window.TektwigDB.getEnterpriseLead(id);
+    if (!lead) return;
+    activeLeadId = id;
+
+    const date = new Date(lead.submittedAt).toLocaleString('en-GB');
+
+    const modalHTML = `
+      <div id="lead-modal-backdrop" class="modal-backdrop show" onclick="if(event.target===this)closeLeadModal()">
+        <div class="app-modal lead-modal">
+          <div class="modal-header">
+            <div>
+              <div class="badge badge-purple" style="margin-bottom:6px; font-size:0.7rem;">${lead.refId}</div>
+              <h2 class="modal-title">${lead.jobTitle}</h2>
+              <p style="font-size:0.85rem; color:var(--text-muted);">${lead.companyName} · ${lead.industry}</p>
+            </div>
+            <button class="modal-close-btn" id="lead-modal-close" onclick="closeLeadModal()">✕</button>
+          </div>
+          <div class="modal-body lead-modal-body">
+            <div class="lead-detail-grid">
+              <div class="lead-detail-section">
+                <h4 class="job-details-title">Contact</h4>
+                <p><strong>${lead.contactName}</strong></p>
+                <p>${lead.email}</p>
+                <p>${lead.phone}</p>
+              </div>
+              <div class="lead-detail-section">
+                <h4 class="job-details-title">Role Details</h4>
+                <p><strong>Type:</strong> ${lead.employmentType || '—'}</p>
+                <p><strong>Location:</strong> ${lead.locationType || '—'}${lead.city ? ' · ' + lead.city : ''}</p>
+                <p><strong>Openings:</strong> ${lead.openings || 1}</p>
+                <p><strong>Salary:</strong> ${lead.currency || ''} ${lead.salaryMin || '—'} – ${lead.salaryMax || '—'}</p>
+                <p><strong>Deadline:</strong> ${lead.deadline || '—'}</p>
+              </div>
+              <div class="lead-detail-section">
+                <h4 class="job-details-title">Preferences</h4>
+                <p><strong>Package:</strong> ${lead.package || '—'}</p>
+                <p><strong>Source:</strong> ${lead.source || '—'}</p>
+                <p><strong>Submitted:</strong> ${date}</p>
+              </div>
+            </div>
+            <div class="lead-detail-full">
+              <h4 class="job-details-title">Job Description</h4>
+              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${lead.description || '—'}</p>
+            </div>
+            <div class="lead-detail-full">
+              <h4 class="job-details-title">Key Requirements</h4>
+              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${lead.requirements || '—'}</p>
+            </div>
+            <div class="lead-status-update">
+              <label style="font-size:0.85rem; font-weight:600;">Update Status</label>
+              <select id="lead-status-select" style="background:rgba(0,0,0,0.3); border:1px solid var(--border-color); color:var(--text-main); padding:10px 14px; border-radius:8px; font-family:var(--font-body); font-size:0.9rem;">
+                <option value="New"         ${lead.status==='New'?'selected':''}>New</option>
+                <option value="In Progress" ${lead.status==='In Progress'?'selected':''}>In Progress</option>
+                <option value="Completed"   ${lead.status==='Completed'?'selected':''}>Completed</option>
+              </select>
+              <button class="btn btn-primary btn-sm" onclick="saveLeadStatus()">Save Status</button>
+              <button class="btn btn-secondary btn-sm" style="border-color:#ef4444; color:#ef4444;" onclick="deleteLead(${lead.id})">Delete Lead</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeLeadModal = function() {
+    const el = document.getElementById('lead-modal-backdrop');
+    if (el) el.remove();
+    document.body.style.overflow = '';
+    activeLeadId = null;
+  };
+
+  window.saveLeadStatus = async function() {
+    if (!activeLeadId) return;
+    const select = document.getElementById('lead-status-select');
+    const newStatus = select ? select.value : 'New';
+    try {
+      await window.TektwigDB.updateLeadStatus(activeLeadId, newStatus);
+      closeLeadModal();
+      await loadLeads();
+    } catch (err) {
+      console.error('Failed to update lead status:', err);
+    }
+  };
+
+  window.deleteLead = async function(id) {
+    if (!confirm('Delete this enterprise lead? This cannot be undone.')) return;
+    try {
+      await window.TektwigDB.deleteEnterpriseLead(id);
+      closeLeadModal();
+      await loadLeads();
+    } catch (err) {
+      console.error('Failed to delete lead:', err);
+    }
+  };
+
+  // Export leads CSV
+  if (btnExportLeadsCSV) {
+    btnExportLeadsCSV.addEventListener('click', () => {
+      if (allLeads.length === 0) { alert('No leads to export.'); return; }
+      const clean = v => `"${String(v || '').replace(/"/g, '""')}"`;
+      let csv = 'Ref ID,Date,Company,Industry,Contact,Email,Phone,Job Title,Dept,Type,Location,City,Openings,Salary Min,Salary Max,Currency,Deadline,Package,Status\n';
+      allLeads.forEach(l => {
+        const date = new Date(l.submittedAt).toLocaleDateString('en-GB');
+        csv += [clean(l.refId),clean(date),clean(l.companyName),clean(l.industry),clean(l.contactName),clean(l.email),clean(l.phone),clean(l.jobTitle),clean(l.department),clean(l.employmentType),clean(l.locationType),clean(l.city),l.openings||1,clean(l.salaryMin),clean(l.salaryMax),clean(l.currency),clean(l.deadline),clean(l.package),clean(l.status)].join(',') + '\n';
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.setAttribute('href', URL.createObjectURL(blob));
+      link.setAttribute('download', 'tektwig_enterprise_leads.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+
+  loadLeads();
 });
+

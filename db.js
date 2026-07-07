@@ -3,7 +3,7 @@
  */
 
 const DB_NAME = 'TektwigRecruitmentDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 /**
  * Initializes the database.
@@ -36,6 +36,13 @@ function initDB() {
         const appStore = db.createObjectStore('applications', { keyPath: 'id', autoIncrement: true });
         appStore.createIndex('jobId', 'jobId', { unique: false });
         appStore.createIndex('status', 'status', { unique: false });
+      }
+
+      // Store for enterprise recruitment leads (v2)
+      if (!db.objectStoreNames.contains('enterpriseLeads')) {
+        const leadStore = db.createObjectStore('enterpriseLeads', { keyPath: 'id', autoIncrement: true });
+        leadStore.createIndex('status', 'status', { unique: false });
+        leadStore.createIndex('refId', 'refId', { unique: true });
       }
     };
   }).then(async (db) => {
@@ -361,5 +368,36 @@ window.TektwigDB = {
   deleteApplication: async (id) => {
     const db = await initDB();
     return deleteRecord(db, 'applications', parseInt(id));
+  },
+
+  // ── Enterprise Leads ──────────────────────────────────────────────────────
+  getEnterpriseLeads: async () => {
+    const db = await initDB();
+    return getAllRecords(db, 'enterpriseLeads');
+  },
+
+  getEnterpriseLead: async (id) => {
+    const db = await initDB();
+    return getRecordById(db, 'enterpriseLeads', parseInt(id));
+  },
+
+  saveEnterpriseLead: async (leadData) => {
+    const db = await initDB();
+    if (!leadData.submittedAt) leadData.submittedAt = new Date().toISOString();
+    if (!leadData.status) leadData.status = 'New';
+    return addRecord(db, 'enterpriseLeads', leadData);
+  },
+
+  updateLeadStatus: async (id, newStatus) => {
+    const db = await initDB();
+    const lead = await getRecordById(db, 'enterpriseLeads', parseInt(id));
+    if (!lead) throw new Error(`Enterprise lead with ID ${id} not found.`);
+    lead.status = newStatus;
+    return putRecord(db, 'enterpriseLeads', lead);
+  },
+
+  deleteEnterpriseLead: async (id) => {
+    const db = await initDB();
+    return deleteRecord(db, 'enterpriseLeads', parseInt(id));
   }
 };
