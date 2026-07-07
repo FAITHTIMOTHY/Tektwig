@@ -352,4 +352,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ==========================================================================
+     DataRock Control Showcase Tabs Switcher
+     ========================================================================== */
+  const datarockTabBtns = document.querySelectorAll('.datarock-tab-btn');
+  const datarockTabPanes = document.querySelectorAll('.datarock-tab-pane');
+
+  if (datarockTabBtns.length > 0) {
+    datarockTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons and panes
+        datarockTabBtns.forEach(b => b.classList.remove('active'));
+        datarockTabPanes.forEach(p => p.classList.remove('active'));
+
+        // Add active class to clicked button
+        btn.classList.add('active');
+
+        // Show corresponding pane
+        const tabId = btn.getAttribute('data-tab');
+        const targetPane = document.getElementById(`pane-${tabId}`);
+        if (targetPane) {
+          targetPane.classList.add('active');
+        }
+      });
+    });
+  }
+
 });
+
