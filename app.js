@@ -314,12 +314,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('actual-contact-form');
 
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       // Get data
-      const name = document.getElementById('contact-name').value;
-      const email = document.getElementById('contact-email').value;
+      const name = document.getElementById('contact-name').value.trim();
+      const email = document.getElementById('contact-email').value.trim();
+      const subject = document.getElementById('contact-subject').value.trim();
+      const message = document.getElementById('contact-msg').value.trim();
+
+      // Save to IndexedDB
+      if (window.TektwigDB) {
+        try {
+          await window.TektwigDB.saveContactInquiry({
+            name,
+            email,
+            subject,
+            message,
+            submittedAt: new Date().toISOString()
+          });
+        } catch (err) {
+          console.error('Failed to save contact inquiry to DB:', err);
+        }
+      }
 
       // Reset form fields
       contactForm.reset();

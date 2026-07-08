@@ -3,7 +3,7 @@
  */
 
 const DB_NAME = 'TektwigRecruitmentDB';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 /**
  * Initializes the database.
@@ -50,6 +50,12 @@ function initDB() {
         const entAppStore = db.createObjectStore('enterpriseApplications', { keyPath: 'id', autoIncrement: true });
         entAppStore.createIndex('leadRefId', 'leadRefId', { unique: false });
         entAppStore.createIndex('status', 'status', { unique: false });
+      }
+
+      // Store for website contact inquiries (v4)
+      if (!db.objectStoreNames.contains('contactInquiries')) {
+        const inquiryStore = db.createObjectStore('contactInquiries', { keyPath: 'id', autoIncrement: true });
+        inquiryStore.createIndex('submittedAt', 'submittedAt', { unique: false });
       }
     };
   }).then(async (db) => {
@@ -444,5 +450,22 @@ window.TektwigDB = {
   deleteEnterpriseLead: async (id) => {
     const db = await initDB();
     return deleteRecord(db, 'enterpriseLeads', parseInt(id));
+  },
+
+  // ── Contact Inquiries ─────────────────────────────────────────────────────
+  saveContactInquiry: async (inquiryData) => {
+    const db = await initDB();
+    if (!inquiryData.submittedAt) inquiryData.submittedAt = new Date().toISOString();
+    return addRecord(db, 'contactInquiries', inquiryData);
+  },
+
+  getContactInquiries: async () => {
+    const db = await initDB();
+    return getAllRecords(db, 'contactInquiries');
+  },
+
+  deleteContactInquiry: async (id) => {
+    const db = await initDB();
+    return deleteRecord(db, 'contactInquiries', parseInt(id));
   }
 };

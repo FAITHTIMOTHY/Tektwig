@@ -102,6 +102,11 @@
           Enterprise Leads
           <span class="leads-count-badge" id="leads-count-badge">0</span>
         </button>
+        <button class="admin-tab-btn" id="tab-btn-inquiries" data-panel="inquiries-panel">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Contact Inquiries
+          <span class="leads-count-badge" id="inquiries-count-badge" style="background:var(--accent-purple); color:#fff;">0</span>
+        </button>
       </div>
 
       <!-- PANEL: Candidates -->
@@ -219,6 +224,41 @@
           </table>
         </div>
       </div> <!-- /#leads-panel -->
+
+      <!-- PANEL: Contact Inquiries -->
+      <div id="inquiries-panel" style="display:none;">
+        <div class="admin-controls-bar">
+          <div class="search-input-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="inquiries-search-input" placeholder="Search inquiries by name, email, subject...">
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-export-inquiries-csv" style="margin-left: auto;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span>Export Inquiries CSV</span>
+          </button>
+        </div>
+
+        <div class="table-responsive glass-panel">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 120px;">Date</th>
+                <th>Name / Email</th>
+                <th>Subject</th>
+                <th>Message Snippet</th>
+                <th style="text-align:right; width: 180px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="inquiries-tbody">
+              <tr>
+                <td colspan="5" class="empty-state-row">
+                  <div class="empty-state-content"><p>Loading contact inquiries...</p></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> <!-- /#inquiries-panel -->
 
       <!-- Job postings management drawer/panel (hidden initially) -->
       <div id="jobs-management-panel" class="glass-panel" style="display:none; margin-top: 40px; padding: 30px;">
@@ -386,7 +426,7 @@
         <div class="footer-socials">
           <a href="https://www.facebook.com/tektwiig" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fb"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
           <a href="https://x.com/tektwig" target="_blank" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-x"><path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768 M20 4l-6.768 6.768"></path></svg></a>
-          <a href="http://www.instagram.com/tektwig" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-ig"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="https://www.instagram.com/tektwig" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-ig"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
           <a href="http://linkedin.com/company/tektwig" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-li"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
         </div>
       </div>

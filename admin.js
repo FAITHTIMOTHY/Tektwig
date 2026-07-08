@@ -77,6 +77,23 @@ document.addEventListener('DOMContentLoaded', () => {
         allJobs = await window.TektwigDB.getJobs();
         allApplications = await window.TektwigDB.getApplications();
         
+        // Load counts for the tab badges
+        try {
+          const leads = await window.TektwigDB.getEnterpriseLeads();
+          const leadsCountBadge = document.getElementById('leads-count-badge');
+          if (leadsCountBadge) leadsCountBadge.textContent = leads.length;
+        } catch (leadErr) {
+          console.error('Failed to load leads count for badge:', leadErr);
+        }
+
+        try {
+          const inquiries = await window.TektwigDB.getContactInquiries();
+          const inquiriesCountBadge = document.getElementById('inquiries-count-badge');
+          if (inquiriesCountBadge) inquiriesCountBadge.textContent = inquiries.length;
+        } catch (inqErr) {
+          console.error('Failed to load inquiries count for badge:', inqErr);
+        }
+
         populateRoleFilters();
         renderJobsList();
         updateMetrics();
@@ -527,6 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminTabBtns     = document.querySelectorAll('.admin-tab-btn');
   const candidatesPanel  = document.getElementById('candidates-panel');
   const leadsPanel       = document.getElementById('leads-panel');
+  const inquiriesPanel   = document.getElementById('inquiries-panel');
 
   adminTabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -536,12 +554,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const panelId = btn.getAttribute('data-panel');
       candidatesPanel.style.display  = panelId === 'candidates-panel' ? 'block' : 'none';
       leadsPanel.style.display       = panelId === 'leads-panel'      ? 'block' : 'none';
+      if (inquiriesPanel) {
+        inquiriesPanel.style.display = panelId === 'inquiries-panel'   ? 'block' : 'none';
+      }
 
       // Live reload of data on tab switch to prevent stale lists
       if (panelId === 'candidates-panel') {
         initDashboard();
       } else if (panelId === 'leads-panel') {
         loadLeads();
+      } else if (panelId === 'inquiries-panel') {
+        loadInquiries();
       }
     });
   });
@@ -924,6 +947,159 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Failed to generate candidate spreadsheet.');
     }
   };
+
+  /* ==========================================================================
+     Contact Inquiries Panel
+     ========================================================================== */
+  let allInquiries = [];
+  let filteredInquiries = [];
+
+  const inquiriesTbody        = document.getElementById('inquiries-tbody');
+  const inquiriesSearch       = document.getElementById('inquiries-search-input');
+  const inquiriesCountBadge   = document.getElementById('inquiries-count-badge');
+  const btnExportInquiriesCSV = document.getElementById('btn-export-inquiries-csv');
+
+  async function loadInquiries() {
+    try {
+      allInquiries = await window.TektwigDB.getContactInquiries();
+      if (inquiriesCountBadge) inquiriesCountBadge.textContent = allInquiries.length;
+      filterAndRenderInquiries();
+    } catch (err) {
+      console.error('Failed to load contact inquiries:', err);
+    }
+  }
+
+  function renderInquiries(inquiries) {
+    if (!inquiriesTbody) return;
+    if (inquiries.length === 0) {
+      inquiriesTbody.innerHTML = `
+        <tr>
+          <td colspan="5" class="empty-state-row">
+            <div class="empty-state-content">
+              <p>No contact inquiries found.</p>
+            </div>
+          </td>
+        </tr>`;
+      return;
+    }
+
+    inquiriesTbody.innerHTML = inquiries.map(inquiry => {
+      const date = new Date(inquiry.submittedAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+      const snippet = inquiry.message.length > 70 ? inquiry.message.slice(0, 70) + '...' : inquiry.message;
+      return `
+        <tr>
+          <td><span style="font-family: monospace;">${date}</span></td>
+          <td>
+            <strong>${inquiry.name}</strong><br>
+            <span style="font-size:0.75rem;color:var(--text-muted);">${inquiry.email}</span>
+          </td>
+          <td><span style="font-weight:500; color:var(--text-main);">${inquiry.subject}</span></td>
+          <td><span style="font-size:0.85rem;color:var(--text-muted);">${snippet}</span></td>
+          <td style="text-align:right;">
+            <button class="action-btn-sm btn-view-candidate" onclick="openInquiryModal(${inquiry.id})" style="margin-right: 6px;">
+              View Message
+            </button>
+            <button class="action-btn-sm" style="border-color:#ef4444; color:#ef4444; background:rgba(239,68,68,0.03);" onclick="deleteInquiry(${inquiry.id})">
+              Delete
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function filterAndRenderInquiries() {
+    const query = inquiriesSearch ? inquiriesSearch.value.toLowerCase().trim() : '';
+    filteredInquiries = allInquiries.filter(inq => {
+      return inq.name.toLowerCase().includes(query) ||
+             inq.email.toLowerCase().includes(query) ||
+             inq.subject.toLowerCase().includes(query) ||
+             inq.message.toLowerCase().includes(query);
+    });
+    renderInquiries(filteredInquiries);
+  }
+
+  if (inquiriesSearch) {
+    inquiriesSearch.addEventListener('input', filterAndRenderInquiries);
+  }
+
+  // Inquiry Detail Modal
+  window.openInquiryModal = async function(id) {
+    try {
+      const inquiries = await window.TektwigDB.getContactInquiries();
+      const item = inquiries.find(x => x.id === parseInt(id));
+      if (!item) return;
+
+      const date = new Date(item.submittedAt).toLocaleString('en-GB');
+      const modalHTML = `
+        <div id="inquiry-modal-backdrop" class="modal-backdrop show" onclick="if(event.target===this)closeInquiryModal()">
+          <div class="app-modal" style="max-width: 600px; margin: 10% auto;">
+            <div class="modal-header">
+              <div>
+                <span class="badge badge-purple" style="margin-bottom:6px; font-size:0.7rem;">Contact Submission</span>
+                <h2 class="modal-title">${item.subject}</h2>
+                <p style="font-size:0.85rem; color:var(--text-muted);">${item.name} · ${item.email}</p>
+              </div>
+              <button class="modal-close-btn" onclick="closeInquiryModal()">✕</button>
+            </div>
+            <div class="modal-body" style="padding-bottom:30px;">
+              <div style="background:rgba(0,0,0,0.25); border:1px solid var(--border-color); border-radius:12px; padding:20px; margin-bottom:20px;">
+                <p style="white-space:pre-wrap; color:var(--text-main); font-size:0.95rem; line-height:1.7; margin:0;">${item.message}</p>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.8rem; color:var(--text-muted);">Received: ${date}</span>
+                <div style="display:flex; gap:8px;">
+                  <a href="mailto:${item.email}?subject=Re: ${encodeURIComponent(item.subject)}" class="btn btn-primary btn-sm" style="font-size:0.78rem; text-decoration:none; display:inline-flex; align-items:center;">Reply Email</a>
+                  <button class="btn btn-secondary btn-sm" style="border-color:#ef4444; color:#ef4444;" onclick="closeInquiryModal(); deleteInquiry(${item.id});">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+      document.body.style.overflow = 'hidden';
+    } catch (err) {
+      console.error('Error opening inquiry modal:', err);
+    }
+  };
+
+  window.closeInquiryModal = function() {
+    const backdrop = document.getElementById('inquiry-modal-backdrop');
+    if (backdrop) backdrop.remove();
+    document.body.style.overflow = '';
+  };
+
+  window.deleteInquiry = async function(id) {
+    if (!confirm('Permanently delete this contact inquiry? This cannot be undone.')) return;
+    try {
+      await window.TektwigDB.deleteContactInquiry(id);
+      await loadInquiries();
+    } catch (err) {
+      console.error('Failed to delete contact inquiry:', err);
+    }
+  };
+
+  // CSV Export
+  if (btnExportInquiriesCSV) {
+    btnExportInquiriesCSV.addEventListener('click', () => {
+      if (allInquiries.length === 0) { alert('No inquiries to export.'); return; }
+      const clean = v => `"${String(v || '').replace(/"/g, '""')}"`;
+      let csv = 'Submission Date,Name,Email,Subject,Message\n';
+      allInquiries.forEach(inq => {
+        const date = new Date(inq.submittedAt).toLocaleDateString('en-GB');
+        csv += [clean(date), clean(inq.name), clean(inq.email), clean(inq.subject), clean(inq.message)].join(',') + '\n';
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.setAttribute('href', URL.createObjectURL(blob));
+      link.setAttribute('download', 'tektwig_contact_inquiries.csv');
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
 
   // Start initialization
   loadLeads();
