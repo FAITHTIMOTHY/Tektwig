@@ -6,20 +6,45 @@ const DB_NAME = 'TektwigRecruitmentDB';
 const DB_VERSION = 4;
 
 /**
+ * Cached database connection — opened once and reused across all operations.
+ * Avoids re-opening IndexedDB and re-running seed checks on every single call.
+ */
+let _dbInstance = null;
+let _dbInitPromise = null;
+
+/**
  * Initializes the database.
- * Returns a promise that resolves with the database object.
+ * Returns a promise that resolves with the (cached) database object.
  */
 function initDB() {
-  return new Promise((resolve, reject) => {
+  // If we already have a live connection, reuse it
+  if (_dbInstance) {
+    return Promise.resolve(_dbInstance);
+  }
+
+  // If initialization is already in progress, wait for it
+  if (_dbInitPromise) {
+    return _dbInitPromise;
+  }
+
+  _dbInitPromise = new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
 
     request.onerror = (event) => {
       console.error('IndexedDB open error:', event.target.error);
+      _dbInitPromise = null;
       reject(event.target.error);
     };
 
     request.onsuccess = (event) => {
       const db = event.target.result;
+
+      // Handle unexpected connection close (e.g. browser GC)
+      db.onclose = () => {
+        _dbInstance = null;
+        _dbInitPromise = null;
+      };
+
       resolve(db);
     };
 
@@ -59,10 +84,16 @@ function initDB() {
       }
     };
   }).then(async (db) => {
-    // Seed initial data if stores are empty
+    // Seed initial data if stores are empty (runs only once)
     await seedInitialData(db);
+    _dbInstance = db;
     return db;
+  }).catch(err => {
+    _dbInitPromise = null;
+    throw err;
   });
+
+  return _dbInitPromise;
 }
 
 /**

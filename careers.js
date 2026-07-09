@@ -3,6 +3,19 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  /* ==========================================================================
+     Utility: HTML Entity Escaper (XSS Prevention)
+     ========================================================================== */
+  const escapeHTML = (str) => {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
   let allJobs = [];
   let selectedJob = null;
   let uploadedCVFile = null;
@@ -85,39 +98,42 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    jobsGrid.innerHTML = jobsList.map(job => `
+    jobsGrid.innerHTML = jobsList.map(job => {
+      const truncatedDesc = job.description.length > 130 ? job.description.slice(0, 130) + '...' : job.description;
+      return `
       <div class="job-card glass-panel${job.isThirdParty ? ' job-card--external' : ''}" id="job-card-${job.id}">
         <div class="job-header">
-          <span class="job-dept-tag">${job.department}</span>
-          <span class="job-type-tag">${job.type}</span>
+          <span class="job-dept-tag">${escapeHTML(job.department)}</span>
+          <span class="job-type-tag">${escapeHTML(job.type)}</span>
         </div>
         ${job.isThirdParty && job.advertisingFor
           ? `<div class="job-advertising-badge">
                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-               Advertising for <strong>${job.advertisingFor}</strong>
+               Advertising for <strong>${escapeHTML(job.advertisingFor)}</strong>
              </div>`
           : ''}
-        <h3 class="job-card-title">${job.title}</h3>
+        <h3 class="job-card-title">${escapeHTML(job.title)}</h3>
         
         <div class="job-meta-info">
           <div class="job-meta-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>${job.location}</span>
+            <span>${escapeHTML(job.location)}</span>
           </div>
           <div class="job-meta-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span>${job.experience}</span>
+            <span>${escapeHTML(job.experience)}</span>
           </div>
         </div>
         
-        <p class="job-card-desc">${job.description.length > 130 ? job.description.slice(0, 130) + '...' : job.description}</p>
+        <p class="job-card-desc">${escapeHTML(truncatedDesc)}</p>
         
         <div class="job-card-footer">
-          <span class="job-card-salary">${job.salary}</span>
+          <span class="job-card-salary">${escapeHTML(job.salary)}</span>
           <button class="btn btn-primary btn-sm btn-apply" data-id="${job.id}">Apply Now</button>
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
 
 
     // Attach event listeners to apply buttons

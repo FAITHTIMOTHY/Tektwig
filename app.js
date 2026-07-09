@@ -1,6 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ==========================================================================
+     Utility: HTML Entity Escaper (XSS Prevention)
+     ========================================================================== */
+  const escapeHTML = (str) => {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
+  /* ==========================================================================
      Header Scroll & Sticky Navigation
      ========================================================================== */
   const header = document.getElementById('main-header');
@@ -26,8 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (currentSectionId) {
       navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        // Skip external page links (e.g. careers.html) — they can't match a section ID
+        if (!href || !href.startsWith('#')) return;
         link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentSectionId}`) {
+        if (href === `#${currentSectionId}`) {
           link.classList.add('active');
         }
       });
@@ -59,84 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     DataRock Control Live Telemetry Simulator
+     NOTE: DataRock telemetry simulator was removed — the DOM elements it
+     targeted (telemetry-logs, chart-points, stat-blocks, stat-ping) do not
+     exist in any current page. The two setInterval timers were consuming
+     CPU cycles every 2.5s / 4s with no visible effect.
      ========================================================================== */
-  const telemetryLogs = document.getElementById('telemetry-logs');
-  const chartLoadPercent = document.getElementById('chart-load-percent');
-  const chartPoints = document.querySelectorAll('.chart-point');
-
-  // Random log line pool
-  const mockLogPool = [
-    { type: 'success', text: 'Cloud Gateway: IP tunnel refresh completed' },
-    { type: 'info', text: 'Endpoint Monitor: 42 assets audited, compliance 100%' },
-    { type: 'success', text: 'DataRock Shield: Safe packet filters updated' },
-    { type: 'warning', text: 'Intrusion Attempt: IP 104.22.42.16 throttled by firewalls' },
-    { type: 'success', text: 'AI Analyzer: Pattern correlation query resolved (12ms)' },
-    { type: 'info', text: 'Virtualization Node: Resources balanced successfully' },
-    { type: 'success', text: 'Threat Shield: Zero payloads detected on database streams' },
-    { type: 'warning', text: 'Datarock Alert: Endpoint device #12 CPU peak' }
-  ];
-
-  // Helper to append a dynamic log line
-  const addTelemetryLog = () => {
-    if (!telemetryLogs) return;
-    const logItem = mockLogPool[Math.floor(Math.random() * mockLogPool.length)];
-    const timeStr = new Date().toISOString().split('T')[1].slice(0, 8);
-    
-    let textClass = 'text-info';
-    if (logItem.type === 'success') textClass = 'text-success';
-    if (logItem.type === 'warning') textClass = 'text-warning';
-
-    const newLine = document.createElement('div');
-    newLine.className = `log-line ${textClass}`;
-    newLine.innerHTML = `<span class="text-muted">[${timeStr}]</span> ${logItem.text}`;
-    
-    telemetryLogs.appendChild(newLine);
-    
-    // Auto-scroll terminal
-    telemetryLogs.scrollTop = telemetryLogs.scrollHeight;
-
-    // Prune logs if they get too long
-    if (telemetryLogs.childElementCount > 15) {
-      telemetryLogs.removeChild(telemetryLogs.firstElementChild);
-    }
-  };
-
-  // Animate Terminal Chart
-  const updateTerminalChart = () => {
-    if (chartPoints.length === 0) return;
-    
-    let loadSum = 0;
-    chartPoints.forEach(point => {
-      const randomHeight = Math.floor(Math.random() * 80) + 15; // 15% to 95%
-      point.style.setProperty('--height', `${randomHeight}%`);
-      loadSum += randomHeight;
-    });
-
-    const averageLoad = Math.floor(loadSum / chartPoints.length);
-    if (chartLoadPercent) {
-      chartLoadPercent.textContent = `Load: ${averageLoad}%`;
-    }
-
-    // Dynamic numbers
-    const statBlocks = document.getElementById('stat-blocks');
-    if (statBlocks) {
-      const currentBlocks = parseInt(statBlocks.textContent.replace('K+', ''));
-      if (Math.random() > 0.6) {
-        statBlocks.textContent = `${currentBlocks + 1}K+`;
-      }
-    }
-
-    const statPing = document.getElementById('stat-ping');
-    if (statPing) {
-      const randomPing = (Math.random() * 0.8 + 0.8).toFixed(1);
-      statPing.textContent = `${randomPing}ms`;
-    }
-  };
-
-  // Run simulators
-  setInterval(addTelemetryLog, 4000);
-  setInterval(updateTerminalChart, 2500);
 
   /* ==========================================================================
      Portfolio Filter
@@ -349,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         <div>
           <strong style="display:block;">Inquiry Transmitted!</strong>
-          <span style="font-size:0.8rem;color:var(--text-muted);">Thank you ${name}. Our security team will contact you at ${email} within 2 hours.</span>
+          <span style="font-size:0.8rem;color:var(--text-muted);">Thank you ${escapeHTML(name)}. Our security team will contact you at ${escapeHTML(email)} within 2 hours.</span>
         </div>
       `;
       document.body.appendChild(toast);

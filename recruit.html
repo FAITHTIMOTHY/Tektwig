@@ -552,14 +552,6 @@
   <!-- Scripts -->
   <script src="db.js"></script>
   <script src="recruit.js"></script>
-  <script>
-    function selectPackage(btn, name) {
-      document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
-      btn.closest('.pkg-card').classList.add('selected');
-      const input = document.getElementById('preferred-package');
-      if (input) input.value = name;
-      document.getElementById('submit-brief').scrollIntoView({ behavior: 'smooth' });
-    }
-  </script>
+
 </body>
 </html>

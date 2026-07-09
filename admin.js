@@ -3,6 +3,32 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  /* ==========================================================================
+     Utility: HTML Entity Escaper (XSS Prevention)
+     ========================================================================== */
+  const escapeHTML = (str) => {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
+  /* ==========================================================================
+     Utility: CSV Value Sanitizer (Prevents CSV Injection + escapes quotes)
+     ========================================================================== */
+  const cleanCSVVal = (val) => {
+    if (val === undefined || val === null) return '""';
+    let clean = String(val).replace(/"/g, '""');
+    // Guard against CSV injection: prefix values starting with dangerous chars
+    if (/^[=+\-@\t\r]/.test(clean)) {
+      clean = "'" + clean;
+    }
+    return `"${clean}"`;
+  };
+
   let allApplications = [];
   let allJobs = [];
   let filteredApplications = [];
@@ -218,14 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       return `
         <tr id="applicant-row-${app.id}">
-          <td><span style="font-family: monospace;">${applyDate}</span></td>
+          <td><span style="font-family: monospace;">${escapeHTML(applyDate)}</span></td>
           <td>
-            <div class="cand-name-cell">${app.name}</div>
-            <span class="cand-email-cell">${app.email}</span>
+            <div class="cand-name-cell">${escapeHTML(app.name)}</div>
+            <span class="cand-email-cell">${escapeHTML(app.email)}</span>
           </td>
-          <td><span style="font-weight: 500;">${app.jobTitle}</span></td>
-          <td style="text-align: center; font-weight: 600;">${app.experience} Yr${app.experience > 1 ? 's' : ''}</td>
-          <td><span class="status-pill ${statusClass}">${statusLabel}</span></td>
+          <td><span style="font-weight: 500;">${escapeHTML(app.jobTitle)}</span></td>
+          <td style="text-align: center; font-weight: 600;">${escapeHTML(app.experience)} Yr${app.experience > 1 ? 's' : ''}</td>
+          <td><span class="status-pill ${statusClass}">${escapeHTML(statusLabel)}</span></td>
           <td style="text-align: right;">
             <button class="action-btn-sm btn-view-candidate" data-id="${app.id}">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -405,8 +431,8 @@ document.addEventListener('DOMContentLoaded', () => {
     adminJobsList.innerHTML = allJobs.map(job => `
       <li class="glass-panel" style="padding:16px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.01);">
         <div>
-          <strong style="color:var(--text-main); font-size:0.95rem;">${job.title}</strong>
-          <span style="display:block; font-size:0.75rem; color:var(--text-muted);">${job.department} &bull; ${job.location} &bull; ${job.type}</span>
+          <strong style="color:var(--text-main); font-size:0.95rem;">${escapeHTML(job.title)}</strong>
+          <span style="display:block; font-size:0.75rem; color:var(--text-muted);">${escapeHTML(job.department)} &bull; ${escapeHTML(job.location)} &bull; ${escapeHTML(job.type)}</span>
         </div>
         <button class="action-btn-sm btn-delete-job" data-id="${job.id}" style="border-color:#ef4444; color:#ef4444; background:none;">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
@@ -490,13 +516,6 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('No candidate applications to export.');
       return;
     }
-
-    // Helper to sanitize text values for CSV columns
-    const cleanCSVVal = (val) => {
-      if (val === undefined || val === null) return '""';
-      let clean = String(val).replace(/"/g, '""'); // Escape double quotes
-      return `"${clean}"`;
-    };
 
     // Header column row
     let csvContent = 'Tracking ID,Date Applied,Candidate Name,Email Address,Phone Number,Applied Position,Experience (Years),Portfolio URL,Current Recruitment Stage\n';
@@ -605,12 +624,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         : 'stage-badge stage-offered';
       return `
         <tr>
-          <td>${date}</td>
-          <td><code style="font-size:0.78rem; color:var(--accent-cyan);">${lead.refId}</code></td>
-          <td><strong>${lead.companyName}</strong><br><span style="font-size:0.75rem;color:var(--text-muted);">${lead.industry}</span></td>
-          <td>${lead.jobTitle}<br><span style="font-size:0.75rem;color:var(--text-muted);">${lead.employmentType || ''}</span></td>
-          <td>${lead.package || '—'}</td>
-          <td><span class="${statusClass}">${lead.status}</span></td>
+          <td>${escapeHTML(date)}</td>
+          <td><code style="font-size:0.78rem; color:var(--accent-cyan);">${escapeHTML(lead.refId)}</code></td>
+          <td><strong>${escapeHTML(lead.companyName)}</strong><br><span style="font-size:0.75rem;color:var(--text-muted);">${escapeHTML(lead.industry)}</span></td>
+          <td>${escapeHTML(lead.jobTitle)}<br><span style="font-size:0.75rem;color:var(--text-muted);">${escapeHTML(lead.employmentType || '')}</span></td>
+          <td>${escapeHTML(lead.package || '—')}</td>
+          <td><span class="${statusClass}">${escapeHTML(lead.status)}</span></td>
           <td style="text-align:right;">
             <button class="btn-view-profile" onclick="openLeadModal(${lead.id})">View Brief</button>
           </td>
@@ -662,12 +681,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const appDate = new Date(app.appliedAt).toLocaleDateString('en-GB');
         return `
           <tr>
-            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); font-family:monospace; font-size:0.8rem;">${appDate}</td>
+            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); font-family:monospace; font-size:0.8rem;">${escapeHTML(appDate)}</td>
             <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05);">
-              <div style="font-weight:600; color:var(--text-main); font-size:0.88rem;">${app.name}</div>
-              <span style="font-size:0.75rem; color:var(--text-muted);">${app.email} · ${app.phone}</span>
+              <div style="font-weight:600; color:var(--text-main); font-size:0.88rem;">${escapeHTML(app.name)}</div>
+              <span style="font-size:0.75rem; color:var(--text-muted);">${escapeHTML(app.email)} · ${escapeHTML(app.phone)}</span>
             </td>
-            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); text-align:center; font-weight:600; font-size:0.85rem;">${app.experience} Yr${app.experience > 1 ? 's' : ''}</td>
+            <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); text-align:center; font-weight:600; font-size:0.85rem;">${escapeHTML(app.experience)} Yr${app.experience > 1 ? 's' : ''}</td>
             <td style="padding:12px 10px; border-bottom:1px solid rgba(255,255,255,0.05); text-align:right;">
               <button class="btn btn-secondary btn-sm" style="font-size:0.75rem; padding:4px 10px; border-color:rgba(255,255,255,0.15);" onclick="downloadEnterpriseCV(${app.id})">
                 Download CV
@@ -683,9 +702,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="app-modal lead-modal" style="max-height:85vh; overflow-y:auto;">
           <div class="modal-header">
             <div>
-              <div class="badge badge-purple" style="margin-bottom:6px; font-size:0.7rem;">${lead.refId}</div>
-              <h2 class="modal-title">${lead.jobTitle}</h2>
-              <p style="font-size:0.85rem; color:var(--text-muted);">${lead.companyName} · ${lead.industry}</p>
+              <div class="badge badge-purple" style="margin-bottom:6px; font-size:0.7rem;">${escapeHTML(lead.refId)}</div>
+              <h2 class="modal-title">${escapeHTML(lead.jobTitle)}</h2>
+              <p style="font-size:0.85rem; color:var(--text-muted);">${escapeHTML(lead.companyName)} · ${escapeHTML(lead.industry)}</p>
             </div>
             <button class="modal-close-btn" id="lead-modal-close" onclick="closeLeadModal()">✕</button>
           </div>
@@ -693,33 +712,33 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="lead-detail-grid">
               <div class="lead-detail-section">
                 <h4 class="job-details-title">Contact</h4>
-                <p><strong>${lead.contactName}</strong></p>
-                <p>${lead.email}</p>
-                <p>${lead.phone}</p>
+                <p><strong>${escapeHTML(lead.contactName)}</strong></p>
+                <p>${escapeHTML(lead.email)}</p>
+                <p>${escapeHTML(lead.phone)}</p>
               </div>
               <div class="lead-detail-section">
                 <h4 class="job-details-title">Role Details</h4>
-                <p><strong>Type:</strong> ${lead.employmentType || '—'}</p>
-                <p><strong>Location:</strong> ${lead.locationType || '—'}${lead.city ? ' · ' + lead.city : ''}</p>
-                <p><strong>Openings:</strong> ${lead.openings || 1}</p>
-                <p><strong>Salary:</strong> ${lead.currency || ''} ${lead.salaryMin || '—'} – ${lead.salaryMax || '—'}</p>
-                <p><strong>Deadline:</strong> ${lead.deadline || '—'}</p>
+                <p><strong>Type:</strong> ${escapeHTML(lead.employmentType || '—')}</p>
+                <p><strong>Location:</strong> ${escapeHTML(lead.locationType || '—')}${lead.city ? ' · ' + escapeHTML(lead.city) : ''}</p>
+                <p><strong>Openings:</strong> ${escapeHTML(lead.openings || 1)}</p>
+                <p><strong>Salary:</strong> ${escapeHTML(lead.currency || '')} ${escapeHTML(lead.salaryMin || '—')} – ${escapeHTML(lead.salaryMax || '—')}</p>
+                <p><strong>Deadline:</strong> ${escapeHTML(lead.deadline || '—')}</p>
               </div>
               <div class="lead-detail-section">
                 <h4 class="job-details-title">Preferences</h4>
-                <p><strong>Package:</strong> ${lead.package || '—'}</p>
-                <p><strong>Source:</strong> ${lead.source || '—'}</p>
-                <p><strong>Submitted:</strong> ${date}</p>
+                <p><strong>Package:</strong> ${escapeHTML(lead.package || '—')}</p>
+                <p><strong>Source:</strong> ${escapeHTML(lead.source || '—')}</p>
+                <p><strong>Submitted:</strong> ${escapeHTML(date)}</p>
               </div>
             </div>
             
             <div class="lead-detail-full">
               <h4 class="job-details-title">Job Description</h4>
-              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${lead.description || '—'}</p>
+              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${escapeHTML(lead.description || '—')}</p>
             </div>
             <div class="lead-detail-full">
               <h4 class="job-details-title">Key Requirements</h4>
-              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${lead.requirements || '—'}</p>
+              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${escapeHTML(lead.requirements || '—')}</p>
             </div>
 
             <!-- SECTION: ENTERPRISE APPLICANTS -->
@@ -870,11 +889,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnExportLeadsCSV) {
     btnExportLeadsCSV.addEventListener('click', () => {
       if (allLeads.length === 0) { alert('No leads to export.'); return; }
-      const clean = v => `"${String(v || '').replace(/"/g, '""')}"`;
+      // Use the top-level cleanCSVVal which also guards against CSV injection
       let csv = 'Ref ID,Date,Company,Industry,Contact,Email,Phone,Job Title,Dept,Type,Location,City,Openings,Salary Min,Salary Max,Currency,Deadline,Package,Status\n';
       allLeads.forEach(l => {
         const date = new Date(l.submittedAt).toLocaleDateString('en-GB');
-        csv += [clean(l.refId),clean(date),clean(l.companyName),clean(l.industry),clean(l.contactName),clean(l.email),clean(l.phone),clean(l.jobTitle),clean(l.department),clean(l.employmentType),clean(l.locationType),clean(l.city),l.openings||1,clean(l.salaryMin),clean(l.salaryMax),clean(l.currency),clean(l.deadline),clean(l.package),clean(l.status)].join(',') + '\n';
+        csv += [cleanCSVVal(l.refId),cleanCSVVal(date),cleanCSVVal(l.companyName),cleanCSVVal(l.industry),cleanCSVVal(l.contactName),cleanCSVVal(l.email),cleanCSVVal(l.phone),cleanCSVVal(l.jobTitle),cleanCSVVal(l.department),cleanCSVVal(l.employmentType),cleanCSVVal(l.locationType),cleanCSVVal(l.city),l.openings||1,cleanCSVVal(l.salaryMin),cleanCSVVal(l.salaryMax),cleanCSVVal(l.currency),cleanCSVVal(l.deadline),cleanCSVVal(l.package),cleanCSVVal(l.status)].join(',') + '\n';
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
@@ -884,6 +903,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
     });
   }
 
@@ -918,19 +938,19 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('No candidate applications have been filed for this advertisement yet.');
         return;
       }
-      const clean = v => `"${String(v || '').replace(/"/g, '""')}"`;
+      // Use the top-level cleanCSVVal which also guards against CSV injection
       let csv = 'Apply Date,Candidate Name,Email,Phone,Experience (Years),Portfolio,Cover Letter,Status\n';
       apps.forEach(app => {
         const appDate = new Date(app.appliedAt).toLocaleDateString('en-GB');
         csv += [
-          clean(appDate),
-          clean(app.name),
-          clean(app.email),
-          clean(app.phone),
+          cleanCSVVal(appDate),
+          cleanCSVVal(app.name),
+          cleanCSVVal(app.email),
+          cleanCSVVal(app.phone),
           app.experience,
-          clean(app.portfolio),
-          clean(app.coverLetter),
-          clean(app.status)
+          cleanCSVVal(app.portfolio),
+          cleanCSVVal(app.coverLetter),
+          cleanCSVVal(app.status)
         ].join(',') + '\n';
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -988,13 +1008,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const snippet = inquiry.message.length > 70 ? inquiry.message.slice(0, 70) + '...' : inquiry.message;
       return `
         <tr>
-          <td><span style="font-family: monospace;">${date}</span></td>
+          <td><span style="font-family: monospace;">${escapeHTML(date)}</span></td>
           <td>
-            <strong>${inquiry.name}</strong><br>
-            <span style="font-size:0.75rem;color:var(--text-muted);">${inquiry.email}</span>
+            <strong>${escapeHTML(inquiry.name)}</strong><br>
+            <span style="font-size:0.75rem;color:var(--text-muted);">${escapeHTML(inquiry.email)}</span>
           </td>
-          <td><span style="font-weight:500; color:var(--text-main);">${inquiry.subject}</span></td>
-          <td><span style="font-size:0.85rem;color:var(--text-muted);">${snippet}</span></td>
+          <td><span style="font-weight:500; color:var(--text-main);">${escapeHTML(inquiry.subject)}</span></td>
+          <td><span style="font-size:0.85rem;color:var(--text-muted);">${escapeHTML(snippet)}</span></td>
           <td style="text-align:right;">
             <button class="action-btn-sm btn-view-candidate" onclick="openInquiryModal(${inquiry.id})" style="margin-right: 6px;">
               View Message
@@ -1037,14 +1057,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="modal-header">
               <div>
                 <span class="badge badge-purple" style="margin-bottom:6px; font-size:0.7rem;">Contact Submission</span>
-                <h2 class="modal-title">${item.subject}</h2>
-                <p style="font-size:0.85rem; color:var(--text-muted);">${item.name} · ${item.email}</p>
+                <h2 class="modal-title">${escapeHTML(item.subject)}</h2>
+                <p style="font-size:0.85rem; color:var(--text-muted);">${escapeHTML(item.name)} · ${escapeHTML(item.email)}</p>
               </div>
               <button class="modal-close-btn" onclick="closeInquiryModal()">✕</button>
             </div>
             <div class="modal-body" style="padding-bottom:30px;">
               <div style="background:rgba(0,0,0,0.25); border:1px solid var(--border-color); border-radius:12px; padding:20px; margin-bottom:20px;">
-                <p style="white-space:pre-wrap; color:var(--text-main); font-size:0.95rem; line-height:1.7; margin:0;">${item.message}</p>
+                <p style="white-space:pre-wrap; color:var(--text-main); font-size:0.95rem; line-height:1.7; margin:0;">${escapeHTML(item.message)}</p>
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-size:0.8rem; color:var(--text-muted);">Received: ${date}</span>
@@ -1084,11 +1104,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnExportInquiriesCSV) {
     btnExportInquiriesCSV.addEventListener('click', () => {
       if (allInquiries.length === 0) { alert('No inquiries to export.'); return; }
-      const clean = v => `"${String(v || '').replace(/"/g, '""')}"`;
+      // Use the top-level cleanCSVVal which also guards against CSV injection
       let csv = 'Submission Date,Name,Email,Subject,Message\n';
       allInquiries.forEach(inq => {
         const date = new Date(inq.submittedAt).toLocaleDateString('en-GB');
-        csv += [clean(date), clean(inq.name), clean(inq.email), clean(inq.subject), clean(inq.message)].join(',') + '\n';
+        csv += [cleanCSVVal(date), cleanCSVVal(inq.name), cleanCSVVal(inq.email), cleanCSVVal(inq.subject), cleanCSVVal(inq.message)].join(',') + '\n';
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
@@ -1098,6 +1118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
     });
   }
 
