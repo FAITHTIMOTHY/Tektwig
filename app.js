@@ -115,6 +115,35 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
+     Portfolio Click Toggle (for touch/desktop description viewing)
+     ========================================================================== */
+  portfolioItems.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+
+  /* ==========================================================================
+     Dynamic "New Service" Badge Visibility Handler (7-day rule)
+     ========================================================================== */
+  const serviceCards = document.querySelectorAll('.service-card[data-released-date]');
+  serviceCards.forEach(card => {
+    const releasedStr = card.getAttribute('data-released-date');
+    if (!releasedStr) return;
+
+    const releaseDate = new Date(releasedStr);
+    const today = new Date();
+    const diffTime = today - releaseDate;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+    if (diffDays > 7) {
+      const badge = card.querySelector('.service-card-badge');
+      if (badge) badge.style.display = 'none';
+      card.classList.remove('service-card--featured');
+    }
+  });
+
+  /* ==========================================================================
      Testimonials Slider
      ========================================================================== */
   const slides = document.querySelectorAll('.testimonial-slide');

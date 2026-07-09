@@ -67,6 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminJobsList = document.getElementById('admin-jobs-list');
   const addJobForm = document.getElementById('admin-add-job-form');
 
+  // Job editing elements
+  let editingJobId = null;
+  let reviewingLeadId = null;
+  const jobFormTitle = document.getElementById('job-form-title');
+  const btnJobSubmit = document.getElementById('btn-job-submit');
+  const btnJobCancelEdit = document.getElementById('btn-job-cancel-edit');
+
   // Mobile Toggle navigation (from app.js)
   const navToggle = document.getElementById('nav-toggle');
   const navMenu = document.getElementById('nav-menu');
@@ -434,11 +441,46 @@ document.addEventListener('DOMContentLoaded', () => {
           <strong style="color:var(--text-main); font-size:0.95rem;">${escapeHTML(job.title)}</strong>
           <span style="display:block; font-size:0.75rem; color:var(--text-muted);">${escapeHTML(job.department)} &bull; ${escapeHTML(job.location)} &bull; ${escapeHTML(job.type)}</span>
         </div>
-        <button class="action-btn-sm btn-delete-job" data-id="${job.id}" style="border-color:#ef4444; color:#ef4444; background:none;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-        </button>
+        <div style="display:flex; gap:8px;">
+          <button class="action-btn-sm btn-edit-job" data-id="${job.id}" style="border-color:var(--accent-cyan); color:var(--accent-cyan); background:none; padding:4px 8px; font-size:0.75rem; display:inline-flex; align-items:center; gap:4px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>Edit</span>
+          </button>
+          <button class="action-btn-sm btn-delete-job" data-id="${job.id}" style="border-color:#ef4444; color:#ef4444; background:none; padding:4px 8px; font-size:0.75rem; display:inline-flex; align-items:center; justify-content:center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </div>
       </li>
     `).join('');
+
+    // Attach edit job button click events
+    document.querySelectorAll('.btn-edit-job').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const jobId = e.currentTarget.getAttribute('data-id');
+        const job = allJobs.find(j => j.id === parseInt(jobId));
+        if (!job) return;
+
+        editingJobId = job.id;
+        
+        // Populate form inputs
+        document.getElementById('job-title').value = job.title;
+        document.getElementById('job-dept').value = job.department;
+        document.getElementById('job-type').value = job.type;
+        document.getElementById('job-location').value = job.location;
+        document.getElementById('job-exp').value = job.experience;
+        document.getElementById('job-salary').value = job.salary;
+        document.getElementById('job-desc').value = job.description;
+        document.getElementById('job-reqs').value = (job.requirements || []).join(', ');
+
+        // Update labels and toggle cancel button
+        if (jobFormTitle) jobFormTitle.textContent = 'Edit Job Role';
+        if (btnJobSubmit) btnJobSubmit.textContent = 'Save Changes';
+        if (btnJobCancelEdit) btnJobCancelEdit.style.display = 'block';
+
+        // Scroll form panel into view
+        addJobForm.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
 
     // Attach delete job button click events
     document.querySelectorAll('.btn-delete-job').forEach(btn => {
@@ -452,6 +494,11 @@ document.addEventListener('DOMContentLoaded', () => {
           allJobs = await window.TektwigDB.getJobs();
           renderJobsList();
           populateRoleFilters();
+          
+          // If we were editing this deleted job, reset form
+          if (editingJobId === parseInt(jobId)) {
+            resetJobForm();
+          }
         } catch (err) {
           console.error('Error deleting job posting:', err);
           alert('Failed to delete job posting.');
@@ -460,7 +507,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Publish New Job Submission
+  // Reset job form helper
+  function resetJobForm() {
+    editingJobId = null;
+    reviewingLeadId = null;
+    addJobForm.reset();
+    if (jobFormTitle) jobFormTitle.textContent = 'Post a New Job Role';
+    if (btnJobSubmit) btnJobSubmit.textContent = 'Publish Job Post';
+    if (btnJobCancelEdit) btnJobCancelEdit.style.display = 'none';
+  }
+
+  // Cancel edit handler
+  if (btnJobCancelEdit) {
+    btnJobCancelEdit.addEventListener('click', () => {
+      resetJobForm();
+    });
+  }
+
+  // Publish / Update Job Submission
   addJobForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -476,33 +540,122 @@ document.addEventListener('DOMContentLoaded', () => {
     // Map requirements list
     const requirementsArray = reqsVal.split(',').map(req => req.trim()).filter(req => req.length > 0);
 
-    const newJobPayload = {
-      title: titleVal,
-      department: deptVal,
-      type: typeVal,
-      location: locVal,
-      experience: expVal,
-      salary: salaryVal,
-      description: descVal,
-      requirements: requirementsArray,
-      status: 'Active',
-      createdAt: new Date().toISOString()
-    };
+    if (editingJobId) {
+      // Editing Mode
+      const originalJob = allJobs.find(j => j.id === editingJobId) || {};
+      const updatedJobPayload = Object.assign({}, originalJob, {
+        title: titleVal,
+        department: deptVal,
+        type: typeVal,
+        location: locVal,
+        experience: expVal,
+        salary: salaryVal,
+        description: descVal,
+        requirements: requirementsArray
+      });
 
-    try {
-      await window.TektwigDB.addJob(newJobPayload);
-      
-      // Reload job postings
-      allJobs = await window.TektwigDB.getJobs();
-      renderJobsList();
-      populateRoleFilters();
-      
-      // Reset form
-      addJobForm.reset();
-      alert(`Job Posting "${newJobPayload.title}" has been successfully published!`);
-    } catch (err) {
-      console.error('Error adding job:', err);
-      alert('Failed to publish job posting.');
+      if (!confirm(`Are you sure you want to save changes to "${updatedJobPayload.title}"? This will immediately update the live job posting on the Careers page.`)) {
+        return;
+      }
+
+      try {
+        await window.TektwigDB.updateJob(updatedJobPayload);
+        
+        // Reload job postings
+        allJobs = await window.TektwigDB.getJobs();
+        renderJobsList();
+        populateRoleFilters();
+        
+        alert(`Job Posting "${updatedJobPayload.title}" has been successfully updated!`);
+        resetJobForm();
+      } catch (err) {
+        console.error('Error updating job posting:', err);
+        alert('Failed to save changes to the job posting.');
+      }
+    } else if (reviewingLeadId) {
+      // Reviewing & Publishing Enterprise Lead Mode
+      const originalLead = allLeads.find(l => l.id === reviewingLeadId);
+      if (!originalLead) {
+        alert('Error: Original lead brief not found.');
+        return;
+      }
+
+      const newJobPayload = {
+        title: titleVal,
+        department: deptVal,
+        type: typeVal,
+        location: locVal,
+        experience: expVal,
+        salary: salaryVal,
+        description: descVal,
+        requirements: requirementsArray,
+        status: 'Active',
+        isThirdParty: true,
+        advertisingFor: originalLead.companyName,
+        leadRefId: originalLead.refId,
+        createdAt: new Date().toISOString()
+      };
+
+      if (!confirm(`Are you sure you want to confirm and publish "${newJobPayload.title}" as a live job listing on the Careers page? This will immediately make it visible to candidates.`)) {
+        return;
+      }
+
+      try {
+        const newJobId = await window.TektwigDB.addJob(newJobPayload);
+
+        // Stamp lead with published job ID and update status
+        const updatedLead = Object.assign({}, originalLead, {
+          publishedJobId: newJobId,
+          status: 'In Progress'
+        });
+        await window.TektwigDB.updateEnterpriseLead(updatedLead);
+
+        // Reload lists and counts
+        allJobs = await window.TektwigDB.getJobs();
+        renderJobsList();
+        populateRoleFilters();
+        await loadLeads();
+
+        alert(`Job Listing published successfully!\n\n"${newJobPayload.title}" is now live on the Careers page\nAdvertising for: ${originalLead.companyName}`);
+        resetJobForm();
+      } catch (err) {
+        console.error('Error publishing lead job posting:', err);
+        alert('Failed to publish job listing.');
+      }
+    } else {
+      // Publishing Mode
+      const newJobPayload = {
+        title: titleVal,
+        department: deptVal,
+        type: typeVal,
+        location: locVal,
+        experience: expVal,
+        salary: salaryVal,
+        description: descVal,
+        requirements: requirementsArray,
+        status: 'Active',
+        createdAt: new Date().toISOString()
+      };
+
+      if (!confirm(`Are you sure you want to publish "${newJobPayload.title}" as a live job listing on the Careers page? This will immediately make it visible to all applicants.`)) {
+        return;
+      }
+
+      try {
+        await window.TektwigDB.addJob(newJobPayload);
+        
+        // Reload job postings
+        allJobs = await window.TektwigDB.getJobs();
+        renderJobsList();
+        populateRoleFilters();
+        
+        // Reset form
+        addJobForm.reset();
+        alert(`Job Posting "${newJobPayload.title}" has been successfully published!`);
+      } catch (err) {
+        console.error('Error adding job:', err);
+        alert('Failed to publish job posting.');
+      }
     }
   });
 
@@ -631,7 +784,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${escapeHTML(lead.package || '—')}</td>
           <td><span class="${statusClass}">${escapeHTML(lead.status)}</span></td>
           <td style="text-align:right;">
-            <button class="btn-view-profile" onclick="openLeadModal(${lead.id})">View Brief</button>
+            <button class="action-btn-sm btn-view-candidate" onclick="openLeadModal(${lead.id})" style="display:inline-flex; align-items:center; gap:4px; padding:4px 8px; font-size:0.75rem; border-color:var(--accent-cyan); color:var(--accent-cyan); background:none; cursor:pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span>View Brief</span>
+            </button>
           </td>
         </tr>
       `;
@@ -700,51 +856,82 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalHTML = `
       <div id="lead-modal-backdrop" class="modal-backdrop show" onclick="if(event.target===this)closeLeadModal()">
         <div class="app-modal lead-modal" style="max-height:85vh; overflow-y:auto;">
-          <div class="modal-header">
+          <div class="modal-header-section" style="border-color: var(--border-glow-purple);">
             <div>
               <div class="badge badge-purple" style="margin-bottom:6px; font-size:0.7rem;">${escapeHTML(lead.refId)}</div>
               <h2 class="modal-title">${escapeHTML(lead.jobTitle)}</h2>
               <p style="font-size:0.85rem; color:var(--text-muted);">${escapeHTML(lead.companyName)} · ${escapeHTML(lead.industry)}</p>
             </div>
-            <button class="modal-close-btn" id="lead-modal-close" onclick="closeLeadModal()">✕</button>
+            <button class="modal-close-btn" id="lead-modal-close" onclick="closeLeadModal()" aria-label="Close Modal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
           </div>
-          <div class="modal-body lead-modal-body" style="padding-bottom:30px;">
-            <div class="lead-detail-grid">
-              <div class="lead-detail-section">
-                <h4 class="job-details-title">Contact</h4>
-                <p><strong>${escapeHTML(lead.contactName)}</strong></p>
-                <p>${escapeHTML(lead.email)}</p>
-                <p>${escapeHTML(lead.phone)}</p>
+          <div class="modal-content-body" style="padding-bottom:30px;">
+            <div class="recruiter-profile-summary" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 24px;">
+              <div>
+                <h4 class="job-details-title" style="border-left-color: var(--accent-purple); font-size: 0.95rem; margin-bottom: 12px; margin-top: 0;">Contact</h4>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Contact Name</div>
+                  <div class="profile-meta-val">${escapeHTML(lead.contactName)}</div>
+                </div>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Email Address</div>
+                  <div class="profile-meta-val">${escapeHTML(lead.email)}</div>
+                </div>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Phone Number</div>
+                  <div class="profile-meta-val">${escapeHTML(lead.phone)}</div>
+                </div>
               </div>
-              <div class="lead-detail-section">
-                <h4 class="job-details-title">Role Details</h4>
-                <p><strong>Type:</strong> ${escapeHTML(lead.employmentType || '—')}</p>
-                <p><strong>Location:</strong> ${escapeHTML(lead.locationType || '—')}${lead.city ? ' · ' + escapeHTML(lead.city) : ''}</p>
-                <p><strong>Openings:</strong> ${escapeHTML(lead.openings || 1)}</p>
-                <p><strong>Salary:</strong> ${escapeHTML(lead.currency || '')} ${escapeHTML(lead.salaryMin || '—')} – ${escapeHTML(lead.salaryMax || '—')}</p>
-                <p><strong>Deadline:</strong> ${escapeHTML(lead.deadline || '—')}</p>
+
+              <div>
+                <h4 class="job-details-title" style="border-left-color: var(--accent-cyan); font-size: 0.95rem; margin-bottom: 12px; margin-top: 0;">Role Details</h4>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Employment Type</div>
+                  <div class="profile-meta-val">${escapeHTML(lead.employmentType || '—')}</div>
+                </div>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Location</div>
+                  <div class="profile-meta-val">${escapeHTML(lead.locationType || '—')}${lead.city ? ' · ' + escapeHTML(lead.city) : ''}</div>
+                </div>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Openings &amp; Salary</div>
+                  <div class="profile-meta-val">
+                    ${escapeHTML(lead.openings || 1)} roles &bull; ${escapeHTML(lead.currency || '')} ${escapeHTML(lead.salaryMin || '—')} – ${escapeHTML(lead.salaryMax || '—')}
+                  </div>
+                </div>
               </div>
-              <div class="lead-detail-section">
-                <h4 class="job-details-title">Preferences</h4>
-                <p><strong>Package:</strong> ${escapeHTML(lead.package || '—')}</p>
-                <p><strong>Source:</strong> ${escapeHTML(lead.source || '—')}</p>
-                <p><strong>Submitted:</strong> ${escapeHTML(date)}</p>
+
+              <div>
+                <h4 class="job-details-title" style="border-left-color: var(--accent-green); font-size: 0.95rem; margin-bottom: 12px; margin-top: 0;">Preferences</h4>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Preferred Package</div>
+                  <div class="profile-meta-val" style="color: var(--accent-cyan); font-weight: 700;">${escapeHTML(lead.package || '—')}</div>
+                </div>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">How they heard</div>
+                  <div class="profile-meta-val">${escapeHTML(lead.source || '—')}</div>
+                </div>
+                <div class="profile-meta-block">
+                  <div class="profile-meta-lbl">Submission Date</div>
+                  <div class="profile-meta-val">${escapeHTML(date)}</div>
+                </div>
               </div>
             </div>
             
-            <div class="lead-detail-full">
-              <h4 class="job-details-title">Job Description</h4>
-              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${escapeHTML(lead.description || '—')}</p>
+            <div class="profile-cover-letter-box" style="max-height:none; margin-bottom:24px;">
+              <h4 class="job-details-title" style="margin-bottom:12px; margin-top: 0;">Job Description</h4>
+              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7; margin:0;">${escapeHTML(lead.description || '—')}</p>
             </div>
-            <div class="lead-detail-full">
-              <h4 class="job-details-title">Key Requirements</h4>
-              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7;">${escapeHTML(lead.requirements || '—')}</p>
+            <div class="profile-cover-letter-box" style="max-height:none; margin-bottom:24px;">
+              <h4 class="job-details-title" style="margin-bottom:12px; margin-top: 0;">Key Requirements</h4>
+              <p style="white-space:pre-wrap; color:var(--text-muted); font-size:0.9rem; line-height:1.7; margin:0;">${escapeHTML(lead.requirements || '—')}</p>
             </div>
 
             <!-- SECTION: ENTERPRISE APPLICANTS -->
-            <div class="lead-detail-full" style="border-color: rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.01);">
+            <div class="profile-cover-letter-box" style="max-height:none; margin-bottom:24px; border-color: rgba(245, 158, 11, 0.2); background: rgba(245, 158, 11, 0.01);">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h4 class="job-details-title" style="margin-bottom:0; color:#f59e0b;">
+                <h4 class="job-details-title" style="margin-bottom:0; margin-top: 0; color:#f59e0b; border-left-color:#f59e0b;">
                   Candidate Returns (${leadApps.length})
                 </h4>
                 ${leadApps.length > 0 ? `
@@ -771,22 +958,25 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
 
-            <div class="lead-status-update">
-              <label style="font-size:0.85rem; font-weight:600;">Update Status</label>
-              <select id="lead-status-select" style="background:rgba(0,0,0,0.3); border:1px solid var(--border-color); color:var(--text-main); padding:10px 14px; border-radius:8px; font-family:var(--font-body); font-size:0.9rem;">
-                <option value="New"         ${lead.status==='New'?'selected':''}>New</option>
-                <option value="In Progress" ${lead.status==='In Progress'?'selected':''}>In Progress</option>
-                <option value="Completed"   ${lead.status==='Completed'?'selected':''}>Completed</option>
-              </select>
-              <button class="btn btn-primary btn-sm" onclick="saveLeadStatus()">Save Status</button>
-              ${lead.publishedJobId
-                ? `<span class="lead-published-badge">&#10003; Live on Careers Page</span>`
-                : `<button class="btn btn-sm lead-publish-btn" onclick="publishLeadAsJob(${lead.id})">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                     Publish as Job Listing
-                   </button>`
-              }
-              <button class="btn btn-secondary btn-sm" style="border-color:#ef4444; color:#ef4444; margin-left:auto;" onclick="deleteLead(${lead.id})">Delete Lead</button>
+            <div class="profile-action-bar">
+              <div class="status-update-control">
+                <select id="lead-status-select" style="padding: 10px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; font-family: var(--font-body); font-size: 0.9rem;">
+                  <option value="New"         ${lead.status==='New'?'selected':''}>New</option>
+                  <option value="In Progress" ${lead.status==='In Progress'?'selected':''}>In Progress</option>
+                  <option value="Completed"   ${lead.status==='Completed'?'selected':''}>Completed</option>
+                </select>
+                <button class="btn btn-primary btn-sm" onclick="saveLeadStatus()">Save Status</button>
+              </div>
+              <div style="display:flex; gap:12px; align-items:center;">
+                ${lead.publishedJobId
+                  ? `<span class="lead-published-badge">&#10003; Live on Careers Page</span>`
+                  : `<button class="btn btn-sm lead-publish-btn" onclick="publishLeadAsJob(${lead.id})">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                       Publish as Job Listing
+                     </button>`
+                }
+                <button class="btn btn-secondary btn-sm" style="border-color:#ef4444; color:#ef4444;" onclick="deleteLead(${lead.id})">Delete Lead</button>
+              </div>
             </div>
           </div>
         </div>
@@ -821,8 +1011,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const lead = await window.TektwigDB.getEnterpriseLead(id);
     if (!lead) return;
 
-    if (!confirm(`Publish "${lead.jobTitle}" for ${lead.companyName} as a live job listing on the Careers page?`)) return;
-
     // Build salary string from lead data
     const salaryStr = (lead.salaryMin && lead.salaryMax)
       ? `${lead.currency || 'NGN'} ${lead.salaryMin} \u2013 ${lead.salaryMax}/month`
@@ -831,46 +1019,48 @@ document.addEventListener('DOMContentLoaded', () => {
     // Build location string
     const locationStr = [lead.locationType, lead.city].filter(Boolean).join(' \u00b7 ') || 'See description';
 
-    // Parse requirements text into array (one per non-empty line)
+    // Parse requirements text into comma separated string
     const reqLines = (lead.requirements || '')
       .split('\n')
       .map(s => s.trim())
-      .filter(Boolean)
-      .slice(0, 6);
+      .filter(Boolean);
+    const reqsStr = reqLines.join(', ');
 
-    const job = {
-      title:          lead.jobTitle,
-      department:     lead.department || 'External',
-      type:           lead.employmentType || 'Full-time',
-      location:       locationStr,
-      experience:     'See description',
-      salary:         salaryStr,
-      description:    lead.description || 'See full job description.',
-      requirements:   reqLines.length ? reqLines : ['See full job description.'],
-      status:         'Active',
-      isThirdParty:   true,
-      advertisingFor: lead.companyName,
-      leadRefId:      lead.refId,
-      createdAt:      new Date().toISOString()
-    };
+    // Set editing and reviewing references
+    editingJobId = null;
+    reviewingLeadId = lead.id;
 
-    try {
-      const newJobId = await window.TektwigDB.addJob(job);
+    // Populate the form fields with lead info so the admin can review & edit!
+    document.getElementById('job-title').value = lead.jobTitle;
+    document.getElementById('job-dept').value = lead.department || 'Software Dev';
+    document.getElementById('job-type').value = lead.employmentType || 'Full-time';
+    document.getElementById('job-location').value = locationStr;
+    document.getElementById('job-exp').value = 'See description';
+    document.getElementById('job-salary').value = salaryStr;
+    document.getElementById('job-desc').value = lead.description || '';
+    document.getElementById('job-reqs').value = reqsStr;
 
-      // Stamp the lead with the published job ID and update status
-      const updatedLead = Object.assign({}, lead, {
-        publishedJobId: newJobId,
-        status: 'In Progress'
-      });
-      await window.TektwigDB.updateEnterpriseLead(updatedLead);
+    // Update form header and labels
+    if (jobFormTitle) jobFormTitle.textContent = 'Review & Publish Job Listing';
+    if (btnJobSubmit) btnJobSubmit.textContent = 'Confirm & Publish';
+    if (btnJobCancelEdit) btnJobCancelEdit.style.display = 'block';
 
-      closeLeadModal();
-      await loadLeads();
-      alert(`Job listing published!\n\n"${lead.jobTitle}" is now live on the Careers page\nAdvertising for: ${lead.companyName}`);
-    } catch (err) {
-      console.error('Failed to publish job listing:', err);
-      alert('Error publishing job. Please try again.');
+    // Close the detail view modal
+    closeLeadModal();
+
+    // Open/toggle the jobs postings drawer panel if hidden
+    if (jobsPanel && jobsPanel.style.display === 'none') {
+      jobsPanel.style.display = 'block';
+      if (btnToggleJobs) {
+        btnToggleJobs.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <span>Hide Jobs Panel</span>
+        `;
+      }
     }
+
+    // Scroll form container smoothly into view
+    addJobForm.scrollIntoView({ behavior: 'smooth' });
   };
 
 

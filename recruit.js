@@ -97,6 +97,22 @@ document.addEventListener('DOMContentLoaded', () => {
       valid = false;
     }
 
+    // Scroll to the first element with an error and focus it
+    if (!valid) {
+      const firstError = form.querySelector('.has-error');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const input = firstError.querySelector('input, select, textarea');
+        if (input) {
+          // If checkbox, focus it, otherwise also select text if text field
+          input.focus();
+          if (input.select && ['text', 'email', 'number', 'tel', 'url'].includes(input.type)) {
+            input.select();
+          }
+        }
+      }
+    }
+
     return valid;
   }
 

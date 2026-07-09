@@ -275,7 +275,7 @@
           
           <!-- Add Job Form -->
           <div class="glass-panel" style="padding: 20px; background: rgba(0,0,0,0.2);">
-            <h3 class="job-details-title" style="margin-bottom: 12px;">Post a New Job Role</h3>
+            <h3 class="job-details-title" id="job-form-title" style="margin-bottom: 12px;">Post a New Job Role</h3>
             <form id="admin-add-job-form">
               <div class="form-group" style="margin-bottom: 12px;">
                 <label for="job-title" style="display:block; font-size:0.8rem; margin-bottom: 4px;">Job Title *</label>
@@ -320,7 +320,10 @@
                 <textarea id="job-reqs" rows="2" required placeholder="E.g. Degree in CS, Docker certification, 3 years React exp" style="width:100%; padding:8px 12px; font-size:0.85rem; background:rgba(0,0,0,0.3); border:1px solid var(--border-color); border-radius:6px; color:#fff; font-family:var(--font-body);"></textarea>
               </div>
               
-              <button type="submit" class="btn btn-primary btn-sm btn-block">Publish Job Post</button>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <button type="submit" id="btn-job-submit" class="btn btn-primary btn-sm btn-block">Publish Job Post</button>
+                <button type="button" id="btn-job-cancel-edit" class="btn btn-secondary btn-sm btn-block" style="display:none; border-color:#94a3b8;">Cancel Edit</button>
+              </div>
             </form>
           </div>
         </div>

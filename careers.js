@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalBackdrop = document.getElementById('application-modal-backdrop');
   const modalCloseBtn = document.getElementById('modal-close-btn');
   const successCloseBtn = document.getElementById('btn-success-close');
+  const btnModalApply = document.getElementById('btn-modal-apply');
   
   // Modal Job Details
   const modalJobDept = document.getElementById('modal-job-dept');
@@ -99,9 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     jobsGrid.innerHTML = jobsList.map(job => {
-      const truncatedDesc = job.description.length > 130 ? job.description.slice(0, 130) + '...' : job.description;
       return `
-      <div class="job-card glass-panel${job.isThirdParty ? ' job-card--external' : ''}" id="job-card-${job.id}">
+      <div class="job-card glass-panel${job.isThirdParty ? ' job-card--external' : ''}" id="job-card-${job.id}" style="cursor: pointer;">
         <div class="job-header">
           <span class="job-dept-tag">${escapeHTML(job.department)}</span>
           <span class="job-type-tag">${escapeHTML(job.type)}</span>
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         
-        <p class="job-card-desc">${escapeHTML(truncatedDesc)}</p>
+        <p class="job-card-desc">${escapeHTML(job.description)}</p>
         
         <div class="job-card-footer">
           <span class="job-card-salary">${escapeHTML(job.salary)}</span>
@@ -136,11 +136,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }).join('');
 
 
+    // Attach click listeners to the entire job card for details-only popup
+    document.querySelectorAll('.job-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', (e) => {
+        // If clicked on/inside Apply Now button, let it be handled by the button event
+        if (e.target.closest('.btn-apply')) {
+          return;
+        }
+        
+        const jobId = card.id.replace('job-card-', '');
+        openApplyModal(jobId, false);
+      });
+    });
+
     // Attach event listeners to apply buttons
     document.querySelectorAll('.btn-apply').forEach(button => {
       button.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent opening in details-only mode when clicking apply button
         const jobId = e.target.getAttribute('data-id');
-        openApplyModal(jobId);
+        openApplyModal(jobId, true);
       });
     });
   }
@@ -165,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
   departmentFilter.addEventListener('change', filterJobs);
 
   // Modal Functionality
-  async function openApplyModal(jobId) {
+  async function openApplyModal(jobId, showForm = true) {
     try {
       selectedJob = await window.TektwigDB.getJob(jobId);
       if (!selectedJob) return;
@@ -210,8 +225,15 @@ document.addEventListener('DOMContentLoaded', () => {
         handleFileSelected(mockFile);
       }
       
-      // Show form screen, hide success screen
-      appForm.style.display = 'block';
+      // Show form screen or hide it based on showForm flag
+      if (showForm) {
+        appForm.style.display = 'block';
+        if (btnModalApply) btnModalApply.style.display = 'none';
+      } else {
+        appForm.style.display = 'none';
+        if (btnModalApply) btnModalApply.style.display = 'inline-block';
+      }
+      
       jobDetailsView.style.display = 'block';
       successContainer.style.display = 'none';
 
@@ -231,6 +253,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   modalCloseBtn.addEventListener('click', closeApplyModal);
   successCloseBtn.addEventListener('click', closeApplyModal);
+
+  // Wire up inline apply button in the modal's details-only view
+  if (btnModalApply) {
+    btnModalApply.addEventListener('click', () => {
+      btnModalApply.style.display = 'none';
+      appForm.style.display = 'block';
+      // Smoothly scroll modal down to the application form
+      appForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 
   // Close modal when clicking on backdrop shadow
   modalBackdrop.addEventListener('click', (e) => {
