@@ -46,8 +46,6 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  overflow-x: hidden;
-  max-width: 100%;
 }
 
 body {
@@ -3454,7 +3452,7 @@ img {
 /* Videos Grid */
 .datarock-videos-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 30px;
 }
 
@@ -3637,31 +3635,19 @@ img {
 }
 
 .cta-questions {
-  list-style: none;
+  list-style-type: disc;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   margin: 10px 0 20px;
+  padding-left: 20px;
   text-align: left;
   max-width: 680px;
-  padding: 0;
 }
 
 .cta-questions li {
   font-size: 0.95rem;
   line-height: 1.5;
-  position: relative;
-  padding-left: 24px;
-}
-
-.cta-questions li::before {
-  content: "•";
-  color: var(--accent-purple);
-  font-size: 1.4rem;
-  position: absolute;
-  left: 0;
-  top: -2px;
-  line-height: 1;
 }
 
 .cta-buttons {
@@ -4177,80 +4163,5 @@ img {
   .site-footer .btn {
     width: 100% !important;
     justify-content: center !important;
-  }
-
-  /* Background Glow Orbs bounds constraints */
-  .orb-1 {
-    left: 0 !important;
-    top: 5% !important;
-    width: 200px !important;
-    height: 200px !important;
-  }
-  .orb-2 {
-    right: 0 !important;
-    top: 35% !important;
-    width: 250px !important;
-    height: 250px !important;
-  }
-  .orb-3 {
-    left: 10% !important;
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  /* Interactive Tech Card 3D transform override */
-  .tech-card-wrapper {
-    perspective: none !important;
-    max-width: 100% !important;
-  }
-  .tech-card {
-    animation: none !important;
-    transform: none !important;
-    transform-style: flat !important;
-    max-width: 100% !important;
-  }
-
-  /* Datarock Mockups mobile layouts */
-  .policy-editor-mock,
-  .desktop-mockup,
-  .outlook-mockup {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-  }
-
-  .desktop-body {
-    grid-template-columns: 1fr !important;
-    height: auto !important;
-  }
-  .desktop-sidebar {
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    border-right: none !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    padding: 8px !important;
-    gap: 8px !important;
-    justify-content: flex-start !important;
-  }
-  .desktop-sidebar .sidebar-item {
-    padding: 6px 12px !important;
-    white-space: nowrap !important;
-    border-radius: 4px !important;
-  }
-  .desktop-content-area {
-    padding: 16px !important;
-  }
-
-  .outlook-body {
-    grid-template-columns: 1fr !important;
-    height: auto !important;
-  }
-  .email-form-mock {
-    border-right: none !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    padding: 12px !important;
-  }
-  .outlook-sidebar-mock {
-    padding: 12px !important;
   }
 }
