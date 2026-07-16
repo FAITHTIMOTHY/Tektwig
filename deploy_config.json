@@ -1,0 +1,8 @@
+{
+  "ftpHost": "ftp.tektwig.com",
+  "ftpUsername": "u787979704",
+  "ftpPassword": "Pry@19#90tektwig",
+  "ftpPort": 21,
+  "mainRemoteDir": "/public_html",
+  "subdomainRemoteDir": "/admin.tektwig.com"
+}

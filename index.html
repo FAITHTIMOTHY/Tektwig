@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      const hostname = window.location.hostname;
+      if (hostname.startsWith('admin.')) {
+        window.location.replace(window.location.protocol + '//' + window.location.host + '/admin.html' + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tektwig Digital & Internet Business Solutions - Building secure, intelligent, data-driven systems that scale with you. Specialists in Cybersecurity, Data Protection, AI development, Networking, and Full-Stack Engineering.">
   <meta name="keywords" content="Cybersecurity, Data Protection, AI Development, Networking, Software Development, IT Training, Lagos, Nigeria, Tektwig">
