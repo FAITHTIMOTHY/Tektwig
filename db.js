@@ -357,146 +357,267 @@ function deleteRecord(db, storeName, id) {
    Public DB Operations API (exported to window object)
    ========================================================================== */
 
-window.TektwigDB = {
-  getJobs: async () => {
-    const db = await initDB();
-    return getAllRecords(db, 'jobs');
-  },
-  
-  getJob: async (id) => {
-    const db = await initDB();
-    return getRecordById(db, 'jobs', parseInt(id));
-  },
-  
-  addJob: async (job) => {
-    const db = await initDB();
-    if (!job.createdAt) job.createdAt = new Date().toISOString();
-    return addRecord(db, 'jobs', job);
-  },
+(function() {
+  const isSubdomainAdmin = typeof window !== 'undefined' && window.location.hostname.startsWith('admin.');
 
-  updateJob: async (job) => {
-    const db = await initDB();
-    return putRecord(db, 'jobs', job);
-  },
+  if (isSubdomainAdmin) {
+    // Client (Proxy) Mode
+    const pendingRequests = new Map();
+    let requestCounter = 0;
+    let isBridgeReady = false;
+    const bridgeReadyQueue = [];
+    let iframe = null;
 
-  deleteJob: async (id) => {
-    const db = await initDB();
-    return deleteRecord(db, 'jobs', parseInt(id));
-  },
-
-  getApplications: async () => {
-    const db = await initDB();
-    return getAllRecords(db, 'applications');
-  },
-
-  getApplication: async (id) => {
-    const db = await initDB();
-    return getRecordById(db, 'applications', parseInt(id));
-  },
-
-  saveApplication: async (appData) => {
-    const db = await initDB();
-    if (!appData.appliedAt) appData.appliedAt = new Date().toISOString();
-    if (!appData.status) appData.status = 'Pending Review';
-    if (appData.isThirdParty) {
-      return addRecord(db, 'enterpriseApplications', appData);
+    const currentHost = window.location.host;
+    let parentHost = currentHost;
+    if (window.location.hostname.startsWith('admin.')) {
+      parentHost = currentHost.replace(/^admin\./, '');
     }
-    return addRecord(db, 'applications', appData);
-  },
+    const parentOrigin = window.TEKTWIG_PARENT_ORIGIN || (window.location.protocol + '//' + parentHost);
+    const bridgeUrl = parentOrigin + '/db-bridge.html';
 
-  updateApplicationStatus: async (id, newStatus) => {
-    const db = await initDB();
-    const app = await getRecordById(db, 'applications', parseInt(id));
-    if (!app) throw new Error(`Application with ID ${id} not found.`);
-    app.status = newStatus;
-    return putRecord(db, 'applications', app);
-  },
+    function initBridge() {
+      if (iframe) return;
+      
+      iframe = document.createElement('iframe');
+      iframe.src = bridgeUrl;
+      iframe.style.display = 'none';
+      
+      if (document.body) {
+        document.body.appendChild(iframe);
+      } else {
+        document.addEventListener('DOMContentLoaded', () => {
+          document.body.appendChild(iframe);
+        });
+      }
+    }
 
-  deleteApplication: async (id) => {
-    const db = await initDB();
-    return deleteRecord(db, 'applications', parseInt(id));
-  },
+    // Load bridge immediately
+    initBridge();
 
-  // ── Enterprise Applications ────────────────────────────────────────────────
-  getEnterpriseApplications: async () => {
-    const db = await initDB();
-    return getAllRecords(db, 'enterpriseApplications');
-  },
+    window.addEventListener('message', (event) => {
+      if (event.origin !== parentOrigin) return;
+      
+      const data = event.data;
+      if (!data) return;
+      
+      if (data.type === 'db-bridge-ready') {
+        isBridgeReady = true;
+        while (bridgeReadyQueue.length > 0) {
+          const callback = bridgeReadyQueue.shift();
+          callback();
+        }
+      } else if (data.type === 'db-response') {
+        const { id, success, result, error } = data;
+        if (pendingRequests.has(id)) {
+          const { resolve, reject } = pendingRequests.get(id);
+          pendingRequests.delete(id);
+          if (success) {
+            resolve(result);
+          } else {
+            reject(new Error(error));
+          }
+        }
+      }
+    });
 
-  getEnterpriseApplicationsForLead: async (leadRefId) => {
-    const db = await initDB();
-    const allEntApps = await getAllRecords(db, 'enterpriseApplications');
-    return allEntApps.filter(app => app.leadRefId === leadRefId);
-  },
+    function sendRequest(method, args) {
+      initBridge();
+      return new Promise((resolve, reject) => {
+        const id = ++requestCounter;
+        pendingRequests.set(id, { resolve, reject });
+        
+        const execute = () => {
+          iframe.contentWindow.postMessage({
+            type: 'db-request',
+            id,
+            method,
+            args
+          }, parentOrigin);
+        };
+        
+        if (isBridgeReady) {
+          execute();
+        } else {
+          bridgeReadyQueue.push(execute);
+        }
+      });
+    }
 
-  getEnterpriseApplication: async (id) => {
-    const db = await initDB();
-    return getRecordById(db, 'enterpriseApplications', parseInt(id));
-  },
+    window.TektwigDB = {
+      getJobs: (...args) => sendRequest('getJobs', args),
+      getJob: (...args) => sendRequest('getJob', args),
+      addJob: (...args) => sendRequest('addJob', args),
+      updateJob: (...args) => sendRequest('updateJob', args),
+      deleteJob: (...args) => sendRequest('deleteJob', args),
+      
+      getApplications: (...args) => sendRequest('getApplications', args),
+      getApplication: (...args) => sendRequest('getApplication', args),
+      saveApplication: (...args) => sendRequest('saveApplication', args),
+      updateApplicationStatus: (...args) => sendRequest('updateApplicationStatus', args),
+      deleteApplication: (...args) => sendRequest('deleteApplication', args),
+      
+      getEnterpriseApplications: (...args) => sendRequest('getEnterpriseApplications', args),
+      getEnterpriseApplicationsForLead: (...args) => sendRequest('getEnterpriseApplicationsForLead', args),
+      getEnterpriseApplication: (...args) => sendRequest('getEnterpriseApplication', args),
+      updateEnterpriseApplicationStatus: (...args) => sendRequest('updateEnterpriseApplicationStatus', args),
+      deleteEnterpriseApplication: (...args) => sendRequest('deleteEnterpriseApplication', args),
+      
+      getEnterpriseLeads: (...args) => sendRequest('getEnterpriseLeads', args),
+      getEnterpriseLead: (...args) => sendRequest('getEnterpriseLead', args),
+      saveEnterpriseLead: (...args) => sendRequest('saveEnterpriseLead', args),
+      updateEnterpriseLead: (...args) => sendRequest('updateEnterpriseLead', args),
+      updateLeadStatus: (...args) => sendRequest('updateLeadStatus', args),
+      deleteEnterpriseLead: (...args) => sendRequest('deleteEnterpriseLead', args),
+      
+      saveContactInquiry: (...args) => sendRequest('saveContactInquiry', args),
+      getContactInquiries: (...args) => sendRequest('getContactInquiries', args),
+      deleteContactInquiry: (...args) => sendRequest('deleteContactInquiry', args)
+    };
+  } else {
+    // Host Mode (Direct IndexedDB Access)
+    window.TektwigDB = {
+      getJobs: async () => {
+        const db = await initDB();
+        return getAllRecords(db, 'jobs');
+      },
+      
+      getJob: async (id) => {
+        const db = await initDB();
+        return getRecordById(db, 'jobs', parseInt(id));
+      },
+      
+      addJob: async (job) => {
+        const db = await initDB();
+        if (!job.createdAt) job.createdAt = new Date().toISOString();
+        return addRecord(db, 'jobs', job);
+      },
 
-  updateEnterpriseApplicationStatus: async (id, newStatus) => {
-    const db = await initDB();
-    const app = await getRecordById(db, 'enterpriseApplications', parseInt(id));
-    if (!app) throw new Error(`Enterprise application with ID ${id} not found.`);
-    app.status = newStatus;
-    return putRecord(db, 'enterpriseApplications', app);
-  },
+      updateJob: async (job) => {
+        const db = await initDB();
+        return putRecord(db, 'jobs', job);
+      },
 
-  deleteEnterpriseApplication: async (id) => {
-    const db = await initDB();
-    return deleteRecord(db, 'enterpriseApplications', parseInt(id));
-  },
+      deleteJob: async (id) => {
+        const db = await initDB();
+        return deleteRecord(db, 'jobs', parseInt(id));
+      },
 
-  // ── Enterprise Leads ──────────────────────────────────────────────────────
-  getEnterpriseLeads: async () => {
-    const db = await initDB();
-    return getAllRecords(db, 'enterpriseLeads');
-  },
+      getApplications: async () => {
+        const db = await initDB();
+        return getAllRecords(db, 'applications');
+      },
 
-  getEnterpriseLead: async (id) => {
-    const db = await initDB();
-    return getRecordById(db, 'enterpriseLeads', parseInt(id));
-  },
+      getApplication: async (id) => {
+        const db = await initDB();
+        return getRecordById(db, 'applications', parseInt(id));
+      },
 
-  saveEnterpriseLead: async (leadData) => {
-    const db = await initDB();
-    if (!leadData.submittedAt) leadData.submittedAt = new Date().toISOString();
-    if (!leadData.status) leadData.status = 'New';
-    return addRecord(db, 'enterpriseLeads', leadData);
-  },
+      saveApplication: async (appData) => {
+        const db = await initDB();
+        if (!appData.appliedAt) appData.appliedAt = new Date().toISOString();
+        if (!appData.status) appData.status = 'Pending Review';
+        if (appData.isThirdParty) {
+          return addRecord(db, 'enterpriseApplications', appData);
+        }
+        return addRecord(db, 'applications', appData);
+      },
 
-  updateEnterpriseLead: async (leadData) => {
-    const db = await initDB();
-    return putRecord(db, 'enterpriseLeads', leadData);
-  },
+      updateApplicationStatus: async (id, newStatus) => {
+        const db = await initDB();
+        const app = await getRecordById(db, 'applications', parseInt(id));
+        if (!app) throw new Error(`Application with ID ${id} not found.`);
+        app.status = newStatus;
+        return putRecord(db, 'applications', app);
+      },
 
-  updateLeadStatus: async (id, newStatus) => {
-    const db = await initDB();
-    const lead = await getRecordById(db, 'enterpriseLeads', parseInt(id));
-    if (!lead) throw new Error(`Enterprise lead with ID ${id} not found.`);
-    lead.status = newStatus;
-    return putRecord(db, 'enterpriseLeads', lead);
-  },
+      deleteApplication: async (id) => {
+        const db = await initDB();
+        return deleteRecord(db, 'applications', parseInt(id));
+      },
 
-  deleteEnterpriseLead: async (id) => {
-    const db = await initDB();
-    return deleteRecord(db, 'enterpriseLeads', parseInt(id));
-  },
+      // ── Enterprise Applications ────────────────────────────────────────────────
+      getEnterpriseApplications: async () => {
+        const db = await initDB();
+        return getAllRecords(db, 'enterpriseApplications');
+      },
 
-  // ── Contact Inquiries ─────────────────────────────────────────────────────
-  saveContactInquiry: async (inquiryData) => {
-    const db = await initDB();
-    if (!inquiryData.submittedAt) inquiryData.submittedAt = new Date().toISOString();
-    return addRecord(db, 'contactInquiries', inquiryData);
-  },
+      getEnterpriseApplicationsForLead: async (leadRefId) => {
+        const db = await initDB();
+        const allEntApps = await getAllRecords(db, 'enterpriseApplications');
+        return allEntApps.filter(app => app.leadRefId === leadRefId);
+      },
 
-  getContactInquiries: async () => {
-    const db = await initDB();
-    return getAllRecords(db, 'contactInquiries');
-  },
+      getEnterpriseApplication: async (id) => {
+        const db = await initDB();
+        return getRecordById(db, 'enterpriseApplications', parseInt(id));
+      },
 
-  deleteContactInquiry: async (id) => {
-    const db = await initDB();
-    return deleteRecord(db, 'contactInquiries', parseInt(id));
+      updateEnterpriseApplicationStatus: async (id, newStatus) => {
+        const db = await initDB();
+        const app = await getRecordById(db, 'enterpriseApplications', parseInt(id));
+        if (!app) throw new Error(`Enterprise application with ID ${id} not found.`);
+        app.status = newStatus;
+        return putRecord(db, 'enterpriseApplications', app);
+      },
+
+      deleteEnterpriseApplication: async (id) => {
+        const db = await initDB();
+        return deleteRecord(db, 'enterpriseApplications', parseInt(id));
+      },
+
+      // ── Enterprise Leads ──────────────────────────────────────────────────────
+      getEnterpriseLeads: async () => {
+        const db = await initDB();
+        return getAllRecords(db, 'enterpriseLeads');
+      },
+
+      getEnterpriseLead: async (id) => {
+        const db = await initDB();
+        return getRecordById(db, 'enterpriseLeads', parseInt(id));
+      },
+
+      saveEnterpriseLead: async (leadData) => {
+        const db = await initDB();
+        if (!leadData.submittedAt) leadData.submittedAt = new Date().toISOString();
+        if (!leadData.status) leadData.status = 'New';
+        return addRecord(db, 'enterpriseLeads', leadData);
+      },
+
+      updateEnterpriseLead: async (leadData) => {
+        const db = await initDB();
+        return putRecord(db, 'enterpriseLeads', leadData);
+      },
+
+      updateLeadStatus: async (id, newStatus) => {
+        const db = await initDB();
+        const lead = await getRecordById(db, 'enterpriseLeads', parseInt(id));
+        if (!lead) throw new Error(`Enterprise lead with ID ${id} not found.`);
+        lead.status = newStatus;
+        return putRecord(db, 'enterpriseLeads', lead);
+      },
+
+      deleteEnterpriseLead: async (id) => {
+        const db = await initDB();
+        return deleteRecord(db, 'enterpriseLeads', parseInt(id));
+      },
+
+      // ── Contact Inquiries ─────────────────────────────────────────────────────
+      saveContactInquiry: async (inquiryData) => {
+        const db = await initDB();
+        if (!inquiryData.submittedAt) inquiryData.submittedAt = new Date().toISOString();
+        return addRecord(db, 'contactInquiries', inquiryData);
+      },
+
+      getContactInquiries: async () => {
+        const db = await initDB();
+        return getAllRecords(db, 'contactInquiries');
+      },
+
+      deleteContactInquiry: async (id) => {
+        const db = await initDB();
+        return deleteRecord(db, 'contactInquiries', parseInt(id));
+      }
+    };
   }
-};
+})();

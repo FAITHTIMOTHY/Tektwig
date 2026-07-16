@@ -4,6 +4,27 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================================
+     Utility: Cross-Subdomain Link Adjuster
+     ========================================================================== */
+  const adjustSubdomainLinks = () => {
+    if (window.location.hostname.startsWith('admin.')) {
+      const currentHost = window.location.host;
+      const parentHost = currentHost.replace(/^admin\./, '');
+      const parentOrigin = window.location.protocol + '//' + parentHost;
+
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && (href.startsWith('index.html') || href.startsWith('careers.html') || href.startsWith('privacy-policy.html'))) {
+          link.setAttribute('href', parentOrigin + '/' + href);
+        }
+      });
+    }
+  };
+
+  adjustSubdomainLinks();
+
+  /* ==========================================================================
      Utility: HTML Entity Escaper (XSS Prevention)
      ========================================================================== */
   const escapeHTML = (str) => {

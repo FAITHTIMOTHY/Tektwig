@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      const hostname = window.location.hostname;
+      if (!hostname.startsWith('admin.') && hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== '') {
+        window.location.replace(window.location.protocol + '//admin.' + window.location.host + window.location.pathname + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tektwig Recruiter Panel - Central recruitment spreadsheet and applicant management database. View, filter, sort candidates, track statuses, download CVs, and export reports.">
-  <title>Tektwig Recruiter Portal | Manage Candidates</title>
+  <meta name="description" content="Tektwig Admin Panel - Central recruitment spreadsheet and applicant management database. View, filter, sort candidates, track statuses, download CVs, and export reports.">
+  <title>Tektwig Admin Portal | Manage Candidates</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   
   <!-- Fonts -->
@@ -45,7 +53,7 @@
           <li><a href="careers.html" class="nav-link">Careers</a></li>
         </ul>
         <div class="nav-actions">
-          <a href="admin.html" class="btn btn-primary btn-sm active">Recruiter Portal</a>
+          <a href="admin.html" class="btn btn-primary btn-sm active">Admin Portal</a>
         </div>
       </nav>
     </div>
@@ -454,7 +462,7 @@
           <li><a href="index.html#portfolio">Our Portfolio</a></li>
           <li><a href="index.html#datarock">DataRock Suite</a></li>
           <li><a href="careers.html">Careers / Job Openings</a></li>
-          <li><a href="admin.html">Recruiter Dashboard</a></li>
+          <li><a href="admin.html">Admin Dashboard</a></li>
         </ul>
       </div>
 

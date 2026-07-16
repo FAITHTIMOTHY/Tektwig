@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tektwig DB Bridge</title>
+</head>
+<body>
+  <!-- Load the database script in host mode -->
+  <script src="db.js"></script>
+  <script>
+    (function() {
+      // Validate that the request originates from a trusted subdomain or local port
+      function isOriginAllowed(origin) {
+        try {
+          const parentUrl = new URL(origin);
+          const bridgeUrl = new URL(window.location.href);
+          
+          if (parentUrl.origin === bridgeUrl.origin) return true;
+          
+          const parentHostname = parentUrl.hostname;
+          const bridgeHostname = bridgeUrl.hostname;
+          
+          // E.g. parent: admin.tektwig.com, bridge: tektwig.com
+          if (parentHostname === 'admin.' + bridgeHostname) return true;
+          
+          // Support localhost port variance for local developer servers
+          if ((parentHostname === 'localhost' || parentHostname === '127.0.0.1' || parentHostname.endsWith('.localhost')) &&
+              (bridgeHostname === 'localhost' || bridgeHostname === '127.0.0.1')) {
+            return true;
+          }
+          
+          // Support local domains (e.g. parent: admin.tektwig.local, bridge: tektwig.local)
+          if (parentHostname.endsWith('.local') && bridgeHostname.endsWith('.local')) {
+            if (parentHostname === 'admin.' + bridgeHostname) return true;
+          }
+        } catch (e) {
+          return false;
+        }
+        return false;
+      }
+
+      window.addEventListener('message', async (event) => {
+        const origin = event.origin;
+        if (!isOriginAllowed(origin)) {
+          console.warn('Unauthorized DB bridge access from origin:', origin);
+          return;
+        }
+
+        const data = event.data;
+        if (data && data.type === 'db-request') {
+          const { id, method, args } = data;
+          try {
+            if (!window.TektwigDB || typeof window.TektwigDB[method] !== 'function') {
+              throw new Error(`DB method "${method}" not found or database not initialized.`);
+            }
+            
+            // Execute the operation against standard local IndexedDB
+            const result = await window.TektwigDB[method].apply(window.TektwigDB, args);
+            
+            event.source.postMessage({
+              type: 'db-response',
+              id: id,
+              success: true,
+              result: result
+            }, origin);
+          } catch (err) {
+            event.source.postMessage({
+              type: 'db-response',
+              id: id,
+              success: false,
+              error: err.message || String(err)
+            }, origin);
+          }
+        }
+      });
+
+      // Broadcast readiness to parent window
+      window.parent.postMessage({ type: 'db-bridge-ready' }, '*');
+    })();
+  </script>
+</body>
+</html>
