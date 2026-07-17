@@ -253,13 +253,11 @@ window.TektwigDB = {
         applied_at: appData.appliedAt || new Date().toISOString()
       };
 
-      const { data, error } = await supabaseClient
+      const { error } = await supabaseClient
         .from('enterprise_applications')
-        .insert(payload)
-        .select('id')
-        .single();
+        .insert(payload);
       if (error) throw error;
-      return data.id;
+      return null;
     } else {
       const payload = {
         name: appData.name,
@@ -277,13 +275,11 @@ window.TektwigDB = {
         applied_at: appData.appliedAt || new Date().toISOString()
       };
 
-      const { data, error } = await supabaseClient
+      const { error } = await supabaseClient
         .from('applications')
-        .insert(payload)
-        .select('id')
-        .single();
+        .insert(payload);
       if (error) throw error;
-      return data.id;
+      return null;
     }
   },
 
@@ -381,13 +377,11 @@ window.TektwigDB = {
     if (!payload.submitted_at) payload.submitted_at = new Date().toISOString();
     if (!payload.status) payload.status = 'New';
 
-    const { data, error } = await supabaseClient
+    const { error } = await supabaseClient
       .from('enterprise_leads')
-      .insert(payload)
-      .select('id')
-      .single();
+      .insert(payload);
     if (error) throw error;
-    return data.id;
+    return null;
   },
 
   updateEnterpriseLead: async (leadData) => {
@@ -428,13 +422,11 @@ window.TektwigDB = {
     delete payload.id;
     if (!payload.submitted_at) payload.submitted_at = new Date().toISOString();
 
-    const { data, error } = await supabaseClient
+    const { error } = await supabaseClient
       .from('contact_inquiries')
-      .insert(payload)
-      .select('id')
-      .single();
+      .insert(payload);
     if (error) throw error;
-    return data.id;
+    return null;
   },
 
   getContactInquiries: async () => {
