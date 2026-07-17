@@ -21,6 +21,7 @@ $username = $config.ftpUsername
 $password = $config.ftpPassword
 $port = if ($config.ftpPort) { $config.ftpPort } else { 21 }
 $remoteDir = $config.mainRemoteDir.TrimEnd('/')
+$subdomainRemoteDir = if ($config.subdomainRemoteDir) { $config.subdomainRemoteDir.TrimEnd('/') } else { "" }
 
 # Helper: Create Remote FTP Directory
 function Create-FTPDirectory {
@@ -113,6 +114,24 @@ $filesToUpload = @(
 
 foreach ($file in $filesToUpload) {
     Upload-FTPFile -LocalFilePath $file.local -RemoteFilePath $file.remote
+}
+
+if ($subdomainRemoteDir) {
+    Write-Host "`n3. Uploading admin files to subdomain $subdomainRemoteDir..."
+    Create-FTPDirectory -RemotePath "$subdomainRemoteDir/assets"
+    
+    $subdomainFiles = @(
+        @{ local = "admin.html"; remote = "$subdomainRemoteDir/admin.html" },
+        @{ local = "admin.js"; remote = "$subdomainRemoteDir/admin.js" },
+        @{ local = "db.js"; remote = "$subdomainRemoteDir/db.js" },
+        @{ local = "styles.css"; remote = "$subdomainRemoteDir/styles.css" },
+        @{ local = "assets/logo.svg"; remote = "$subdomainRemoteDir/assets/logo.svg" },
+        @{ local = "assets/favicon.svg"; remote = "$subdomainRemoteDir/assets/favicon.svg" }
+    )
+    
+    foreach ($file in $subdomainFiles) {
+        Upload-FTPFile -LocalFilePath $file.local -RemoteFilePath $file.remote
+    }
 }
 
 Write-Host "`n============================================="
