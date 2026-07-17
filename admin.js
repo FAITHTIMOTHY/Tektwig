@@ -560,19 +560,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Map requirements list (split by newline if newlines are present, otherwise by comma)
     let requirementsArray = [];
-    if (reqsVal.includes('\n')) {
-      requirementsArray = reqsVal.split('\n');
+    if (reqsVal.includes('\n') || reqsVal.includes('\r')) {
+      requirementsArray = reqsVal.split(/\r?\n|\r/);
     } else {
       requirementsArray = reqsVal.split(',');
     }
     requirementsArray = requirementsArray
       .map(req => {
         let cleaned = req.trim();
-        // Remove numbering prefixes (e.g. "1.", "1)", "1 -")
-        cleaned = cleaned.replace(/^\d+[\s\.\)-]+/, '');
-        // Remove bullet prefixes (e.g. "-", "*", "•", "▪", "◦")
-        cleaned = cleaned.replace(/^[\-\*\u2022\u25AA\u25E6]\s*/, '');
-        return cleaned.trim();
+        let prevCleaned;
+        do {
+          prevCleaned = cleaned;
+          cleaned = cleaned
+            .replace(/^\d+[\s\.\)-]+/, '')
+            .replace(/^[\-\*\u2022\u25AA\u25E6]\s*/, '')
+            .trim();
+        } while (cleaned !== prevCleaned);
+        return cleaned;
       })
       .filter(req => req.length > 0);
 
