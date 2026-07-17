@@ -211,11 +211,29 @@ window.TektwigDB = {
   },
 
   saveApplication: async (appData) => {
-    // Route enterprise applications to their own table
+    // 1. Upload CV file if present
+    let cvFilePath = null;
+    if (appData.cvFile) {
+      cvFilePath = await uploadCVFile(appData.cvFile, appData.cvFileName || 'resume');
+    }
+
+    // 2. Insert into the appropriate table using only valid columns
     if (appData.isThirdParty) {
-      const payload = await prepareApplicationPayload(appData);
-      delete payload.id;
-      delete payload.is_third_party;
+      const payload = {
+        lead_ref_id: appData.leadRefId || null,
+        name: appData.name,
+        email: appData.email,
+        phone: appData.phone || null,
+        job_title: appData.jobTitle,
+        experience: appData.experience || 0,
+        portfolio: appData.portfolio || null,
+        cover_letter: appData.coverLetter || null,
+        cv_file_path: cvFilePath,
+        cv_file_name: appData.cvFileName || null,
+        cv_file_type: appData.cvFileType || null,
+        status: appData.status || 'Pending Review',
+        applied_at: appData.appliedAt || new Date().toISOString()
+      };
 
       const { data, error } = await supabaseClient
         .from('enterprise_applications')
@@ -224,21 +242,31 @@ window.TektwigDB = {
         .single();
       if (error) throw error;
       return data.id;
+    } else {
+      const payload = {
+        name: appData.name,
+        email: appData.email,
+        phone: appData.phone || null,
+        job_id: appData.jobId ? parseInt(appData.jobId) : null,
+        job_title: appData.jobTitle,
+        experience: appData.experience || 0,
+        portfolio: appData.portfolio || null,
+        cover_letter: appData.coverLetter || null,
+        cv_file_path: cvFilePath,
+        cv_file_name: appData.cvFileName || null,
+        cv_file_type: appData.cvFileType || null,
+        status: appData.status || 'Pending Review',
+        applied_at: appData.appliedAt || new Date().toISOString()
+      };
+
+      const { data, error } = await supabaseClient
+        .from('applications')
+        .insert(payload)
+        .select('id')
+        .single();
+      if (error) throw error;
+      return data.id;
     }
-
-    // Standard application
-    const payload = await prepareApplicationPayload(appData);
-    delete payload.id;
-    delete payload.is_third_party;
-    delete payload.advertising_for;
-
-    const { data, error } = await supabaseClient
-      .from('applications')
-      .insert(payload)
-      .select('id')
-      .single();
-    if (error) throw error;
-    return data.id;
   },
 
   updateApplicationStatus: async (id, newStatus) => {
