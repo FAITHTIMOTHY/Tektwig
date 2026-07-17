@@ -24,7 +24,7 @@ $remoteDir = $config.mainRemoteDir.TrimEnd('/')
 
 
 # Helper: Create Remote FTP Directory
-function Create-FTPDirectory {
+function New-FTPDirectory {
     param (
         [string]$RemotePath
     )
@@ -44,7 +44,7 @@ function Create-FTPDirectory {
 }
 
 # Helper: Upload File to FTP
-function Upload-FTPFile {
+function Send-FTPFile {
     param (
         [string]$LocalFilePath,
         [string]$RemoteFilePath
@@ -108,8 +108,8 @@ Write-Host "============================================="
 
 # 1. Ensure remote directories exist
 Write-Host "`n1. Setting up remote directories..."
-Create-FTPDirectory -RemotePath "$remoteDir/assets"
-Create-FTPDirectory -RemotePath "$remoteDir/admin"
+New-FTPDirectory -RemotePath "$remoteDir/assets"
+New-FTPDirectory -RemotePath "$remoteDir/admin"
 
 # 2. Upload All Site Files
 Write-Host "`n2. Uploading files to $remoteDir..."
@@ -135,7 +135,7 @@ $filesToUpload = @(
 )
 
 foreach ($file in $filesToUpload) {
-    Upload-FTPFile -LocalFilePath $file.local -RemoteFilePath $file.remote
+    Send-FTPFile -LocalFilePath $file.local -RemoteFilePath $file.remote
     Start-Sleep -Milliseconds 500
 }
 
