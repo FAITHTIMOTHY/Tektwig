@@ -491,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('job-exp').value = job.experience;
         document.getElementById('job-salary').value = job.salary;
         document.getElementById('job-desc').value = job.description;
-        document.getElementById('job-reqs').value = (job.requirements || []).join(', ');
+        document.getElementById('job-reqs').value = (job.requirements || []).join('\n');
 
         // Update labels and toggle cancel button
         if (jobFormTitle) jobFormTitle.textContent = 'Edit Job Role';
@@ -558,8 +558,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const descVal = document.getElementById('job-desc').value.trim();
     const reqsVal = document.getElementById('job-reqs').value.trim();
 
-    // Map requirements list
-    const requirementsArray = reqsVal.split(',').map(req => req.trim()).filter(req => req.length > 0);
+    // Map requirements list (split by newline if newlines are present, otherwise by comma)
+    let requirementsArray = [];
+    if (reqsVal.includes('\n')) {
+      requirementsArray = reqsVal.split('\n');
+    } else {
+      requirementsArray = reqsVal.split(',');
+    }
+    requirementsArray = requirementsArray
+      .map(req => {
+        let cleaned = req.trim();
+        // Remove numbering prefixes (e.g. "1.", "1)", "1 -")
+        cleaned = cleaned.replace(/^\d+[\s\.\)-]+/, '');
+        // Remove bullet prefixes (e.g. "-", "*", "•", "▪", "◦")
+        cleaned = cleaned.replace(/^[\-\*\u2022\u25AA\u25E6]\s*/, '');
+        return cleaned.trim();
+      })
+      .filter(req => req.length > 0);
 
     if (editingJobId) {
       // Editing Mode
@@ -1040,12 +1055,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Build location string
     const locationStr = [lead.locationType, lead.city].filter(Boolean).join(' \u00b7 ') || 'See description';
 
-    // Parse requirements text into comma separated string
+    // Parse requirements text into newline separated string
     const reqLines = (lead.requirements || '')
       .split('\n')
       .map(s => s.trim())
       .filter(Boolean);
-    const reqsStr = reqLines.join(', ');
+    const reqsStr = reqLines.join('\n');
 
     // Set editing and reviewing references
     editingJobId = null;
