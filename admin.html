@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <script>
+    // Redirect commented out to allow accessing the admin panel directly on the main domain (e.g. tektwig.com/admin.html)
+    /*
     (function() {
       const hostname = window.location.hostname;
       if (!hostname.startsWith('admin.') && hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== '') {
         window.location.replace(window.location.protocol + '//admin.' + window.location.host + window.location.pathname + window.location.search + window.location.hash);
       }
     })();
+    */
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Tektwig Admin Panel - Central recruitment spreadsheet and applicant management database. View, filter, sort candidates, track statuses, download CVs, and export reports.">
