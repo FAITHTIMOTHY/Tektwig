@@ -10,7 +10,7 @@ $configContent = '<?php
  * Generated via secure setup script
  */
 
-define("RESEND_API_KEY", "re_ajzA6Cim_DeX6KwMUFAMV9EKXogsLWYVc");
+define("RESEND_API_KEY", "re_fBJxrb5o_DVs5P7eKe3pYaFExSMz7dN1N");
 define("ADMIN_EMAIL", "faithtimo2006@gmail.com");
 ?>';
 
