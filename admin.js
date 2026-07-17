@@ -3,6 +3,11 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Secure Route: Check auth session state
+  if (!sessionStorage.getItem('tektwig_admin_session')) {
+    window.location.replace('login.html');
+    return;
+  }
 
 
   /* ==========================================================================
@@ -104,6 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
   });
+
+  // Sign Out event handler
+  const btnSignOut = document.getElementById('btn-admin-signout');
+  if (btnSignOut) {
+    btnSignOut.addEventListener('click', (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem('tektwig_admin_session');
+      window.location.replace('login.html');
+    });
+  }
 
   // Fetch jobs and applications, compute metrics
   async function initDashboard() {

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tektwig Admin Portal | Secure Login</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="../styles.css">
+  
+  <!-- Custom Login Styling -->
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .login-container {
+      width: 100%;
+      max-width: 440px;
+      padding: 40px;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+    
+    .login-logo {
+      display: block;
+      width: 140px;
+      margin: 0 auto 30px;
+    }
+    
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .login-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    
+    .login-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    
+    .login-form-group {
+      margin-bottom: 20px;
+    }
+    
+    .login-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .login-input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      transition: var(--transition-fast);
+    }
+    
+    .login-input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(0, 171, 236, 0.2);
+    }
+    
+    .login-input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .otp-input-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .otp-field {
+      width: 50px;
+      height: 54px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--accent-cyan);
+    }
+    
+    .otp-field:focus {
+      outline: none;
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 10px rgba(217, 70, 239, 0.2);
+    }
+    
+    .error-banner {
+      display: none;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    /* Step views */
+    #step-2fa {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Orbs -->
+  <div class="glow-orb orb-1" style="width: 300px; height: 300px; top: 10%; left: 10%;"></div>
+  <div class="glow-orb orb-2" style="width: 350px; height: 350px; bottom: 10%; right: 10%;"></div>
+
+  <div class="login-container glass-panel">
+    <img src="../assets/logo.svg" alt="Tektwig Logo" class="login-logo">
+    
+    <div id="error-box" class="error-banner"></div>
+    
+    <!-- STEP 1: Email and Password -->
+    <div id="step-credentials">
+      <div class="login-header">
+        <h1 class="login-title">Administrator Portal</h1>
+        <p class="login-subtitle">Provide your credentials to request secure access</p>
+      </div>
+      
+      <form id="credentials-form">
+        <div class="login-form-group">
+          <label for="admin-email" class="login-label">Email Address</label>
+          <input type="email" id="admin-email" class="login-input" required placeholder="admin@tektwig.com" autocomplete="username">
+        </div>
+        
+        <div class="login-form-group">
+          <label for="admin-password" class="login-label">Password</label>
+          <input type="password" id="admin-password" class="login-input" required placeholder="••••••••" autocomplete="current-password">
+        </div>
+        
+        <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block" style="margin-top: 10px;">
+          <span>Request Secure Login</span>
+        </button>
+      </form>
+    </div>
+    
+    <!-- STEP 2: Resend 2FA OTP -->
+    <div id="step-2fa">
+      <div class="login-header">
+        <h1 class="login-title">Two-Step Verification</h1>
+        <p class="login-subtitle" style="color: var(--accent-cyan);">Code dispatched successfully!</p>
+        <p class="login-subtitle" style="margin-top: 6px;">Check your email inbox for your 6-digit confirmation pin.</p>
+      </div>
+      
+      <form id="otp-form">
+        <div class="login-form-group">
+          <label class="login-label" style="text-align: center;">Enter 6-Digit OTP</label>
+          
+          <div class="otp-input-container">
+            <input type="text" class="otp-field" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+            <input type="text" class="otp-field" maxlength="1" pattern="[0-9]" inputmode="numeric" required disabled>
+            <input type="text" class="otp-field" maxlength="1" pattern="[0-9]" inputmode="numeric" required disabled>
+            <input type="text" class="otp-field" maxlength="1" pattern="[0-9]" inputmode="numeric" required disabled>
+            <input type="text" class="otp-field" maxlength="1" pattern="[0-9]" inputmode="numeric" required disabled>
+            <input type="text" class="otp-field" maxlength="1" pattern="[0-9]" inputmode="numeric" required disabled>
+          </div>
+        </div>
+        
+        <button type="submit" id="btn-otp-submit" class="btn btn-primary btn-block" style="border-color: var(--accent-purple); box-shadow: 0 0 15px rgba(217, 70, 239, 0.15);">
+          <span>Verify Token</span>
+        </button>
+        
+        <button type="button" id="btn-otp-back" class="btn btn-secondary btn-block" style="margin-top: 12px; border-color: rgba(255,255,255,0.15);">
+          <span>Back to Credentials</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="login.js?v=2026071703"></script>
+</body>
+</html>

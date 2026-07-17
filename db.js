@@ -9,6 +9,24 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Restore session from sessionStorage if present to authenticate database queries
+if (typeof window !== 'undefined') {
+  const sessionDataStr = window.sessionStorage.getItem('tektwig_admin_session');
+  if (sessionDataStr) {
+    try {
+      const sessionData = JSON.parse(sessionDataStr);
+      if (sessionData && sessionData.access_token) {
+        supabaseClient.auth.setSession({
+          access_token: sessionData.access_token,
+          refresh_token: sessionData.refresh_token || null
+        });
+      }
+    } catch (err) {
+      console.error('Failed to restore admin auth session:', err);
+    }
+  }
+}
+
 /* ==========================================================================
    Helpers: snake_case <-> camelCase field mapping
    ========================================================================== */
