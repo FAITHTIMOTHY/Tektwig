@@ -55,32 +55,50 @@ function Upload-FTPFile {
     }
 
     $url = "ftp://$ftpHost`:$port" + $RemoteFilePath
-    Write-Host "Uploading $LocalFilePath -> $url..." -NoNewline
     
-    try {
-        $request = [System.Net.FtpWebRequest]::Create($url)
-        $request.Credentials = New-Object System.Net.NetworkCredential($username, $password)
-        $request.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
-        $request.UseBinary = $true
-        $request.KeepAlive = $false
-        $request.UsePassive = $true
+    $maxRetries = 5
+    $retryCount = 0
+    $success = $false
+    
+    while (-not $success -and $retryCount -lt $maxRetries) {
+        $retryCount++
+        if ($retryCount -gt 1) {
+            Write-Host "Retrying upload ($retryCount/$maxRetries) after 3s delay..." -ForegroundColor Yellow
+            Start-Sleep -Seconds 3
+        }
         
-        $fileBytes = [System.IO.File]::ReadAllBytes($LocalFilePath)
-        $request.ContentLength = $fileBytes.Length
+        Write-Host "Uploading $LocalFilePath -> $url..." -NoNewline
         
-        $requestStream = $request.GetRequestStream()
-        $requestStream.Write($fileBytes, 0, $fileBytes.Length)
-        $requestStream.Close()
-        $requestStream.Dispose()
-        
-        $response = $request.GetResponse()
-        $response.Close()
-        $response.Dispose()
-        
-        Write-Host " [OK]" -ForegroundColor Green
-    } catch {
-        Write-Host " [FAILED]" -ForegroundColor Red
-        Write-Error $_.Exception.Message
+        try {
+            $request = [System.Net.FtpWebRequest]::Create($url)
+            $request.Credentials = New-Object System.Net.NetworkCredential($username, $password)
+            $request.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
+            $request.UseBinary = $true
+            $request.KeepAlive = $false
+            $request.UsePassive = $true
+            
+            $fileBytes = [System.IO.File]::ReadAllBytes($LocalFilePath)
+            $request.ContentLength = $fileBytes.Length
+            
+            $requestStream = $request.GetRequestStream()
+            $requestStream.Write($fileBytes, 0, $fileBytes.Length)
+            $requestStream.Close()
+            $requestStream.Dispose()
+            
+            $response = $request.GetResponse()
+            $response.Close()
+            $response.Dispose()
+            
+            Write-Host " [OK]" -ForegroundColor Green
+            $success = $true
+        } catch {
+            Write-Host " [FAILED]" -ForegroundColor Red
+            Write-Warning $_.Exception.Message
+        }
+    }
+    
+    if (-not $success) {
+        Write-Error "Failed to upload $LocalFilePath after $maxRetries attempts."
     }
 }
 
