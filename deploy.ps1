@@ -109,6 +109,7 @@ Write-Host "============================================="
 # 1. Ensure remote directories exist
 Write-Host "`n1. Setting up remote directories..."
 Create-FTPDirectory -RemotePath "$remoteDir/assets"
+Create-FTPDirectory -RemotePath "$remoteDir/admin"
 
 # 2. Upload All Site Files
 Write-Host "`n2. Uploading files to $remoteDir..."
@@ -118,6 +119,7 @@ $filesToUpload = @(
     @{ local = "privacy-policy.html"; remote = "$remoteDir/privacy-policy.html" },
     @{ local = "recruit.html"; remote = "$remoteDir/recruit.html" },
     @{ local = "admin.html"; remote = "$remoteDir/admin.html" },
+    @{ local = "admin/index.html"; remote = "$remoteDir/admin/index.html" },
     @{ local = "db-bridge.html"; remote = "$remoteDir/db-bridge.html" },
     @{ local = "db.js"; remote = "$remoteDir/db.js" },
     @{ local = "admin.js"; remote = "$remoteDir/admin.js" },
