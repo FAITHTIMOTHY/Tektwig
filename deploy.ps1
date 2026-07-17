@@ -114,11 +114,13 @@ $filesToUpload = @(
 
 foreach ($file in $filesToUpload) {
     Upload-FTPFile -LocalFilePath $file.local -RemoteFilePath $file.remote
+    Start-Sleep -Milliseconds 500
 }
 
 if ($subdomainRemoteDir) {
     Write-Host "`n3. Uploading admin files to subdomain $subdomainRemoteDir..."
     Create-FTPDirectory -RemotePath "$subdomainRemoteDir/assets"
+    Start-Sleep -Milliseconds 500
     
     $subdomainFiles = @(
         @{ local = "admin.html"; remote = "$subdomainRemoteDir/admin.html" },
@@ -131,6 +133,7 @@ if ($subdomainRemoteDir) {
     
     foreach ($file in $subdomainFiles) {
         Upload-FTPFile -LocalFilePath $file.local -RemoteFilePath $file.remote
+        Start-Sleep -Milliseconds 500
     }
 }
 
