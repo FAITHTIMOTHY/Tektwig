@@ -31,10 +31,10 @@ if (!file_exists($configFile)) {
 
 require_once $configFile;
 
-if (!defined('RESEND_API_KEY') || !defined('ADMIN_EMAIL')) {
+if (!defined('RESEND_API_KEY') || !defined('ADMIN_EMAILS') || !is_array(ADMIN_EMAILS)) {
     echo json_encode([
         "status" => "error",
-        "message" => "Configuration constants RESEND_API_KEY or ADMIN_EMAIL are undefined."
+        "message" => "Configuration constants RESEND_API_KEY or ADMIN_EMAILS are undefined or invalid."
     ]);
     exit;
 }
@@ -53,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Only allow the designated admin email to log into the admin panel
-        if (strtolower($email) !== strtolower(ADMIN_EMAIL)) {
+        // Only allow the designated admin emails to log into the admin panel
+        if (!in_array(strtolower($email), array_map('strtolower', ADMIN_EMAILS))) {
             echo json_encode(["status" => "error", "message" => "Unauthorized access."]);
             exit;
         }
@@ -105,11 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resendCh = curl_init('https://api.resend.com/emails');
         
         // If sending domain is verified in Resend, use auth@tektwig.com, otherwise fall back to onboarding@resend.dev
-        $fromEmail = (strpos(RESEND_API_KEY, 're_') === 0 && ADMIN_EMAIL !== 'your_email_here@example.com') ? 'Tektwig Security <auth@tektwig.com>' : 'onboarding@resend.dev';
+        $fromEmail = (strpos(RESEND_API_KEY, 're_') === 0 && !empty(ADMIN_EMAILS)) ? 'Tektwig Security <auth@tektwig.com>' : 'onboarding@resend.dev';
         
         $emailPayload = json_encode([
             "from" => $fromEmail,
-            "to" => ADMIN_EMAIL,
+            "to" => $email,
             "subject" => "Tektwig Admin Verification Code: $otp",
             "html" => "
                 <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #0b0f19; color: #ffffff;'>
