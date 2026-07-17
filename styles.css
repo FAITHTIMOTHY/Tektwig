@@ -1310,51 +1310,6 @@ img {
 }
 
 /* ==========================================================================
-   Customers Section
-   ========================================================================== */
-.customers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-  margin-top: 40px;
-}
-
-.customer-card {
-  padding: 30px;
-  border-radius: 12px;
-  transition: var(--transition-smooth);
-}
-
-.customer-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--accent-cyan);
-  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
-}
-
-.customer-name {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 8px;
-}
-
-.customer-service-tag {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--accent-cyan);
-  letter-spacing: 1px;
-  margin-bottom: 15px;
-}
-
-.customer-desc {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-/* ==========================================================================
    Calculator & Contact Section
    ========================================================================== */
 .contact-container {
