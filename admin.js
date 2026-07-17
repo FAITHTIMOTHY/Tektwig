@@ -580,6 +580,8 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .filter(req => req.length > 0);
 
+    alert("Diagnostic - Saving " + requirementsArray.length + " requirements:\n" + requirementsArray.map((r, i) => (i + 1) + ". " + r).join("\n"));
+
     if (editingJobId) {
       // Editing Mode
       const originalJob = allJobs.find(j => j.id === editingJobId) || {};
