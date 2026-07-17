@@ -21,7 +21,7 @@ $username = $config.ftpUsername
 $password = $config.ftpPassword
 $port = if ($config.ftpPort) { $config.ftpPort } else { 21 }
 $remoteDir = $config.mainRemoteDir.TrimEnd('/')
-$subdomainRemoteDir = if ($config.subdomainRemoteDir) { $config.subdomainRemoteDir.TrimEnd('/') } else { "" }
+
 
 # Helper: Create Remote FTP Directory
 function Create-FTPDirectory {
@@ -120,7 +120,6 @@ $filesToUpload = @(
     @{ local = "recruit.html"; remote = "$remoteDir/recruit.html" },
     @{ local = "admin.html"; remote = "$remoteDir/admin.html" },
     @{ local = "admin/index.html"; remote = "$remoteDir/admin/index.html" },
-    @{ local = "db-bridge.html"; remote = "$remoteDir/db-bridge.html" },
     @{ local = "db.js"; remote = "$remoteDir/db.js" },
     @{ local = "admin.js"; remote = "$remoteDir/admin.js" },
     @{ local = "app.js"; remote = "$remoteDir/app.js" },
@@ -137,25 +136,7 @@ foreach ($file in $filesToUpload) {
     Start-Sleep -Milliseconds 500
 }
 
-if ($subdomainRemoteDir) {
-    Write-Host "`n3. Uploading admin files to subdomain $subdomainRemoteDir..."
-    Create-FTPDirectory -RemotePath "$subdomainRemoteDir/assets"
-    Start-Sleep -Milliseconds 500
-    
-    $subdomainFiles = @(
-        @{ local = "admin.html"; remote = "$subdomainRemoteDir/admin.html" },
-        @{ local = "admin.js"; remote = "$subdomainRemoteDir/admin.js" },
-        @{ local = "db.js"; remote = "$subdomainRemoteDir/db.js" },
-        @{ local = "styles.css"; remote = "$subdomainRemoteDir/styles.css" },
-        @{ local = "assets/logo.svg"; remote = "$subdomainRemoteDir/assets/logo.svg" },
-        @{ local = "assets/favicon.svg"; remote = "$subdomainRemoteDir/assets/favicon.svg" }
-    )
-    
-    foreach ($file in $subdomainFiles) {
-        Upload-FTPFile -LocalFilePath $file.local -RemoteFilePath $file.remote
-        Start-Sleep -Milliseconds 500
-    }
-}
+
 
 Write-Host "`n============================================="
 Write-Host " Deployment Complete!"

@@ -3,26 +3,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ==========================================================================
-     Utility: Cross-Subdomain Link Adjuster
-     ========================================================================== */
-  const adjustSubdomainLinks = () => {
-    if (window.location.hostname.startsWith('admin.')) {
-      const currentHost = window.location.host;
-      const parentHost = currentHost.replace(/^admin\./, '');
-      const parentOrigin = window.location.protocol + '//' + parentHost;
 
-      const links = document.querySelectorAll('a[href]');
-      links.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && (href.startsWith('index.html') || href.startsWith('careers.html') || href.startsWith('privacy-policy.html'))) {
-          link.setAttribute('href', parentOrigin + '/' + href);
-        }
-      });
-    }
-  };
-
-  adjustSubdomainLinks();
 
   /* ==========================================================================
      Utility: HTML Entity Escaper (XSS Prevention)
@@ -367,27 +348,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // CV File Blob Downloader
-  btnDownloadCV.addEventListener('click', () => {
-    if (!activeCandidate || !activeCandidate.cvFile) {
+  // CV File Downloader (from Supabase Storage)
+  btnDownloadCV.addEventListener('click', async () => {
+    if (!activeCandidate || !activeCandidate.cvFileUrl) {
       alert('Error: CV file not found in database record.');
       return;
     }
 
-    const blob = activeCandidate.cvFile;
-    const filename = activeCandidate.cvFileName || 'candidate_resume.pdf';
-    
-    // Create temporary link and click it
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    
-    // Cleanup
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    try {
+      const response = await fetch(activeCandidate.cvFileUrl);
+      const blob = await response.blob();
+      const filename = activeCandidate.cvFileName || 'candidate_resume.pdf';
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('CV download error:', err);
+      alert('Failed to download CV file.');
+    }
   });
 
   // Save status stage update
@@ -1136,18 +1121,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Download Enterprise Candidate CV Helper
+  // Download Enterprise Candidate CV Helper (from Supabase Storage)
   window.downloadEnterpriseCV = async function(id) {
     try {
       const app = await window.TektwigDB.getEnterpriseApplication(id);
-      if (!app || !app.cvFile) {
-        alert('Resume CV file not found in local IndexedDB storage.');
+      if (!app || !app.cvFileUrl) {
+        alert('Resume CV file not found in storage.');
         return;
       }
-      const url = URL.createObjectURL(app.cvFile);
+      const response = await fetch(app.cvFileUrl);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = app.cvFileName;
+      link.download = app.cvFileName || 'resume';
       link.style.visibility = 'hidden';
       document.body.appendChild(link);
       link.click();
