@@ -492,6 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('job-salary').value = job.salary;
         document.getElementById('job-desc').value = job.description;
         document.getElementById('job-reqs').value = (job.requirements || []).join('\n');
+        document.getElementById('job-advertising-for').value = job.advertisingFor || '';
 
         // Update labels and toggle cancel button
         if (jobFormTitle) jobFormTitle.textContent = 'Edit Job Role';
@@ -557,6 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const salaryVal = document.getElementById('job-salary').value.trim();
     const descVal = document.getElementById('job-desc').value.trim();
     const reqsVal = document.getElementById('job-reqs').value.trim();
+    const advertisingForVal = document.getElementById('job-advertising-for').value.trim();
 
     // Map requirements list (split by newline if newlines are present, otherwise by comma)
     let requirementsArray = [];
@@ -590,7 +592,9 @@ document.addEventListener('DOMContentLoaded', () => {
         experience: expVal,
         salary: salaryVal,
         description: descVal,
-        requirements: requirementsArray
+        requirements: requirementsArray,
+        isThirdParty: !!advertisingForVal,
+        advertisingFor: advertisingForVal || null
       });
 
       if (!confirm(`Are you sure you want to save changes to "${updatedJobPayload.title}"? This will immediately update the live job posting on the Careers page.`)) {
@@ -630,7 +634,7 @@ document.addEventListener('DOMContentLoaded', () => {
         requirements: requirementsArray,
         status: 'Active',
         isThirdParty: true,
-        advertisingFor: originalLead.companyName,
+        advertisingFor: advertisingForVal || originalLead.companyName,
         leadRefId: originalLead.refId,
         createdAt: new Date().toISOString()
       };
@@ -673,6 +677,8 @@ document.addEventListener('DOMContentLoaded', () => {
         description: descVal,
         requirements: requirementsArray,
         status: 'Active',
+        isThirdParty: !!advertisingForVal,
+        advertisingFor: advertisingForVal || null,
         createdAt: new Date().toISOString()
       };
 
@@ -1078,6 +1084,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('job-salary').value = salaryStr;
     document.getElementById('job-desc').value = lead.description || '';
     document.getElementById('job-reqs').value = reqsStr;
+    document.getElementById('job-advertising-for').value = lead.companyName || '';
 
     // Update form header and labels
     if (jobFormTitle) jobFormTitle.textContent = 'Review & Publish Job Listing';
