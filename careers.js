@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalJobSalary = document.getElementById('modal-job-salary');
   const modalJobDesc = document.getElementById('modal-job-desc');
   const modalJobReqs = document.getElementById('modal-job-reqs');
+  const modalJobAdvertising = document.getElementById('modal-job-advertising');
+  const modalJobAdvertisingName = document.getElementById('modal-job-advertising-name');
   
   // Form and Screens
   const appForm = document.getElementById('application-form');
@@ -193,6 +195,16 @@ document.addEventListener('DOMContentLoaded', () => {
       modalJobExp.textContent = selectedJob.experience;
       modalJobSalary.textContent = selectedJob.salary;
       modalJobDesc.textContent = selectedJob.description;
+
+      // Handle third party advertising notice on popup
+      if (modalJobAdvertising && modalJobAdvertisingName) {
+        if (selectedJob.isThirdParty && selectedJob.advertisingFor) {
+          modalJobAdvertisingName.textContent = selectedJob.advertisingFor;
+          modalJobAdvertising.style.display = 'inline-flex';
+        } else {
+          modalJobAdvertising.style.display = 'none';
+        }
+      }
       
       // Populate requirements
       modalJobReqs.innerHTML = selectedJob.requirements.map(req => `<li>${req}</li>`).join('');
