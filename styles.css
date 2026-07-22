@@ -46,6 +46,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -3936,14 +3937,26 @@ img {
 
 @media (max-width: 768px) {
   .scroll-nav {
-    bottom: 20px;
-    right: 20px;
-    gap: 8px;
+    bottom: 14px;
+    right: 14px;
+    gap: 6px;
   }
 
   .scroll-btn {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.45;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .scroll-btn:hover,
+  .scroll-btn:active {
+    opacity: 1;
+  }
+
+  .scroll-btn svg {
+    width: 14px;
+    height: 14px;
   }
 
   /* Compact Viewport Container Rules */
@@ -4012,9 +4025,17 @@ img {
   }
 
   .service-icon-box {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 10px !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    margin-bottom: 16px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .service-icon-box svg {
+    width: 22px !important;
+    height: 22px !important;
   }
 
   .service-bullets {
@@ -4171,3 +4192,517 @@ img {
     justify-content: center !important;
   }
 }
+
+/* ==========================================================================
+   Enhanced Mobile Polish — 768px Additions
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Glow orbs — shrink to prevent horizontal overflow */
+  .glow-orb {
+    opacity: 0.06 !important;
+  }
+  .orb-1 {
+    width: 200px !important;
+    height: 200px !important;
+    left: -60px !important;
+  }
+  .orb-2 {
+    width: 250px !important;
+    height: 250px !important;
+    right: -80px !important;
+  }
+  .orb-3 {
+    width: 180px !important;
+    height: 180px !important;
+  }
+
+  /* Logo */
+  .logo-img {
+    height: 52px !important;
+  }
+
+  /* Hero refinements */
+  .hero-section {
+    min-height: auto !important;
+    padding: 120px 0 60px !important;
+  }
+  .hero-title {
+    font-size: 2rem !important;
+    letter-spacing: -0.5px !important;
+  }
+  .hero-description {
+    font-size: 0.95rem !important;
+    margin-bottom: 28px !important;
+  }
+  .badge {
+    font-size: 0.68rem !important;
+    padding: 5px 12px !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  /* Hero visual — hide tech card for cleaner mobile hero */
+  .hero-visual {
+    display: none !important;
+  }
+
+  /* Service text refinements */
+  .service-title {
+    font-size: 1.15rem !important;
+  }
+  .service-text {
+    font-size: 0.88rem !important;
+    margin-bottom: 16px !important;
+  }
+  .service-bullets li {
+    font-size: 0.82rem !important;
+  }
+
+  /* DataRock section */
+  .datarock-subtitle {
+    font-size: 1.1rem !important;
+  }
+  .datarock-tagline {
+    font-size: 0.92rem !important;
+  }
+  .stat-num {
+    font-size: 1.4rem !important;
+  }
+  .stat-lbl {
+    font-size: 0.72rem !important;
+  }
+  .datarock-hero-banner {
+    text-align: center !important;
+  }
+
+  /* Terminal */
+  .terminal-body {
+    height: 150px !important;
+    font-size: 0.72rem !important;
+  }
+  .terminal-chart {
+    padding: 14px 16px !important;
+  }
+
+  /* Portfolio */
+  .portfolio-item {
+    height: 200px !important;
+    padding: 20px !important;
+  }
+  .portfolio-filters {
+    gap: 8px !important;
+    margin-bottom: 32px !important;
+  }
+  .filter-btn {
+    padding: 6px 14px !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* Testimonials */
+  .testimonial-slider {
+    min-height: 320px !important;
+  }
+  .testimonial-card {
+    padding: 28px 20px !important;
+  }
+  .testimonial-quote {
+    font-size: 1.15rem !important;
+  }
+  .testimonial-text {
+    font-size: 0.92rem !important;
+  }
+  .quote-icon {
+    font-size: 3.5rem !important;
+  }
+
+  /* Leadership */
+  .leadership-grid {
+    gap: 20px !important;
+  }
+  .leader-img-box {
+    height: 260px !important;
+  }
+  .leader-info {
+    padding: 18px !important;
+  }
+  .leader-name {
+    font-size: 1.1rem !important;
+  }
+
+  /* Contact */
+  .contact-container {
+    gap: 24px !important;
+  }
+  .calc-title {
+    font-size: 1.25rem !important;
+  }
+  .output-val {
+    font-size: 1rem !important;
+  }
+
+  /* Footer — single column, centered */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center !important;
+  }
+  .footer-socials {
+    justify-content: center !important;
+  }
+  .footer-logo {
+    margin: 0 auto 20px !important;
+  }
+  .footer-bottom-container {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 12px !important;
+  }
+  .footer-bottom-links {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+  }
+  .site-footer {
+    padding: 50px 0 0 !important;
+  }
+
+  /* Toast */
+  .toast-msg {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 60px !important;
+  }
+}
+
+/* ==========================================================================
+   Small Phone — ≤ 480px
+   ========================================================================== */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 14px !important;
+  }
+  .section-padding {
+    padding: 36px 0 !important;
+  }
+
+  /* Hero */
+  .hero-section {
+    padding: 100px 0 40px !important;
+  }
+  .hero-title {
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+  }
+  .hero-description {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+  }
+  .hero-actions {
+    gap: 10px !important;
+  }
+  .hero-actions .btn {
+    padding: 13px 20px !important;
+    font-size: 0.92rem !important;
+  }
+
+  /* Nav */
+  .nav-menu {
+    left: 10px !important;
+    right: 10px !important;
+    padding: 16px !important;
+  }
+  .nav-list {
+    gap: 14px !important;
+  }
+  .nav-link {
+    font-size: 0.9rem !important;
+  }
+
+  /* Section headers */
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+  .section-subtitle {
+    font-size: 0.85rem !important;
+  }
+  .section-header {
+    margin-bottom: 24px !important;
+  }
+
+  /* Service cards */
+  .service-card {
+    padding: 20px 14px !important;
+  }
+  .service-icon-box {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    margin-bottom: 12px !important;
+  }
+  .service-icon-box svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .service-title {
+    font-size: 1.05rem !important;
+    margin-bottom: 10px !important;
+  }
+  .service-text {
+    font-size: 0.84rem !important;
+    margin-bottom: 14px !important;
+  }
+  .service-bullets li {
+    font-size: 0.78rem !important;
+    margin-bottom: 6px !important;
+  }
+  .service-card-badge {
+    font-size: 0.6rem !important;
+    padding: 3px 8px !important;
+    top: 12px !important;
+    right: 12px !important;
+  }
+
+  /* DataRock */
+  .datarock-stats-grid {
+    gap: 8px !important;
+  }
+  .stat-box {
+    padding: 14px 12px !important;
+  }
+  .stat-num {
+    font-size: 1.2rem !important;
+  }
+  .terminal-body {
+    height: 120px !important;
+  }
+  .datarock-subtitle {
+    font-size: 0.95rem !important;
+  }
+  .datarock-tagline {
+    font-size: 0.85rem !important;
+    padding: 0 8px !important;
+  }
+
+  /* Portfolio */
+  .portfolio-item {
+    height: 180px !important;
+    padding: 16px !important;
+  }
+  .project-name {
+    font-size: 1rem !important;
+  }
+  .project-desc {
+    font-size: 0.8rem !important;
+  }
+
+  /* Testimonials */
+  .testimonial-slider {
+    min-height: 360px !important;
+  }
+  .testimonial-card {
+    padding: 20px 14px !important;
+  }
+  .testimonial-quote {
+    font-size: 1rem !important;
+  }
+  .testimonial-text {
+    font-size: 0.85rem !important;
+    margin-bottom: 20px !important;
+  }
+  .quote-icon {
+    font-size: 2.8rem !important;
+    margin-bottom: -10px !important;
+  }
+  .client-avatar {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .client-name {
+    font-size: 0.88rem !important;
+  }
+  .client-title {
+    font-size: 0.72rem !important;
+  }
+  .control-btn {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .slider-controls {
+    gap: 14px !important;
+    margin-top: 16px !important;
+  }
+
+  /* Leadership */
+  .leader-img-box {
+    height: 220px !important;
+  }
+  .leader-info {
+    padding: 14px !important;
+  }
+  .leader-name {
+    font-size: 1rem !important;
+  }
+  .leader-title {
+    font-size: 0.78rem !important;
+  }
+  .leader-bio {
+    font-size: 0.82rem !important;
+  }
+
+  /* Calculator / Contact */
+  .contact-calc-column {
+    padding: 18px 12px !important;
+  }
+  .contact-form {
+    padding: 24px 16px !important;
+    margin-top: 20px !important;
+  }
+  .calc-title {
+    font-size: 1.15rem !important;
+  }
+  .calc-intro-text {
+    font-size: 0.82rem !important;
+  }
+  .calc-checkbox-card {
+    padding: 10px 12px !important;
+  }
+  .checkbox-label {
+    font-size: 0.82rem !important;
+  }
+  .output-val {
+    font-size: 0.95rem !important;
+  }
+  .contact-form label {
+    font-size: 0.72rem !important;
+  }
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form textarea {
+    font-size: 0.88rem !important;
+    padding: 10px 12px !important;
+  }
+
+  /* Footer */
+  .footer-heading {
+    font-size: 0.88rem !important;
+    margin-bottom: 16px !important;
+  }
+  .footer-links a {
+    font-size: 0.82rem !important;
+  }
+  .footer-bio-text {
+    font-size: 0.82rem !important;
+  }
+  .footer-contact-info {
+    font-size: 0.82rem !important;
+  }
+  .footer-bottom {
+    padding: 20px 0 !important;
+  }
+  .copyright-text {
+    font-size: 0.78rem !important;
+  }
+  .footer-bottom-links a {
+    font-size: 0.78rem !important;
+  }
+  .footer-logo {
+    height: 48px !important;
+  }
+
+  /* Scroll nav extra-compact */
+  .scroll-nav {
+    bottom: 10px !important;
+    right: 10px !important;
+  }
+  .scroll-btn {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .scroll-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  /* Modal */
+  .app-modal {
+    width: 98% !important;
+    border-radius: 10px !important;
+  }
+  .modal-header-section {
+    padding: 16px 18px !important;
+  }
+  .modal-content-body {
+    padding: 14px !important;
+  }
+
+  /* Careers */
+  .careers-hero {
+    padding: 110px 0 40px !important;
+  }
+  .job-card {
+    padding: 18px 14px !important;
+  }
+  .job-card-title {
+    font-size: 1.15rem !important;
+  }
+  .job-card-desc {
+    font-size: 0.84rem !important;
+  }
+  .job-card-salary {
+    font-size: 0.88rem !important;
+  }
+}
+
+/* ==========================================================================
+   Ultra-Narrow Phone — ≤ 390px
+   ========================================================================== */
+@media (max-width: 390px) {
+  .container {
+    padding: 0 12px !important;
+  }
+
+  .hero-title {
+    font-size: 1.45rem !important;
+  }
+  .hero-description {
+    font-size: 0.84rem !important;
+  }
+  .hero-actions .btn {
+    padding: 12px 16px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .section-title {
+    font-size: 1.35rem !important;
+  }
+  .section-subtitle {
+    font-size: 0.8rem !important;
+  }
+
+  .service-card {
+    padding: 16px 12px !important;
+  }
+  .service-title {
+    font-size: 1rem !important;
+  }
+  .service-text {
+    font-size: 0.8rem !important;
+  }
+
+  .testimonial-slider {
+    min-height: 400px !important;
+  }
+  .testimonial-quote {
+    font-size: 0.92rem !important;
+  }
+  .testimonial-text {
+    font-size: 0.8rem !important;
+  }
+
+  .stat-num {
+    font-size: 1.1rem !important;
+  }
+
+  .footer-heading {
+    font-size: 0.82rem !important;
+  }
+}
