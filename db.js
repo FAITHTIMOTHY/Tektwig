@@ -210,22 +210,46 @@ window.TektwigDB = {
   // ── Applications ──────────────────────────────────────────────────────────
 
   getApplications: async () => {
-    const { data, error } = await supabaseClient
+    const { data: stdData, error: stdErr } = await supabaseClient
       .from('applications')
       .select('*')
       .order('applied_at', { ascending: false });
-    if (error) throw error;
-    return data.map(enrichApplicationRecord);
+    if (stdErr) throw stdErr;
+
+    const { data: entData, error: entErr } = await supabaseClient
+      .from('enterprise_applications')
+      .select('*')
+      .order('applied_at', { ascending: false });
+    if (entErr) throw entErr;
+
+    const combined = [
+      ...(stdData || []).map(row => ({ ...row, isThirdParty: false })),
+      ...(entData || []).map(row => ({ ...row, isThirdParty: true }))
+    ];
+
+    combined.sort((a, b) => new Date(b.applied_at || 0) - new Date(a.applied_at || 0));
+
+    return combined.map(enrichApplicationRecord);
   },
 
   getApplication: async (id) => {
-    const { data, error } = await supabaseClient
+    const parsedId = parseInt(id);
+    const { data: stdData } = await supabaseClient
       .from('applications')
       .select('*')
-      .eq('id', parseInt(id))
+      .eq('id', parsedId)
+      .maybeSingle();
+
+    if (stdData) return enrichApplicationRecord({ ...stdData, isThirdParty: false });
+
+    const { data: entData, error: entErr } = await supabaseClient
+      .from('enterprise_applications')
+      .select('*')
+      .eq('id', parsedId)
       .single();
-    if (error) throw error;
-    return enrichApplicationRecord(data);
+
+    if (entErr) throw entErr;
+    return enrichApplicationRecord({ ...entData, isThirdParty: true });
   },
 
   saveApplication: async (appData) => {
@@ -284,20 +308,38 @@ window.TektwigDB = {
   },
 
   updateApplicationStatus: async (id, newStatus) => {
-    const { error } = await supabaseClient
+    const parsedId = parseInt(id);
+    const { data, error } = await supabaseClient
       .from('applications')
       .update({ status: newStatus })
-      .eq('id', parseInt(id));
-    if (error) throw error;
+      .eq('id', parsedId)
+      .select();
+
+    if (error || !data || data.length === 0) {
+      const { error: entErr } = await supabaseClient
+        .from('enterprise_applications')
+        .update({ status: newStatus })
+        .eq('id', parsedId);
+      if (entErr) throw entErr;
+    }
     return true;
   },
 
   deleteApplication: async (id) => {
-    const { error } = await supabaseClient
+    const parsedId = parseInt(id);
+    const { data, error } = await supabaseClient
       .from('applications')
       .delete()
-      .eq('id', parseInt(id));
-    if (error) throw error;
+      .eq('id', parsedId)
+      .select();
+
+    if (error || !data || data.length === 0) {
+      const { error: entErr } = await supabaseClient
+        .from('enterprise_applications')
+        .delete()
+        .eq('id', parsedId);
+      if (entErr) throw entErr;
+    }
     return true;
   },
 
