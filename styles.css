@@ -4527,4 +4527,43 @@ img {
   .service-card {
     padding: 16px 10px !important;
   }
-}
+}
+
+/* ==========================================================================
+   Toast Notification Design System
+   ========================================================================== */
+.toast-msg {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: rgba(13, 17, 23, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.15);
+  color: #f0f6fc;
+  font-family: inherit;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  max-width: 420px;
+}
+
+.toast-msg.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.toast-msg.toast-error {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(239, 68, 68, 0.2);
+}
+

@@ -285,59 +285,89 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================================== */
   const contactForm = document.getElementById('actual-contact-form');
 
+  const showToastNotification = (htmlContent, isError = false) => {
+    const toast = document.createElement('div');
+    toast.className = `toast-msg${isError ? ' toast-error' : ''}`;
+    const iconColor = isError ? '#ef4444' : 'var(--accent-cyan)';
+    const iconSvg = isError
+      ? `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${iconColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+
+    toast.innerHTML = `
+      ${iconSvg}
+      <div>${htmlContent}</div>
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('show'), 100);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 500);
+    }, 6000);
+  };
+
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Transmitting...</span>';
+      }
+
       // Get data
       const name = document.getElementById('contact-name').value.trim();
       const email = document.getElementById('contact-email').value.trim();
       const subject = document.getElementById('contact-subject').value.trim();
       const message = document.getElementById('contact-msg').value.trim();
 
-      // Save to IndexedDB
-      if (window.TektwigDB) {
-        try {
-          await window.TektwigDB.saveContactInquiry({
-            name,
-            email,
-            subject,
-            message,
-            submittedAt: new Date().toISOString()
-          });
-        } catch (err) {
-          console.error('Failed to save contact inquiry to DB:', err);
+      try {
+        if (!window.TektwigDB) {
+          throw new Error('Database connection is uninitialized.');
+        }
+
+        await window.TektwigDB.saveContactInquiry({
+          name,
+          email,
+          subject,
+          message,
+          submittedAt: new Date().toISOString()
+        });
+
+        // Reset form fields only on success
+        contactForm.reset();
+        if (typeof calculateEstimate === 'function') calculateEstimate();
+
+        // Show Success Toast
+        showToastNotification(`
+          <strong style="display:block;">Inquiry Transmitted!</strong>
+          <span style="font-size:0.8rem;color:var(--text-muted);">Thank you ${escapeHTML(name)}. Our team will contact you at ${escapeHTML(email)} within 2 hours.</span>
+        `, false);
+
+      } catch (err) {
+        console.error('Failed to save contact inquiry to DB:', err);
+
+        let errDetail = 'Failed to transmit inquiry to server. Please try again.';
+        if (err.message && (err.message.includes('row-level security') || err.code === '42501')) {
+          errDetail = 'Server security policy blocked insert (RLS policy missing). Please apply admin_security.sql on Supabase.';
+        } else if (err.message) {
+          errDetail = err.message;
+        }
+
+        // Show Error Toast
+        showToastNotification(`
+          <strong style="display:block;color:#ef4444;">Transmission Failed</strong>
+          <span style="font-size:0.8rem;color:var(--text-muted);">${escapeHTML(errDetail)}</span>
+        `, true);
+
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHTML;
         }
       }
-
-      // Reset form fields
-      contactForm.reset();
-      calculateEstimate(); // Reset calculator values too
-
-      // Show beautiful Toast Notification
-      const toast = document.createElement('div');
-      toast.className = 'toast-msg';
-      toast.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        <div>
-          <strong style="display:block;">Inquiry Transmitted!</strong>
-          <span style="font-size:0.8rem;color:var(--text-muted);">Thank you ${escapeHTML(name)}. Our security team will contact you at ${escapeHTML(email)} within 2 hours.</span>
-        </div>
-      `;
-      document.body.appendChild(toast);
-
-      // Trigger animation
-      setTimeout(() => {
-        toast.classList.add('show');
-      }, 100);
-
-      // Remove after 6 seconds
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => {
-          toast.remove();
-        }, 500);
-      }, 6000);
     });
   }
 
