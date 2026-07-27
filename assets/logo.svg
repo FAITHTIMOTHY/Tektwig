@@ -13,9 +13,9 @@
   <circle cx="120" cy="90" r="22" fill="#00abec" />
 
   <!-- Letter 't' inside central node -->
-  <path d="M 112,81 L 107,81 L 107,78 C 110,78 113,76 114,73 L 118,73 L 118,81 L 129,81 L 129,85 L 118,85 L 118,102 C 118,108 121,110 126,110 C 129,110 131,109 133,107 L 133,111 C 130,113 127,114 123,114 C 115,114 113,111 113,102 L 113,85 L 109,85 L 109,81 Z" fill="#13267d" />
+  <path d="M 114,82 L 109,82 L 109,80 C 111,80 113,78 114,74.5 L 118,74.5 L 118,82 L 127,82 L 127,84.5 L 118,84.5 L 118,101 C 118,106 120,108 124,108 C 126,108 127.5,107 128.5,106 L 128.5,108 C 127,110 124.5,111 122,111 C 117,111 114,108 114,101 L 114,84.5 L 111,84.5 L 111,82 Z" fill="#13267d" />
 
   <!-- Typography -->
-  <text x="120" y="156" text-anchor="middle" font-family="'Poppins', 'Inter', sans-serif" font-size="16" font-weight="600" letter-spacing="2.2" fill="#13267d">TEKTWIG</text>
-  <text x="120" y="167" text-anchor="middle" font-family="'Inter', sans-serif" font-size="4.5" font-weight="400" letter-spacing="1.2" fill="#13267d" opacity="0.8">LIVING BY TECH...</text>
+  <text x="120" y="140" text-anchor="middle" font-family="'Poppins', 'Inter', sans-serif" font-size="16" font-weight="600" letter-spacing="2.2" fill="#13267d">TEKTWIG</text>
+  <text x="120" y="150" text-anchor="middle" font-family="'Inter', sans-serif" font-size="6" font-weight="400" letter-spacing="1.5" fill="#13267d" opacity="0.8">LIVING BY TECH.</text>
 </svg>
