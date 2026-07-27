@@ -1,21 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 110" width="100%" height="100%">
   <!-- Connecting Lines -->
-  <line x1="120" y1="90" x2="96" y2="48.5" stroke="#00abec" stroke-width="4.5" stroke-linecap="round" />
-  <line x1="120" y1="90" x2="162.6" y2="60.2" stroke="#00abec" stroke-width="4.5" stroke-linecap="round" />
-  <line x1="120" y1="90" x2="64" y2="105" stroke="#00abec" stroke-width="4.5" stroke-linecap="round" />
+  <line x1="90" y1="58" x2="66" y2="16.5" stroke="#00abec" stroke-width="4.5" stroke-linecap="round" />
+  <line x1="90" y1="58" x2="132.6" y2="28.2" stroke="#00abec" stroke-width="4.5" stroke-linecap="round" />
+  <line x1="90" y1="58" x2="34" y2="73" stroke="#00abec" stroke-width="4.5" stroke-linecap="round" />
 
   <!-- Nodes -->
-  <circle cx="96" cy="48.5" r="12" fill="#00abec" />
-  <circle cx="162.6" cy="60.2" r="14" fill="#00abec" />
-  <circle cx="64" cy="105" r="18" fill="#f24b22" />
+  <circle cx="66" cy="16.5" r="12" fill="#00abec" />
+  <circle cx="132.6" cy="28.2" r="14" fill="#00abec" />
+  <circle cx="34" cy="73" r="18" fill="#f24b22" />
   
   <!-- Central Node -->
-  <circle cx="120" cy="90" r="22" fill="#00abec" />
+  <circle cx="90" cy="58" r="22" fill="#00abec" />
 
   <!-- Letter 't' inside central node -->
-  <path d="M 114,82 L 109,82 L 109,80 C 111,80 113,78 114,74.5 L 118,74.5 L 118,82 L 127,82 L 127,84.5 L 118,84.5 L 118,101 C 118,106 120,108 124,108 C 126,108 127.5,107 128.5,106 L 128.5,108 C 127,110 124.5,111 122,111 C 117,111 114,108 114,101 L 114,84.5 L 111,84.5 L 111,82 Z" fill="#13267d" />
+  <path d="M 84,50 L 79,50 L 79,48 C 81,48 83,46 84,42.5 L 88,42.5 L 88,50 L 97,50 L 97,52.5 L 88,52.5 L 88,69 C 88,74 90,76 94,76 C 96,76 97.5,75 98.5,74 L 98.5,76 C 97,78 94.5,79 92,79 C 87,79 84,76 84,69 L 84,52.5 L 81,52.5 L 81,50 Z" fill="#13267d" />
 
-  <!-- Typography -->
-  <text x="120" y="140" text-anchor="middle" font-family="'Poppins', 'Inter', sans-serif" font-size="16" font-weight="600" letter-spacing="2.2" fill="#13267d">TEKTWIG</text>
-  <text x="120" y="150" text-anchor="middle" font-family="'Inter', sans-serif" font-size="6" font-weight="400" letter-spacing="1.5" fill="#13267d" opacity="0.8">LIVING BY TECH.</text>
+  <!-- Typography: 'ek' in cyan (#00abec), 'twig' in orange-red (#f24b22) -->
+  <text x="112" y="74" font-family="'Georgia', 'Times New Roman', serif" font-size="52" font-weight="700" letter-spacing="-0.5">
+    <tspan fill="#00abec">ek</tspan><tspan fill="#f24b22">twig</tspan>
+  </text>
+  <!-- Subtext tagline -->
+  <text x="116" y="92" font-family="'Inter', 'Poppins', sans-serif" font-size="9" font-weight="400" letter-spacing="2.8" fill="#00abec" opacity="0.95">LIVING BY TECH...</text>
 </svg>
