@@ -413,6 +413,20 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     });
   }
+  /* ==========================================================================
+     Preloader Splash Screen
+     ========================================================================== */
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        preloader.classList.add('fade-out');
+        preloader.addEventListener('transitionend', () => {
+          preloader.style.display = 'none';
+        }, { once: true });
+      }, 1200);
+    });
+  }
 
 });
 
