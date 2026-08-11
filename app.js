@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextSlide = () => showSlide(currentSlide + 1);
   const prevSlide = () => showSlide(currentSlide - 1);
 
-  if (prevBtn && nextBtn) {
+  if (slides.length > 0 && prevBtn && nextBtn) {
     prevBtn.addEventListener('click', () => {
       prevSlide();
       resetAutoSlide();
@@ -427,6 +427,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1200);
     });
   }
+  /* ==========================================================================
+     Scroll-Driven Reveal (Intersection Observer)
+     ========================================================================== */
+  const revealElements = document.querySelectorAll(
+    '.section-header, .datarock-hero-banner, .service-card, .use-case-card, .matters-card, .video-card, .award-badge-card, .portfolio-item, .leader-card, .contact-calc-column, .contact-form-column'
+  );
+
+  revealElements.forEach((el) => {
+    el.classList.add('scroll-reveal');
+  });
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      } else {
+        entry.target.classList.remove('visible');
+      }
+    });
+  }, {
+    threshold: 0.02,
+    rootMargin: '0px 0px 0px 0px'
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
 
 });
 

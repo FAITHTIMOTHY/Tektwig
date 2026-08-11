@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <script>
-    (function() {
+    (function () {
       const hostname = window.location.hostname;
       if (hostname.startsWith('admin.')) {
         window.location.replace(window.location.protocol + '//' + window.location.host + '/admin.html' + window.location.search + window.location.hash);
@@ -11,27 +12,34 @@
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Tektwig Digital & Internet Business Solutions - Building secure, intelligent, data-driven systems that scale with you. Specialists in Cybersecurity, Data Protection, AI development, Networking, and Full-Stack Engineering.">
-  <meta name="keywords" content="Cybersecurity, Data Protection, AI Development, Networking, Software Development, IT Training, Lagos, Nigeria, Tektwig">
+  <meta name="description"
+    content="Tektwig Digital & Internet Business Solutions - Building secure, intelligent, data-driven systems that scale with you. Specialists in Cybersecurity, Data Protection, AI development, Networking, and Full-Stack Engineering.">
+  <meta name="keywords"
+    content="Cybersecurity, Data Protection, AI Development, Networking, Software Development, IT Training, Lagos, Nigeria, Tektwig">
   <meta name="author" content="Tektwig">
   <title>Tektwig | Empowering Your Digital Future</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <!-- Preloader Splash Screen -->
   <div class="preloader" id="preloader">
     <div class="preloader-inner">
       <img src="assets/logo.svg" alt="Tektwig" class="preloader-logo">
-      <div class="preloader-bar"><div class="preloader-fill"></div></div>
+      <div class="preloader-bar">
+        <div class="preloader-fill"></div>
+      </div>
     </div>
   </div>
 
@@ -42,13 +50,19 @@
     <div class="glow-orb orb-3"></div>
   </div>
 
-  <!-- Header / Navigation -->
-  <header id="main-header" class="site-header">
-    <div class="container header-container">
+  <!-- Site Logo (fixed to page top spot) -->
+  <div class="site-logo-wrapper">
+    <div class="container">
       <a href="#" class="logo-link">
         <img src="assets/logo.svg" alt="Tektwig Logo" class="logo-img" id="site-logo">
       </a>
-      
+    </div>
+  </div>
+
+  <!-- Header / Navigation (fixed floating glass dock) -->
+  <header id="main-header" class="site-header">
+    <div class="header-container">
+
       <!-- Mobile Nav Trigger -->
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
         <span class="hamburger"></span>
@@ -78,14 +92,20 @@
           Building Secure, <span class="gradient-text">Intelligent</span> Systems That Scale.
         </h1>
         <p class="hero-description" id="hero-sub-text">
-          From advanced cybersecurity and data protection to custom AI development, networking, and full-stack software engineering. We turn your technology ambitions into production-ready realities.
+          From advanced cybersecurity and data protection to custom AI development, networking, and full-stack software
+          engineering. We turn your technology ambitions into production-ready realities.
         </p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary btn-lg" id="hero-cta-primary">Start a Project</a>
           <a href="#services" class="btn btn-secondary btn-lg" id="hero-cta-secondary">Explore Services</a>
           <a href="#contact" class="btn btn-tertiary" id="hero-cta-tertiary">
             <span>Learn With Us</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-arrow-right">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </a>
         </div>
       </div>
@@ -136,20 +156,24 @@
       <div class="section-header center-align">
         <span class="section-tag">Solutions Overview</span>
         <h2 class="section-title">How Can We Help You?</h2>
-        <p class="section-subtitle">We deliver premium consulting, training, and execution across critical digital layers.</p>
+        <p class="section-subtitle">We deliver premium consulting, training, and execution across critical digital
+          layers.</p>
       </div>
 
       <div class="services-grid">
         <!-- Card 1 -->
         <div class="service-card glass-panel" id="service-cybersecurity">
           <div class="service-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon-svg">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
           </div>
           <h3 class="service-title">Cybersecurity &amp; Data Protection</h3>
           <p class="service-text">
-            Comprehensive risk assessments, GDPR/ISO27001 compliance advisory, penetration testing, database encryption, and automated incident response systems.
+            Comprehensive risk assessments, GDPR/ISO27001 compliance advisory, penetration testing, database encryption,
+            and automated incident response systems.
           </p>
           <ul class="service-bullets">
             <li>Risk &amp; Vulnerability Auditing</li>
@@ -161,7 +185,9 @@
         <!-- Card 2 -->
         <div class="service-card glass-panel" id="service-networking">
           <div class="service-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon-svg">
               <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
               <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
               <line x1="6" y1="6" x2="6.01" y2="6"></line>
@@ -170,7 +196,8 @@
           </div>
           <h3 class="service-title">Networking &amp; Infrastructure</h3>
           <p class="service-text">
-            Enterprise network architecture design and deployment. Specializing in secure private clouds, SD-WAN virtualization, and telemetry monitoring.
+            Enterprise network architecture design and deployment. Specializing in secure private clouds, SD-WAN
+            virtualization, and telemetry monitoring.
           </p>
           <ul class="service-bullets">
             <li>Secure Topology Design</li>
@@ -182,15 +209,20 @@
         <!-- Card 3 -->
         <div class="service-card glass-panel" id="service-ai">
           <div class="service-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon-svg">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+              </path>
               <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
               <line x1="12" y1="22.08" x2="12" y2="12"></line>
             </svg>
           </div>
           <h3 class="service-title">AI &amp; Data Analytics</h3>
           <p class="service-text">
-            Bespoke machine learning models, predictive intelligence algorithms, dynamic data engineering pipelines (ETL/ELT), and real-time BI dashboards.
+            Bespoke machine learning models, predictive intelligence algorithms, dynamic data engineering pipelines
+            (ETL/ELT), and real-time BI dashboards.
           </p>
           <ul class="service-bullets">
             <li>Machine Learning Pipelines</li>
@@ -202,7 +234,9 @@
         <!-- Card 4 -->
         <div class="service-card glass-panel" id="service-software">
           <div class="service-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon-svg">
               <polyline points="16 18 22 12 16 6"></polyline>
               <polyline points="8 6 2 12 8 18"></polyline>
               <line x1="14" y1="4" x2="10" y2="20"></line>
@@ -210,7 +244,8 @@
           </div>
           <h3 class="service-title">Software Development</h3>
           <p class="service-text">
-            Bespoke full-stack web and native mobile application engineering. API integrations, microservices structures, and automated DevOps CI/CD setups.
+            Bespoke full-stack web and native mobile application engineering. API integrations, microservices
+            structures, and automated DevOps CI/CD setups.
           </p>
           <ul class="service-bullets">
             <li>Full-Stack Web &amp; Mobile</li>
@@ -222,7 +257,9 @@
         <!-- Card 5 -->
         <div class="service-card glass-panel" id="service-vending">
           <div class="service-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon-svg">
               <circle cx="9" cy="21" r="1"></circle>
               <circle cx="20" cy="21" r="1"></circle>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -230,7 +267,8 @@
           </div>
           <h3 class="service-title">IT Products Vending</h3>
           <p class="service-text">
-            Strategic technology hardware and license procurement. Sourcing robust security appliances, high-throughput network nodes, and software tools.
+            Strategic technology hardware and license procurement. Sourcing robust security appliances, high-throughput
+            network nodes, and software tools.
           </p>
           <ul class="service-bullets">
             <li>Hardware Supply &amp; Install</li>
@@ -242,14 +280,17 @@
         <!-- Card 6 -->
         <div class="service-card glass-panel" id="service-training">
           <div class="service-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon-svg">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             </svg>
           </div>
           <h3 class="service-title">Training &amp; Capacity Building</h3>
           <p class="service-text">
-            Tailored technical bootcamps, security awareness modules, structured corporate coaching, and guided mentorship in programming and analytics.
+            Tailored technical bootcamps, security awareness modules, structured corporate coaching, and guided
+            mentorship in programming and analytics.
           </p>
           <ul class="service-bullets">
             <li>Technical Bootcamp Programs</li>
@@ -259,10 +300,13 @@
         </div>
 
         <!-- Card 7 — Enterprise Recruitment (featured) -->
-        <div class="service-card service-card--featured glass-panel" id="service-recruitment" data-released-date="2026-07-06">
+        <div class="service-card service-card--featured glass-panel" id="service-recruitment"
+          data-released-date="2026-07-06">
           <div class="service-card-badge">New Service</div>
           <div class="service-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="url(#cyanPurpleGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="icon-svg">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
               <circle cx="9" cy="7" r="4"></circle>
               <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -271,7 +315,8 @@
           </div>
           <h3 class="service-title">Enterprise Recruitment</h3>
           <p class="service-text">
-            Let Tektwig handle your talent search. We advertise your vacancies across premium channels, pre-screen candidates, and deliver only qualified applicants — saving your HR team time and budget.
+            Let Tektwig handle your talent search. We advertise your vacancies across premium channels, pre-screen
+            candidates, and deliver only qualified applicants — saving your HR team time and budget.
           </p>
           <ul class="service-bullets">
             <li>Multi-Platform Job Advertising</li>
@@ -280,12 +325,16 @@
           </ul>
           <a href="recruit.html" class="service-cta-link">
             Submit a Hiring Brief
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </a>
         </div>
       </div>
     </div>
-    
+
     <!-- SVG gradients helper for styles -->
     <svg style="width:0;height:0;position:absolute;" aria-hidden="true">
       <linearGradient id="cyanPurpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -298,22 +347,26 @@
   <!-- DataRock Control Showcase -->
   <section id="datarock" class="datarock-section section-padding">
     <div class="container datarock-clone-container">
-      
+
       <!-- Part 1: Hero Banner -->
       <div class="datarock-hero-banner text-center">
         <div class="badge badge-purple" id="datarock-badge">Data Protection Redefined</div>
         <h2 class="section-title text-glow">Côntrol™</h2>
         <h3 class="datarock-subtitle">Secure person-to-person data sharing</h3>
         <p class="datarock-tagline">
-          It's easy to take control of your data with secure-by-design protection trusted in national security environments—no expertise required.
+          It's easy to take control of your data with secure-by-design protection trusted in national security
+          environments—no expertise required.
         </p>
         <p class="datarock-caption text-gradient">
           Secure, zero-trust control of your files — decide who, when, where, and how your data is accessed.
         </p>
-        
+
         <!-- Hero main product screenshot -->
-        <div class="hero-image-wrapper" style="max-width: 800px; margin: 30px auto 0; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);">
-          <img src="assets/datarock/Screenshot-2025-11-27-142942.png" alt="DataRock zero-trust security policy control panel screenshot" style="width: 100%; height: auto; display: block;">
+        <div class="hero-image-wrapper"
+          style="max-width: 800px; margin: 30px auto 0; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1);">
+          <img src="assets/datarock/Screenshot-2025-11-27-142942.png"
+            alt="DataRock zero-trust security policy control panel screenshot"
+            style="width: 100%; height: auto; display: block;">
         </div>
       </div>
 
@@ -323,35 +376,55 @@
         <span class="divider-text">Use Cases</span>
         <span class="divider-line"></span>
       </div>
-      
+
       <div class="datarock-use-cases-grid">
         <div class="use-case-card glass-panel hover-glow">
           <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="var(--accent-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-mail">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
           </div>
           <h3>Email Security</h3>
           <p>
-            A dedicated Outlook plugin lets you send encrypted emails and attachments with a single click, ensuring confidentiality and compliance without complicating your workflow.
-          </p>
-        </div>
-        
-        <div class="use-case-card glass-panel hover-glow">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-          </div>
-          <h3>Secure File Sharing</h3>
-          <p>
-            With Côntrol, you can share sensitive documents across devices and platforms — Windows, macOS, iOS, Android — while controlling exactly who can access them, where, when, and how.
+            A dedicated Outlook plugin lets you send encrypted emails and attachments with a single click, ensuring
+            confidentiality and compliance without complicating your workflow.
           </p>
         </div>
 
         <div class="use-case-card glass-panel hover-glow">
           <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="var(--accent-purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-share-2">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </div>
+          <h3>Secure File Sharing</h3>
+          <p>
+            With Côntrol, you can share sensitive documents across devices and platforms — Windows, macOS, iOS, Android
+            — while controlling exactly who can access them, where, when, and how.
+          </p>
+        </div>
+
+        <div class="use-case-card glass-panel hover-glow">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-shield">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
           </div>
           <h3>Data Rights Management</h3>
           <p>
-            Côntrol keeps the control in your hands — preventing unauthorized copying, printing, or forwarding, setting time- or location-based access restrictions, and enabling you to revoke permissions at any time.
+            Côntrol keeps the control in your hands — preventing unauthorized copying, printing, or forwarding, setting
+            time- or location-based access restrictions, and enabling you to revoke permissions at any time.
           </p>
         </div>
       </div>
@@ -365,7 +438,7 @@
 
       <div class="datarock-showcase-tabs">
         <h3 class="tabs-section-title text-center">See what Côntrol™ looks like</h3>
-        
+
         <div class="tabs-header-container">
           <div class="tabs-header glass-panel">
             <button class="datarock-tab-btn active" data-tab="rules">Your data. Your Rules.</button>
@@ -381,43 +454,67 @@
             <div class="pane-grid">
               <div class="pane-visual">
                 <!-- Real high-fidelity zero-trust policy control interface screenshot -->
-                <div class="glass-panel" style="padding:12px; border-radius:16px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center;">
-                  <img src="assets/datarock/rules_interface_cropped.png" alt="DataRock zero-trust security policy control panel interface screenshot" style="border-radius:8px; border:1px solid rgba(255,255,255,0.08); width:100%; height:auto;">
+                <div class="glass-panel"
+                  style="padding:12px; border-radius:16px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center;">
+                  <img src="assets/datarock/rules_interface_cropped.png"
+                    alt="DataRock zero-trust security policy control panel interface screenshot"
+                    style="border-radius:8px; border:1px solid rgba(255,255,255,0.08); width:100%; height:auto;">
                 </div>
               </div>
               <div class="pane-info">
                 <h4>Your data. Your Rules.</h4>
                 <p>
-                  Decide WHO, WHEN, WHERE, and HOW Data is Shared. Côntrol™ is a patent-pending solution that can be used on multiple platforms, including Windows, macOS, iOS, and Android. It provides the ability to:
+                  Decide WHO, WHEN, WHERE, and HOW Data is Shared. Côntrol™ is a patent-pending solution that can be
+                  used on multiple platforms, including Windows, macOS, iOS, and Android. It provides the ability to:
                 </p>
                 <ul class="pane-list" style="list-style: none; padding: 0; margin: 20px 0 0;">
                   <li style="display: flex; align-items: center; margin-bottom: 16px;">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span
+                      style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                     </span>
                     <span>Control WHO can access your data</span>
                   </li>
                   <li style="display: flex; align-items: center; margin-bottom: 16px;">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span
+                      style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                     </span>
                     <span>Control WHEN they can access your data (time-fencing)</span>
                   </li>
                   <li style="display: flex; align-items: center; margin-bottom: 16px;">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span
+                      style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                     </span>
                     <span>Control WHERE they can access your data (geofencing)</span>
                   </li>
                   <li style="display: flex; align-items: center; margin-bottom: 16px;">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span
+                      style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                     </span>
                     <span>Enforce HOW your data is accessed (DRM - no forward, copy, print or save)</span>
                   </li>
                   <li style="display: flex; align-items: center; margin-bottom: 16px;">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span
+                      style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: #5b5bf6; border-radius: 50%; margin-right: 12px; flex-shrink: 0;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                     </span>
                     <span>REVOKE access at any time</span>
                   </li>
@@ -431,18 +528,24 @@
             <div class="pane-grid">
               <div class="pane-visual">
                 <div style="display:flex; justify-content:center; width:100%;">
-                  <div class="glass-panel" style="width:260px; padding:12px; border-radius:28px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center;">
-                    <img src="assets/datarock/mobile_interface_cropped.png" alt="DataRock Control for Mobile interface screenshot" style="border-radius:20px; width:100%; height:auto;">
+                  <div class="glass-panel"
+                    style="width:260px; padding:12px; border-radius:28px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center;">
+                    <img src="assets/datarock/mobile_interface_cropped.png"
+                      alt="DataRock Control for Mobile interface screenshot"
+                      style="border-radius:20px; width:100%; height:auto;">
                   </div>
                 </div>
               </div>
               <div class="pane-info">
                 <h4>Côntrol™ for mobile</h4>
                 <p>
-                  On the move and need to securely share your files from your mobile device? Côntrol has you covered with support for Android and iOS devices. Just like our desktop solution, you can control who, where, how, and when your data is accessed, even when sending it to someone else’s device.
+                  On the move and need to securely share your files from your mobile device? Côntrol has you covered
+                  with support for Android and iOS devices. Just like our desktop solution, you can control who, where,
+                  how, and when your data is accessed, even when sending it to someone else’s device.
                 </p>
                 <p>
-                  Our app uses advanced encryption and multi-factor geofencing, ensuring your files are only accessible in approved locations.
+                  Our app uses advanced encryption and multi-factor geofencing, ensuring your files are only accessible
+                  in approved locations.
                 </p>
               </div>
             </div>
@@ -454,12 +557,17 @@
               <div class="pane-info">
                 <h4>Côntrol™ for desktop</h4>
                 <p>
-                  Côntrol lives on multiple operating systems (OS), including your desktop OS. Whether your OS is Mac or Windows, Côntrol protects your data. Use Côntrol to keep the files on your desktop secure or create a secure file to share with others.
+                  Côntrol lives on multiple operating systems (OS), including your desktop OS. Whether your OS is Mac or
+                  Windows, Côntrol protects your data. Use Côntrol to keep the files on your desktop secure or create a
+                  secure file to share with others.
                 </p>
               </div>
               <div class="pane-visual">
-                <div class="glass-panel" style="padding:12px; border-radius:16px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center;">
-                  <img src="assets/datarock/desktop_interface_cropped.png" alt="DataRock Control for Desktop interface screenshot" style="border-radius:8px; border:1px solid rgba(255,255,255,0.08); width:100%; height:auto;">
+                <div class="glass-panel"
+                  style="padding:12px; border-radius:16px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center;">
+                  <img src="assets/datarock/desktop_interface_cropped.png"
+                    alt="DataRock Control for Desktop interface screenshot"
+                    style="border-radius:8px; border:1px solid rgba(255,255,255,0.08); width:100%; height:auto;">
                 </div>
               </div>
             </div>
@@ -471,12 +579,16 @@
               <div class="pane-info">
                 <h4>Côntrol™ for Outlook</h4>
                 <p>
-                  Email is one of the easiest ways to use Côntrol, as it's plugin for Outlook allows you to seamlessly send secure emails and attachments to others with just a couple of simple clicks.
+                  Email is one of the easiest ways to use Côntrol, as it's plugin for Outlook allows you to seamlessly
+                  send secure emails and attachments to others with just a couple of simple clicks.
                 </p>
               </div>
               <div class="pane-visual">
-                <div class="glass-panel" style="padding:12px; border-radius:16px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center;">
-                  <img src="assets/datarock/outlook_interface_cropped.png" alt="DataRock Control Outlook compose plugin with encryption and permission controls" style="border-radius:8px; border:1px solid rgba(255,255,255,0.08); width:100%; height:auto;">
+                <div class="glass-panel"
+                  style="padding:12px; border-radius:16px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center;">
+                  <img src="assets/datarock/outlook_interface_cropped.png"
+                    alt="DataRock Control Outlook compose plugin with encryption and permission controls"
+                    style="border-radius:8px; border:1px solid rgba(255,255,255,0.08); width:100%; height:auto;">
                 </div>
               </div>
             </div>
@@ -496,15 +608,17 @@
           <span class="card-number text-gradient">01</span>
           <h4>Regulatory Compliance &amp; CUI Management</h4>
           <p>
-            Côntrol is ideal for securing Controlled Unclassified Information (CUI), meeting federal security standards and keeping access tightly governed.
+            Côntrol is ideal for securing Controlled Unclassified Information (CUI), meeting federal security standards
+            and keeping access tightly governed.
           </p>
         </div>
-        
+
         <div class="matters-card glass-panel hover-glow">
           <span class="card-number text-gradient">02</span>
           <h4>Complete Control &amp; Revocation</h4>
           <p>
-            You retain control even after data leaves your device. Revoke access in real-time — no more "I sent it, now I can't take it back."
+            You retain control even after data leaves your device. Revoke access in real-time — no more "I sent it, now
+            I can't take it back."
           </p>
         </div>
 
@@ -512,7 +626,8 @@
           <span class="card-number text-gradient">03</span>
           <h4>Ease of Use</h4>
           <p>
-            Designed for non-experts. Simple UI, yet powerful security. Deploys across your existing infrastructure easily.
+            Designed for non-experts. Simple UI, yet powerful security. Deploys across your existing infrastructure
+            easily.
           </p>
         </div>
 
@@ -520,7 +635,8 @@
           <span class="card-number text-gradient">04</span>
           <h4>Cost-effective Protection</h4>
           <p>
-            Low friction, yet powerful: There's a free, read-only version; 14-day full trial; and enterprise pricing with centralized management.
+            Low friction, yet powerful: There's a free, read-only version; 14-day full trial; and enterprise pricing
+            with centralized management.
           </p>
         </div>
 
@@ -528,7 +644,8 @@
           <span class="card-number text-gradient">05</span>
           <h4>Future-Proof Security</h4>
           <p>
-            Built with advanced encryption and zero-trust principles — positioning you for emerging risks (quantum, ransomware, insider threats).
+            Built with advanced encryption and zero-trust principles — positioning you for emerging risks (quantum,
+            ransomware, insider threats).
           </p>
         </div>
       </div>
@@ -543,22 +660,27 @@
       <div class="datarock-videos-grid">
         <!-- Video 1: Your Data Is Leaking -->
         <div class="video-card glass-panel">
-          <div class="video-embed-container" style="position: relative; width: 100%; height: 280px; overflow: hidden; border-radius: 8px;">
-            <video controls controlsList="nodownload" poster="assets/datarock/datarock_promo_first_frame.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+          <div class="video-embed-container"
+            style="position: relative; width: 100%; height: 280px; overflow: hidden; border-radius: 8px;">
+            <video controls controlsList="nodownload" poster="assets/datarock/datarock_promo_first_frame.png"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
               <source src="assets/datarock/datarock_promo.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>
           <div class="video-info-content">
             <h4>Your Data Is Leaking</h4>
-            <p>Tektwig Presentation: See how leaks occur silently in employee inboxes and why traditional defenses fail.</p>
+            <p>Tektwig Presentation: See how leaks occur silently in employee inboxes and why traditional defenses fail.
+            </p>
           </div>
         </div>
 
         <!-- Video 2: Become a Control Freak -->
         <div class="video-card glass-panel">
-          <div class="video-embed-container" style="position: relative; width: 100%; height: 280px; overflow: hidden; border-radius: 8px;">
-            <video controls controlsList="nodownload" poster="assets/datarock/datarock_demo2_first_frame.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+          <div class="video-embed-container"
+            style="position: relative; width: 100%; height: 280px; overflow: hidden; border-radius: 8px;">
+            <video controls controlsList="nodownload" poster="assets/datarock/datarock_demo2_first_frame.png"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
               <source src="assets/datarock/datarock_demo2.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
@@ -577,8 +699,10 @@
 
         <!-- Video 3: Data Breaches Local Video Player -->
         <div class="video-card glass-panel">
-          <div class="video-embed-container" style="position: relative; width: 100%; height: 280px; overflow: hidden; border-radius: 8px;">
-            <video controls controlsList="nodownload" poster="assets/datarock/datarock_demo3_first_frame.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+          <div class="video-embed-container"
+            style="position: relative; width: 100%; height: 280px; overflow: hidden; border-radius: 8px;">
+            <video controls controlsList="nodownload" poster="assets/datarock/datarock_demo3_first_frame.png"
+              style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
               <source src="assets/datarock/datarock_demo3.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
@@ -600,59 +724,90 @@
       <div class="datarock-awards-banner text-center">
         <h4>Award-Winning Protection</h4>
         <p>DataRock Côntrol™ has been recognized globally for communications security and database defense.</p>
-        
-        <div class="awards-badges-row" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 30px;">
-          <div class="award-badge-card glass-panel hover-glow" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
-            <img src="assets/datarock/global-infosec-awards-red-carpet-2024-lrg-wnrs-2048x1082-removebg-preview-150x123.avif" alt="Global InfoSec Awards Winner 2024 Logo" style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
+
+        <div class="awards-badges-row"
+          style="display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 30px;">
+          <div class="award-badge-card glass-panel hover-glow"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
+            <img
+              src="assets/datarock/global-infosec-awards-red-carpet-2024-lrg-wnrs-2048x1082-removebg-preview-150x123.avif"
+              alt="Global InfoSec Awards Winner 2024 Logo"
+              style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
             <div>
               <h5 style="font-size: 14px; margin-bottom: 4px;">Global InfoSec</h5>
-              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Winner 2024</span>
-              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Cyber Defense CDM</span>
+              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Winner
+                2024</span>
+              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Cyber
+                Defense CDM</span>
             </div>
           </div>
-          
-          <div class="award-badge-card glass-panel hover-glow" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
-            <img src="assets/datarock/GLOBEE_AWARDS_SILVER_WINNER-removebg-preview-150x150.avif" alt="Globee Awards Silver Winner 2023 Logo" style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
+
+          <div class="award-badge-card glass-panel hover-glow"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
+            <img src="assets/datarock/GLOBEE_AWARDS_SILVER_WINNER-removebg-preview-150x150.avif"
+              alt="Globee Awards Silver Winner 2023 Logo"
+              style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
             <div>
               <h5 style="font-size: 14px; margin-bottom: 4px;">Globee Awards</h5>
-              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Silver Winner 2023</span>
-              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Business Awards</span>
+              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Silver
+                Winner 2023</span>
+              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Business
+                Awards</span>
             </div>
           </div>
 
-          <div class="award-badge-card glass-panel hover-glow" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
-            <img src="assets/datarock/Award-Badge-2023-SC-Awards-Excellence-Award-Finalist.avif" alt="SC Awards Excellence Award Finalist Logo" style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
+          <div class="award-badge-card glass-panel hover-glow"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
+            <img src="assets/datarock/Award-Badge-2023-SC-Awards-Excellence-Award-Finalist.avif"
+              alt="SC Awards Excellence Award Finalist Logo"
+              style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
             <div>
               <h5 style="font-size: 14px; margin-bottom: 4px;">SC Awards</h5>
-              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Excellence Finalist</span>
-              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">SC Media 2023</span>
+              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Excellence
+                Finalist</span>
+              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">SC Media
+                2023</span>
             </div>
           </div>
 
-          <div class="award-badge-card glass-panel hover-glow" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
-            <img src="assets/datarock/cybersecurity_excellence_awards_2024.avif" alt="Cybersecurity Excellence Awards Winner 2024 Logo" style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
+          <div class="award-badge-card glass-panel hover-glow"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
+            <img src="assets/datarock/cybersecurity_excellence_awards_2024.avif"
+              alt="Cybersecurity Excellence Awards Winner 2024 Logo"
+              style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
             <div>
               <h5 style="font-size: 14px; margin-bottom: 4px;">Cybersecurity Excellence</h5>
-              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Winner 2024</span>
-              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Excellence Group</span>
+              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Winner
+                2024</span>
+              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Excellence
+                Group</span>
             </div>
           </div>
 
-          <div class="award-badge-card glass-panel hover-glow" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
-            <img src="assets/datarock/85f683_2e77dcda0fd34282b6d89db3196b09d9mv2.avif" alt="Secure Communications Solution of the Year 2023 Logo" style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
+          <div class="award-badge-card glass-panel hover-glow"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
+            <img src="assets/datarock/85f683_2e77dcda0fd34282b6d89db3196b09d9mv2.avif"
+              alt="Secure Communications Solution of the Year 2023 Logo"
+              style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
             <div>
               <h5 style="font-size: 14px; margin-bottom: 4px;">Secure Comms</h5>
-              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Solution of the Year</span>
-              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Cyber Awards 2023</span>
+              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Solution
+                of the Year</span>
+              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">Cyber Awards
+                2023</span>
             </div>
           </div>
 
-          <div class="award-badge-card glass-panel hover-glow" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
-            <img src="assets/datarock/CRN_Awards_Logo_2023Transparent-100x150.avif" alt="CRN Awards Logo 2023 Logo" style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
+          <div class="award-badge-card glass-panel hover-glow"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 24px; border-radius: 12px; width: 180px; min-height: 220px; transition: transform 0.3s ease;">
+            <img src="assets/datarock/CRN_Awards_Logo_2023Transparent-100x150.avif" alt="CRN Awards Logo 2023 Logo"
+              style="height: 70px; width: auto; margin-bottom: 12px; object-fit: contain;">
             <div>
               <h5 style="font-size: 14px; margin-bottom: 4px;">CRN Awards</h5>
-              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Finalist 2023</span>
-              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">The Channel Company</span>
+              <span class="badge-title" style="font-size: 12px; color: var(--accent-orange); display: block;">Finalist
+                2023</span>
+              <span class="badge-issuer" style="font-size: 11px; color: var(--text-muted); display: block;">The Channel
+                Company</span>
             </div>
           </div>
         </div>
@@ -662,14 +817,16 @@
       <div class="datarock-cta-section text-center glass-panel">
         <h3 class="text-glow">So What should you do now?</h3>
         <p class="cta-subtitle text-gradient">Reclaim absolute sovereignty over your corporate files.</p>
-        
+
         <ul class="cta-questions text-muted">
           <li>Do you want the power to decide exactly who can view your files — even after you’ve shared them?</li>
           <li>What if you could delete or revoke file access instantly, anytime, from anywhere?</li>
           <li>How much more secure would your data be if you could control where it’s opened — by country or city?</li>
-          <li>Would setting precise time windows for when others can view your files give you greater peace of mind?</li>
+          <li>Would setting precise time windows for when others can view your files give you greater peace of mind?
+          </li>
           <li>What if you could see, in real time, who accessed your documents and when?</li>
-          <li>Imagine enforcing true zero-trust security with AES-level protection — wouldn’t that transform your data security?</li>
+          <li>Imagine enforcing true zero-trust security with AES-level protection — wouldn’t that transform your data
+            security?</li>
         </ul>
 
         <div class="cta-buttons">
@@ -687,7 +844,8 @@
       <div class="section-header center-align">
         <span class="section-tag">Case Studies</span>
         <h2 class="section-title">Our Portfolio</h2>
-        <p class="section-subtitle">We have successfully delivered numerous projects, both training and implementation, across diverse domains.</p>
+        <p class="section-subtitle">We have successfully delivered numerous projects, both training and implementation,
+          across diverse domains.</p>
       </div>
 
       <!-- Filters -->
@@ -707,7 +865,8 @@
           <div class="project-info">
             <span class="project-cat">GDPR Compliance &amp; Audit</span>
             <h4 class="project-name">Financial Node Vaulting</h4>
-            <p class="project-desc">Audited and encrypted a fintech startup's payment database serving 100K active clients, passing regulatory certification.</p>
+            <p class="project-desc">Audited and encrypted a fintech startup's payment database serving 100K active
+              clients, passing regulatory certification.</p>
           </div>
         </div>
 
@@ -717,7 +876,8 @@
           <div class="project-info">
             <span class="project-cat">AI Predictive Model</span>
             <h4 class="project-name">Smart Grid Telemetry Analytics</h4>
-            <p class="project-desc">Implemented regression algorithms forecasting resource usage peaks for a regional electricity network node.</p>
+            <p class="project-desc">Implemented regression algorithms forecasting resource usage peaks for a regional
+              electricity network node.</p>
           </div>
         </div>
 
@@ -727,7 +887,8 @@
           <div class="project-info">
             <span class="project-cat">Full-Stack Application</span>
             <h4 class="project-name">E-Commerce Merchant Gateway</h4>
-            <p class="project-desc">Built a custom multi-tenant API manager handles high volume transaction loads securely and without downtime.</p>
+            <p class="project-desc">Built a custom multi-tenant API manager handles high volume transaction loads
+              securely and without downtime.</p>
           </div>
         </div>
 
@@ -737,74 +898,9 @@
           <div class="project-info">
             <span class="project-cat">Corporate Coaching Program</span>
             <h4 class="project-name">Cyber Defense Operations Intensive</h4>
-            <p class="project-desc">Coached 50+ enterprise IT operators in malware isolation, threat vectors, and disaster recovery procedures.</p>
+            <p class="project-desc">Coached 50+ enterprise IT operators in malware isolation, threat vectors, and
+              disaster recovery procedures.</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="testimonials-section section-padding">
-    <div class="container testimonial-container">
-      <div class="section-header center-align">
-        <span class="section-tag">Client Feedback</span>
-        <h2 class="section-title">Our Customers</h2>
-        <p class="section-subtitle">Leading companies trust Tektwig to protect and optimize their technological pipelines.</p>
-      </div>
-
-      <!-- Testimonial Slider Outer wrapper -->
-      <div class="testimonial-slider-wrap">
-        <div class="testimonial-slider" id="testimonial-slider">
-          <!-- Slide 1 -->
-          <div class="testimonial-slide active">
-            <div class="testimonial-card glass-panel">
-              <div class="quote-icon">“</div>
-              <h3 class="testimonial-quote">Well Experienced and Professional Service!</h3>
-              <p class="testimonial-text">
-                Tektwig delivered exactly what we needed with impressive expertise and attention to detail. Their professionalism and commitment to quality made our entire experience seamless and highly rewarding.
-              </p>
-              <div class="testimonial-client">
-                <img src="assets/avatar-client.png" alt="John Doe" class="client-avatar">
-                <div class="client-meta">
-                  <h4 class="client-name">John Doe</h4>
-                  <p class="client-title">Chief Technology Officer, FinTech Corp</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Slide 2 -->
-          <div class="testimonial-slide">
-            <div class="testimonial-card glass-panel">
-              <div class="quote-icon">“</div>
-              <h3 class="testimonial-quote">Secured Our Entire Infrastructure</h3>
-              <p class="testimonial-text">
-                Their penetration testing and regulatory compliance team worked tirelessly. Thanks to Tektwig, we successfully passed our ISO27001 data audit and locked down all internal vectors.
-              </p>
-              <div class="testimonial-client">
-                <img src="assets/avatar-client.png" alt="Sarah Connor" class="client-avatar" style="filter: hue-rotate(90deg);">
-                <div class="client-meta">
-                  <h4 class="client-name">Sarah Connor</h4>
-                  <p class="client-title">Director of InfoSec, HealthData</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Slider Controls -->
-        <div class="slider-controls">
-          <button class="control-btn prev-btn" id="testimonial-prev" aria-label="Previous Testimonial">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          </button>
-          <div class="slider-dots" id="slider-dots">
-            <span class="slide-dot active" data-index="0"></span>
-            <span class="slide-dot" data-index="1"></span>
-          </div>
-          <button class="control-btn next-btn" id="testimonial-next" aria-label="Next Testimonial">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
         </div>
       </div>
     </div>
@@ -825,14 +921,27 @@
           <div class="leader-img-box">
             <img src="assets/avatar-esther-prayer.png" alt="Esther Prayer" class="leader-img">
             <div class="leader-overlay-socials">
-              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-              <a href="#" class="social-icon-sm" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg></a>
+              <a href="#" class="social-icon-sm" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                  height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                  </path>
+                </svg></a>
             </div>
           </div>
           <div class="leader-info">
             <h4 class="leader-name">Esther Prayer</h4>
             <p class="leader-title">Co-Founder</p>
-            <p class="leader-bio">Directing operational strategies, framework designs, and corporate networking targets.</p>
+            <p class="leader-bio">Directing operational strategies, framework designs, and corporate networking targets.
+            </p>
           </div>
         </div>
 
@@ -841,13 +950,20 @@
           <div class="leader-img-box">
             <img src="assets/avatar-adebanke.png" alt="Adebanke Shogo" class="leader-img">
             <div class="leader-overlay-socials">
-              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg></a>
             </div>
           </div>
           <div class="leader-info">
             <h4 class="leader-name">Adebanke Shogo</h4>
             <p class="leader-title">Admin Manager</p>
-            <p class="leader-bio">Managing corporate administration, internal communications, human resources, and office operational workflows.</p>
+            <p class="leader-bio">Managing corporate administration, internal communications, human resources, and
+              office operational workflows.</p>
           </div>
         </div>
 
@@ -856,13 +972,20 @@
           <div class="leader-img-box">
             <img src="assets/avatar-ruth.png" alt="Ruth Ifeduba" class="leader-img">
             <div class="leader-overlay-socials">
-              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+              <a href="#" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg></a>
             </div>
           </div>
           <div class="leader-info">
             <h4 class="leader-name">Ruth Ifeduba</h4>
             <p class="leader-title">Finance Manager</p>
-            <p class="leader-bio">Managing corporate financial planning, budget allocations, payroll administration, and investment strategies.</p>
+            <p class="leader-bio">Managing corporate financial planning, budget allocations, payroll administration, and
+              investment strategies.</p>
           </div>
         </div>
 
@@ -871,13 +994,21 @@
           <div class="leader-img-box">
             <img src="assets/avatar-faith.png" alt="Faith Timothy" class="leader-img">
             <div class="leader-overlay-socials">
-              <a href="https://www.linkedin.com/in/faith-timothy-76815b2b2/" target="_blank" rel="noopener noreferrer" class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+              <a href="https://www.linkedin.com/in/faith-timothy-76815b2b2/" target="_blank" rel="noopener noreferrer"
+                class="social-icon-sm" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                  height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg></a>
             </div>
           </div>
           <div class="leader-info">
             <h4 class="leader-name">Faith Timothy</h4>
             <p class="leader-title">Chief Technology Officer (CTO)</p>
-            <p class="leader-bio">Leading global technological strategy, cyber-infrastructure scaling, and custom enterprise dashboard engineering.</p>
+            <p class="leader-bio">Leading global technological strategy, cyber-infrastructure scaling, and custom
+              enterprise dashboard engineering.</p>
           </div>
         </div>
       </div>
@@ -887,35 +1018,37 @@
   <!-- Interactive Project Quote Calculator & Contact Form -->
   <section id="contact" class="contact-section section-padding">
     <div class="container contact-container">
-      
+
       <!-- Calculator Column -->
       <div class="contact-calc-column glass-panel">
         <h3 class="calc-title">Configure Your Solution</h3>
-        <p class="calc-intro-text">Select your target services to calculate an estimated scope, timeline, and resource projection.</p>
-        
+        <p class="calc-intro-text">Select your target services to calculate an estimated scope, timeline, and resource
+          projection.</p>
+
         <form id="quote-calculator-form">
           <!-- Selection -->
           <div class="form-group-checkboxes">
             <label class="calc-label">Select Services Needed</label>
             <div class="calc-checkbox-grid">
               <label class="calc-checkbox-card">
-                <input type="checkbox" name="calc-service" value="cybersecurity" data-cost="2500" data-weeks="3" checked>
+                <input type="checkbox" name="calc-service" value="cybersecurity" data-cost="2500" data-weeks="3"
+                  checked>
                 <span class="checkbox-visual"></span>
                 <span class="checkbox-label">Cybersecurity &amp; Auditing</span>
               </label>
-              
+
               <label class="calc-checkbox-card">
                 <input type="checkbox" name="calc-service" value="networking" data-cost="2000" data-weeks="2">
                 <span class="checkbox-visual"></span>
                 <span class="checkbox-label">Networking Setup</span>
               </label>
-              
+
               <label class="calc-checkbox-card">
                 <input type="checkbox" name="calc-service" value="ai" data-cost="3500" data-weeks="4">
                 <span class="checkbox-visual"></span>
                 <span class="checkbox-label">AI &amp; Data Pipeline</span>
               </label>
-              
+
               <label class="calc-checkbox-card">
                 <input type="checkbox" name="calc-service" value="software" data-cost="3000" data-weeks="4">
                 <span class="checkbox-visual"></span>
@@ -929,14 +1062,15 @@
               </label>
             </div>
           </div>
-          
+
           <!-- Slider -->
           <div class="form-group-slider">
             <div class="slider-header">
               <label for="company-scale" class="calc-label">Company Infrastructure Scale</label>
               <span id="company-scale-value">25 endpoints</span>
             </div>
-            <input type="range" id="company-scale" name="scale" min="5" max="250" step="5" value="25" class="range-slider">
+            <input type="range" id="company-scale" name="scale" min="5" max="250" step="5" value="25"
+              class="range-slider">
             <span class="slider-hint">End-user terminals, local nodes, or servers requiring configuration.</span>
           </div>
 
@@ -963,7 +1097,7 @@
         <div class="badge" id="contact-badge">Ready to Start?</div>
         <h2 class="section-title">Let's Build a Solution</h2>
         <p class="section-subtitle">Reach out today, and let's craft a technology pipeline that delivers results.</p>
-        
+
         <form class="contact-form glass-panel" id="actual-contact-form">
           <div class="form-row-2">
             <div class="form-group">
@@ -977,15 +1111,19 @@
           </div>
           <div class="form-group">
             <label for="contact-subject">Subject</label>
-            <input type="text" id="contact-subject" name="subject" required placeholder="Project Inquiry / Advisory Request">
+            <input type="text" id="contact-subject" name="subject" required
+              placeholder="Project Inquiry / Advisory Request">
           </div>
           <div class="form-group">
             <label for="contact-msg">Tell us about your project</label>
-            <textarea id="contact-msg" name="message" rows="5" required placeholder="Describe your software, database, or security needs..."></textarea>
+            <textarea id="contact-msg" name="message" rows="5" required
+              placeholder="Describe your software, database, or security needs..."></textarea>
           </div>
           <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">
-            By submitting this enquiry, you acknowledge that your information is being processed by Tektwig in accordance with our
-            <a href="privacy-policy.html" target="_blank" style="color: var(--accent-cyan); text-decoration: underline;">Privacy Policy</a>.
+            By submitting this enquiry, you acknowledge that your information is being processed by Tektwig in
+            accordance with our
+            <a href="privacy-policy.html" target="_blank"
+              style="color: var(--accent-cyan); text-decoration: underline;">Privacy Policy</a>.
           </p>
           <button type="submit" class="btn btn-primary btn-block" id="btn-submit-contact">Send Inquiry</button>
         </form>
@@ -1001,13 +1139,34 @@
       <div class="footer-col brand-col">
         <img src="assets/logo.svg" alt="Tektwig Logo" class="footer-logo">
         <p class="footer-bio-text">
-          Tektwig Digital &amp; Internet Business Solutions is your trusted advisor in complex modern technologies. We design, build, audit, and support systems that scale safely.
+          Tektwig Digital &amp; Internet Business Solutions is your trusted advisor in complex modern technologies. We
+          design, build, audit, and support systems that scale safely.
         </p>
         <div class="footer-socials">
-          <a href="https://www.facebook.com/tektwiig" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fb"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-          <a href="https://x.com/tektwig" target="_blank" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-x"><path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768 M20 4l-6.768 6.768"></path></svg></a>
-          <a href="https://www.instagram.com/tektwig" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-ig"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-          <a href="http://linkedin.com/company/tektwig" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-li"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+          <a href="https://www.facebook.com/tektwiig" target="_blank" aria-label="Facebook"><svg
+              xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-fb">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg></a>
+          <a href="https://x.com/tektwig" target="_blank" aria-label="X"><svg xmlns="http://www.w3.org/2000/svg"
+              width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" class="icon-x">
+              <path d="M4 4l11.733 16h4.267l-11.733 -16z M4 20l6.768 -6.768 M20 4l-6.768 6.768"></path>
+            </svg></a>
+          <a href="https://www.instagram.com/tektwig" target="_blank" aria-label="Instagram"><svg
+              xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-ig">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg></a>
+          <a href="http://linkedin.com/company/tektwig" target="_blank" aria-label="LinkedIn"><svg
+              xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-li">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg></a>
         </div>
       </div>
 
@@ -1038,8 +1197,10 @@
       <div class="footer-col contact-col">
         <h4 class="footer-heading">Get in Touch</h4>
         <p class="footer-contact-info"><strong class="label">Location:</strong> LAGOS</p>
-        <p class="footer-contact-info"><strong class="label">Email:</strong> <a href="mailto:Official@tektwig.com">Official@tektwig.com</a></p>
-        <p class="footer-contact-info"><strong class="label">Phone:</strong> <a href="https://wa.me/2347039517970" target="_blank" rel="noopener noreferrer">+234 703 951 7970</a></p>
+        <p class="footer-contact-info"><strong class="label">Email:</strong> <a
+            href="mailto:Official@tektwig.com">Official@tektwig.com</a></p>
+        <p class="footer-contact-info"><strong class="label">Phone:</strong> <a href="https://wa.me/2347039517970"
+            target="_blank" rel="noopener noreferrer">+234 703 951 7970</a></p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1057,10 +1218,17 @@
   <!-- Floating Scroll Navigation -->
   <div class="scroll-nav" id="scroll-nav">
     <button class="scroll-btn scroll-btn--up" id="scroll-btn-up" title="Scroll to Top" aria-label="Scroll to Top">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
     </button>
-    <button class="scroll-btn scroll-btn--down" id="scroll-btn-down" title="Scroll to Bottom" aria-label="Scroll to Bottom">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    <button class="scroll-btn scroll-btn--down" id="scroll-btn-down" title="Scroll to Bottom"
+      aria-label="Scroll to Bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
     </button>
   </div>
 
@@ -1069,4 +1237,5 @@
   <script src="db.js?v=2026072101"></script>
   <script src="app.js?v=2026072101"></script>
 </body>
+
 </html>
